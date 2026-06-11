@@ -1,533 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ThinkNirvana.org — Reimagining Retirement for Everyone</title>
-  <meta name="description" content="ThinkNirvana is a nonprofit on a mission to make retirement savings simple, transparent, and radically affordable for every American worker."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThinkNirvana Foundation — Retirement security is a right, not a privilege.</title>
+  <meta name="description" content="ThinkNirvana Foundation is a nonprofit building the infrastructure that makes retirement security possible — for the 57 million American workers who have never had access to a good plan." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ThinkNirvana Foundation — Retirement security is a right, not a privilege." />
+  <meta property="og:description" content="A Maryland nonprofit and ERISA §413(e) Pooled Plan Provider. Operating AIPEP401K — a nonprofit 401(k) at $6/month per participant with zero employer fees." />
+  <meta property="og:url" content="https://thinknirvana.org" />
+  <meta property="og:type" content="website" />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "@id": "https://thinknirvana.org/#org",
+    "name": "ThinkNirvana Foundation",
+    "alternateName": "ThinkNirvana",
+    "url": "https://thinknirvana.org",
+    "description": "A Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation operates AIPEP401K, a pooled employer 401(k) plan offering Vanguard index funds exclusively at $6/month per participant with no employer fees.",
+    "email": "hello@thinknirvana.org",
+    "foundingDate": "2024",
+    "areaServed": "US",
+    "sameAs": ["https://aipep401k.com"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Olney",
+      "addressRegion": "MD",
+      "addressCountry": "US"
+    },
+    "knowsAbout": ["401k", "retirement plans", "ERISA", "pooled employer plan", "nonprofit finance", "retirement policy"]
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+
   <style>
+    /* ── DESIGN TOKENS ── */
     :root {
-      --cream:     #faf7f2;
-      --cream-2:   #f2ede4;
-      --cream-3:   #e8e0d4;
-      --ink:       #1c1a17;
-      --ink-soft:  #3d3830;
-      --ink-muted: #7a7268;
-      --rust:      #b85c38;
-      --rust-lt:   #d4784e;
-      --rust-bg:   #fdf0ea;
-      --forest:    #2d5a3d;
-      --forest-lt: #3d7a52;
-      --forest-bg: #eaf3ec;
-      --gold:      #c49a3c;
-      --gold-bg:   #fdf6e3;
-      --border:    #ddd5c8;
-      --r:         6px;
-      --r-lg:      14px;
+      --forest:       #0D2B1E;
+      --forest-mid:   #1D9E75;
+      --forest-light: #9FE1CB;
+      --forest-pale:  #E1F5EE;
+      --amber:        #FAC775;
+      --amber-dark:   #854F0B;
+      --white:        #FFFFFF;
+      --text:         #111827;
+      --muted:        #6B7280;
+      --border:       #E5E7EB;
+      --bg:           #F9FAFB;
+      --r:            8px;
+      --r-lg:         16px;
+      --shadow:       0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:    0 4px 12px rgba(0,0,0,.08);
     }
+
+    /* ── RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Lato', sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      line-height: 1.65;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select, textarea { font-family: inherit; }
 
-    /* NAV */
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.2; font-weight: 500; }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+    h3 { font-size: clamp(1.15rem, 2vw, 1.5rem); }
+    h4 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
+    p  { line-height: 1.75; }
+    .mono { font-family: 'Courier Prime', 'Courier New', monospace; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 88px 0; }
+    .section-sm { padding: 56px 0; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header p { color: var(--muted); max-width: 600px; margin: 12px auto 0; font-size: 1.05rem; }
+    .eyebrow {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--forest-mid);
+      background: var(--forest-pale);
+      border: 1px solid var(--forest-light);
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin-bottom: 16px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      background: var(--forest-mid);
+      color: var(--white);
+      padding: 13px 26px;
+      border-radius: var(--r);
+      font-size: .95rem;
+      font-weight: 500;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .88; }
+    .btn-ghost-dark {
+      color: rgba(255,255,255,.75);
+      font-size: .95rem;
+      padding: 13px 4px;
+      border: none;
+      background: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s;
+    }
+    .btn-ghost-dark:hover { color: var(--white); }
+    .btn-outline-light {
+      border: 1px solid rgba(255,255,255,.25);
+      color: rgba(255,255,255,.8);
+      background: transparent;
+      padding: 11px 22px;
+      border-radius: var(--r);
+      font-size: .9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .15s;
+    }
+    .btn-outline-light:hover { border-color: var(--white); color: var(--white); }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--forest-mid);
+      overflow: hidden;
+      padding: 9px 0;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-item {
+      font-family: 'Courier Prime', monospace;
+      font-size: .72rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+      padding: 0 32px;
+    }
+    .ticker-item::after { content: '·'; margin-left: 32px; color: rgba(255,255,255,.35); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── NAV ── */
     nav {
-      border-bottom: 1px solid var(--border);
-      background: rgba(250,247,242,.95);
-      backdrop-filter: blur(10px);
-      position: sticky; top: 0; z-index: 100;
+      background: var(--forest);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
     .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 24px;
     }
-    .nav-logo {
-      display: flex; align-items: center; gap: 12px;
-      text-decoration: none; color: var(--ink);
-    }
-    .nav-lotus {
-      width: 40px; height: 40px;
-      border: 2px solid var(--ink);
+    .logo-wrap { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .logo-mark {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(159,225,203,.4);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 1rem; font-style: italic;
-      color: var(--rust);
+      font-size: .9rem; font-style: italic;
+      color: var(--forest-light);
     }
-    .nav-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; }
-    .nav-dot { color: var(--rust); }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { text-decoration: none; color: var(--ink-soft); font-size: .9rem; font-weight: 400; letter-spacing: .02em; transition: color .15s; }
-    .nav-links a:hover { color: var(--rust); }
-    .nav-btn {
-      padding: 9px 22px; border-radius: var(--r);
-      background: var(--ink); color: var(--cream);
-      font-size: .88rem; font-weight: 700; text-decoration: none;
-      transition: background .15s;
+    .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; }
+    .logo-sub  { color: rgba(255,255,255,.35); font-size: .62rem; letter-spacing: .1em; font-family: 'Courier Prime', monospace; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color .15s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.8);
+      padding: 7px 16px;
+      border-radius: var(--r);
+      font-size: .88rem;
+      transition: all .15s;
+      flex-shrink: 0;
     }
-    .nav-btn:hover { background: var(--rust); }
-    @media (max-width: 740px) { .nav-links { display: none; } }
+    .nav-cta:hover { border-color: var(--white); color: var(--white); }
+    .nav-mobile-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.4rem; }
 
-    /* HERO — editorial newspaper layout */
+    /* ── HERO ── */
     .hero {
-      padding: 80px 0 0;
-      border-bottom: 3px double var(--border);
-    }
-    .hero-kicker {
-      font-family: 'Courier Prime', monospace;
-      font-size: .78rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .hero-kicker::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-      gap: 0;
-      border-top: 2px solid var(--ink);
-    }
-    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
-    .hero-main {
-      padding: 48px 48px 48px 0;
-      border-right: 1px solid var(--border);
-    }
-    @media (max-width: 860px) { .hero-main { padding: 36px 0; border-right: none; } }
-    .hero-main h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.1;
-      font-weight: 700;
-      margin-bottom: 24px;
-      letter-spacing: -.02em;
-    }
-    .hero-main h1 em { font-style: italic; color: var(--rust); }
-    .hero-deck {
-      font-size: 1.12rem;
-      color: var(--ink-soft);
-      max-width: 560px;
-      line-height: 1.75;
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-      margin-bottom: 32px;
-    }
-    .hero-byline {
-      font-family: 'Courier Prime', monospace;
-      font-size: .78rem;
-      color: var(--ink-muted);
-      letter-spacing: .06em;
-      margin-bottom: 32px;
-    }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 11px 24px; border-radius: var(--r);
-      font-family: 'Lato', sans-serif; font-size: .92rem; font-weight: 700;
-      text-decoration: none; cursor: pointer; border: 2px solid transparent;
-      transition: all .18s;
-    }
-    .btn-dark { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-    .btn-dark:hover { background: var(--rust); border-color: var(--rust); }
-    .btn-rust { background: var(--rust); color: #fff; border-color: var(--rust); }
-    .btn-rust:hover { background: #a04a28; }
-    .btn-outline { background: transparent; color: var(--ink); border-color: var(--border); }
-    .btn-outline:hover { border-color: var(--ink); }
-
-    .hero-sidebar { padding: 36px 0 36px 36px; }
-    @media (max-width: 860px) { .hero-sidebar { padding: 0 0 36px; border-top: 1px solid var(--border); } }
-    .sidebar-block { margin-bottom: 28px; }
-    .sidebar-label {
-      font-family: 'Courier Prime', monospace;
-      font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--ink-muted); border-bottom: 1px solid var(--border);
-      padding-bottom: 6px; margin-bottom: 12px;
-    }
-    .sidebar-stat { margin-bottom: 14px; }
-    .sidebar-stat-val {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem; color: var(--rust); line-height: 1;
-    }
-    .sidebar-stat-label { font-size: .8rem; color: var(--ink-muted); margin-top: 2px; line-height: 1.4; }
-    .sidebar-links a {
-      display: block; font-size: .85rem; color: var(--ink-soft);
-      text-decoration: none; padding: 6px 0; border-bottom: 1px solid var(--cream-3);
-      transition: color .12s;
-    }
-    .sidebar-links a:hover { color: var(--rust); }
-    .sidebar-links a::before { content: '→ '; color: var(--rust); }
-
-    /* TICKER */
-    .ticker {
-      background: var(--ink);
-      color: var(--cream);
-      padding: 10px 0;
-      overflow: hidden;
+      background: var(--forest);
+      color: var(--white);
+      padding: 100px 0 88px;
       position: relative;
+      overflow: hidden;
     }
-    .ticker-inner {
-      display: flex; gap: 60px;
-      white-space: nowrap;
-      animation: ticker 30s linear infinite;
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 90% 40%, rgba(29,158,117,.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; max-width: 760px; }
+    .hero-eyebrow { margin-bottom: 20px; }
+    .hero-eyebrow span {
       font-family: 'Courier Prime', monospace;
-      font-size: .78rem;
-      letter-spacing: .06em;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
     }
-    .ticker-item { display: flex; align-items: center; gap: 10px; }
-    .ticker-dot { width: 5px; height: 5px; background: var(--rust); border-radius: 50%; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .hero h1 { color: var(--white); margin-bottom: 20px; }
+    .hero h1 em { font-style: italic; color: var(--forest-light); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.65);
+      max-width: 600px;
+      margin-bottom: 36px;
+      line-height: 1.75;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 56px; }
+    .hero-numbers { display: grid; grid-template-columns: repeat(3, auto); gap: 0; max-width: 560px; }
+    .hero-number { padding: 20px 28px 20px 0; border-right: 1px solid rgba(255,255,255,.1); }
+    .hero-number:last-child { border-right: none; padding-right: 0; padding-left: 28px; }
+    .hero-number:nth-child(2) { padding-left: 28px; }
+    .hero-num-val { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--white); font-weight: 500; line-height: 1; margin-bottom: 6px; }
+    .hero-num-label { font-size: .78rem; color: rgba(255,255,255,.45); line-height: 1.4; }
 
-    /* MISSION STRIP */
-    .mission-strip {
-      padding: 80px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .mission-cols {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    }
-    @media (max-width: 820px) { .mission-cols { grid-template-columns: 1fr; gap: 40px; } }
-    .mission-left {
-      font-family: 'Courier Prime', monospace;
-      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--rust); margin-bottom: 16px;
-    }
-    .mission-left h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.7rem, 3vw, 2.4rem);
-      line-height: 1.2; color: var(--ink); margin-bottom: 20px;
-      font-weight: 700;
-    }
-    .mission-left p { font-size: 1rem; color: var(--ink-soft); line-height: 1.8; margin-bottom: 16px; }
-    .mission-quote {
-      border-left: 3px solid var(--rust);
+    /* ── MISSION SECTION ── */
+    .mission-section { background: var(--white); }
+    .mission-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .mission-left h2 { margin-bottom: 20px; }
+    .mission-left p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 16px; }
+    .mission-pull {
+      border-left: 3px solid var(--forest-mid);
       padding: 16px 20px;
       margin: 24px 0;
       font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
       font-style: italic;
-      font-size: 1.15rem;
-      color: var(--ink);
-      line-height: 1.5;
-      background: var(--rust-bg);
+      color: var(--forest);
+      line-height: 1.6;
+      background: var(--forest-pale);
       border-radius: 0 var(--r) var(--r) 0;
     }
-    .mission-right { display: flex; flex-direction: column; gap: 16px; }
+    .problem-stack { display: flex; flex-direction: column; gap: 16px; }
     .problem-card {
-      background: #fff;
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--r-lg);
       padding: 22px 24px;
-      display: flex; gap: 16px; align-items: flex-start;
-      box-shadow: 0 2px 10px rgba(0,0,0,.04);
-      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      gap: 16px;
     }
-    .problem-card:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,.08); }
-    .problem-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem; color: var(--cream-3); font-weight: 700;
-      line-height: 1; flex-shrink: 0; width: 36px;
-    }
-    .problem-text strong { display: block; font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
-    .problem-text span { font-size: .85rem; color: var(--ink-muted); line-height: 1.5; }
+    .problem-num { font-family: 'Courier Prime', monospace; font-size: .75rem; color: var(--forest-mid); font-weight: 700; flex-shrink: 0; padding-top: 2px; }
+    .problem-card h4 { margin-bottom: 6px; }
+    .problem-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
 
-    /* INITIATIVES */
-    .initiatives { padding: 80px 0; background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .section-eyebrow {
-      font-family: 'Courier Prime', monospace;
-      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--rust); margin-bottom: 12px; display: block;
-    }
-    .section-h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
-      font-weight: 700; line-height: 1.2; margin-bottom: 12px;
-    }
-    .section-sub { font-size: 1rem; color: var(--ink-muted); max-width: 540px; line-height: 1.7; margin-bottom: 48px; }
-    .init-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    @media (max-width: 820px) { .init-grid { grid-template-columns: 1fr; } }
-    .init-card {
-      background: var(--cream);
+    /* ── INITIATIVES ── */
+    .initiatives-section { background: var(--bg); }
+    .initiatives-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .initiative-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--r-lg);
-      overflow: hidden;
-      transition: transform .2s, box-shadow .2s;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
     }
-    .init-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .init-card-top {
-      padding: 28px 28px 20px;
-      border-bottom: 1px solid var(--border);
+    .initiative-card.featured { border-top: 3px solid var(--forest-mid); }
+    .initiative-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
     }
-    .init-tag {
-      display: inline-block;
-      font-family: 'Courier Prime', monospace;
-      font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
-      padding: 3px 9px; border-radius: 3px; margin-bottom: 14px;
-    }
-    .init-tag.rust { background: var(--rust-bg); color: var(--rust); border: 1px solid #e8c4b4; }
-    .init-tag.forest { background: var(--forest-bg); color: var(--forest); border: 1px solid #b4d4bc; }
-    .init-tag.gold { background: var(--gold-bg); color: #8a6c1c; border: 1px solid #e0cc90; }
-    .init-card-top h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;
-    }
-    .init-card-top p { font-size: .88rem; color: var(--ink-soft); line-height: 1.6; }
-    .init-card-bottom { padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; }
-    .init-domain {
-      font-family: 'Courier Prime', monospace;
-      font-size: .78rem; color: var(--ink-muted); letter-spacing: .04em;
-    }
-    .init-link {
-      font-size: .82rem; font-weight: 700; color: var(--rust);
-      text-decoration: none;
-    }
-    .init-link:hover { text-decoration: underline; }
+    .status-live { color: var(--forest-mid); }
+    .status-live::before { content: ''; width: 6px; height: 6px; background: var(--forest-mid); border-radius: 50%; display: inline-block; animation: pulse 2s ease infinite; }
+    .status-coming { color: var(--muted); }
+    .status-coming::before { content: ''; width: 6px; height: 6px; background: var(--muted); border-radius: 50%; display: inline-block; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .initiative-card h3 { margin-bottom: 10px; }
+    .initiative-card p { color: var(--muted); font-size: .9rem; line-height: 1.7; flex: 1; margin-bottom: 20px; }
+    .initiative-link { font-size: .85rem; color: var(--forest-mid); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    .initiative-domain { font-family: 'Courier Prime', monospace; font-size: .72rem; color: var(--muted); margin-bottom: 8px; }
 
-    /* ROADMAP */
-    .roadmap { padding: 80px 0; }
-    .timeline { position: relative; margin-top: 48px; }
-    .timeline::before {
-      content: ''; position: absolute;
-      left: 120px; top: 0; bottom: 0; width: 1px;
+    /* ── IMPACT METRICS ── */
+    .impact-section { background: var(--forest); color: var(--white); padding: 88px 0; }
+    .impact-inner { text-align: center; }
+    .impact-inner h2 { color: var(--white); margin-bottom: 16px; }
+    .impact-inner > p { color: rgba(255,255,255,.6); max-width: 640px; margin: 0 auto 56px; font-size: 1rem; line-height: 1.75; }
+    .impact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: rgba(255,255,255,.08); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 48px; }
+    .impact-metric {
+      background: rgba(13,43,30,.6);
+      padding: 36px 28px;
+      text-align: center;
+    }
+    .impact-val { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: var(--forest-light); font-weight: 500; line-height: 1; margin-bottom: 8px; }
+    .impact-label { font-size: .82rem; color: rgba(255,255,255,.55); line-height: 1.5; }
+    .impact-launch { font-size: .7rem; font-family: 'Courier Prime', monospace; color: rgba(255,255,255,.3); margin-top: 6px; letter-spacing: .05em; }
+    .impact-callout {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(159,225,203,.15);
+      border-radius: var(--r-lg);
+      padding: 28px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: .95rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.75;
+    }
+    .impact-callout strong { color: var(--forest-light); }
+
+    /* ── ROADMAP ── */
+    .roadmap-section { background: var(--white); }
+    .roadmap-timeline { position: relative; max-width: 760px; margin: 0 auto; }
+    .roadmap-timeline::before {
+      content: '';
+      position: absolute;
+      left: 72px;
+      top: 0; bottom: 0;
+      width: 1px;
       background: var(--border);
     }
-    @media (max-width: 640px) { .timeline::before { left: 20px; } }
-    .tl-item { display: flex; gap: 40px; margin-bottom: 40px; align-items: flex-start; position: relative; }
-    .tl-date {
-      width: 100px; flex-shrink: 0;
+    .roadmap-item { display: flex; gap: 32px; margin-bottom: 40px; position: relative; }
+    .roadmap-item:last-child { margin-bottom: 0; }
+    .roadmap-year {
+      flex-shrink: 0;
+      width: 60px;
+      text-align: right;
       font-family: 'Courier Prime', monospace;
-      font-size: .8rem; color: var(--ink-muted);
-      text-align: right; padding-top: 3px;
-      letter-spacing: .04em;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--muted);
+      padding-top: 4px;
     }
-    @media (max-width: 640px) { .tl-date { display: none; } }
-    .tl-dot {
+    .roadmap-dot {
+      flex-shrink: 0;
       width: 12px; height: 12px;
-      border-radius: 50%; flex-shrink: 0;
-      margin-top: 5px; position: relative; z-index: 1;
+      border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--white);
+      margin-top: 5px;
+      position: relative;
+      z-index: 1;
     }
-    .tl-dot.done { background: var(--forest); }
-    .tl-dot.active { background: var(--rust); box-shadow: 0 0 0 4px rgba(184,92,56,.2); }
-    .tl-dot.future { background: var(--cream-3); border: 2px solid var(--border); }
-    .tl-content { flex: 1; }
-    .tl-content h4 { font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
-    .tl-content p { font-size: .85rem; color: var(--ink-muted); line-height: 1.55; }
-    .tl-badge {
-      display: inline-block; font-size: .68rem; font-weight: 700;
-      padding: 2px 8px; border-radius: 3px; margin-top: 6px;
-      font-family: 'Courier Prime', monospace; letter-spacing: .04em;
-    }
-    .tl-badge.done { background: var(--forest-bg); color: var(--forest); }
-    .tl-badge.active { background: var(--rust-bg); color: var(--rust); }
-    .tl-badge.future { background: var(--cream-2); color: var(--ink-muted); }
+    .roadmap-dot.active { background: var(--forest-mid); }
+    .roadmap-dot.complete { background: var(--forest); }
+    .roadmap-content { flex: 1; padding-bottom: 8px; }
+    .roadmap-status { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 6px; }
+    .roadmap-status.complete { color: var(--forest); }
+    .roadmap-status.active   { color: var(--forest-mid); }
+    .roadmap-status.planned  { color: var(--muted); }
+    .roadmap-content h4 { margin-bottom: 8px; font-size: .97rem; }
+    .roadmap-content p  { font-size: .88rem; color: var(--muted); line-height: 1.65; }
 
-    /* VALUES */
-    .values { padding: 80px 0; background: var(--ink); color: var(--cream); }
-    .values .section-eyebrow { color: var(--gold); }
-    .values .section-h2 { color: var(--cream); }
-    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: rgba(255,255,255,.07); margin-top: 48px; }
-    @media (max-width: 820px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .values-grid { grid-template-columns: 1fr; } }
-    .value-cell { background: var(--ink); padding: 32px 24px; }
-    .value-cell:hover { background: rgba(255,255,255,.04); }
-    .value-icon { font-size: 1.6rem; margin-bottom: 14px; }
-    .value-cell h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 8px; color: var(--cream); }
-    .value-cell p { font-size: .85rem; color: rgba(250,247,242,.55); line-height: 1.65; }
-
-    /* TEAM / CONTACT */
-    .contact-section { padding: 80px 0; border-top: 1px solid var(--border); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
-    .contact-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3vw, 2.2rem); margin-bottom: 16px; }
-    .contact-left p { font-size: .95rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 20px; }
-    .contact-channels { display: flex; flex-direction: column; gap: 10px; }
-    .contact-channel {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px;
-      background: var(--cream-2); border-radius: var(--r);
-      border: 1px solid var(--border); text-decoration: none; color: var(--ink);
-      font-size: .88rem; transition: border-color .15s;
-    }
-    .contact-channel:hover { border-color: var(--rust); }
-    .contact-channel .ch-icon { font-size: 1.1rem; }
-    .contact-channel .ch-label { font-weight: 700; }
-    .contact-channel .ch-val { color: var(--ink-muted); font-size: .82rem; }
-
-    .signup-box {
-      background: var(--cream-2);
+    /* ── PRINCIPLES ── */
+    .principles-section { background: var(--bg); }
+    .principles-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .principle-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--r-lg);
-      padding: 36px;
+      padding: 28px 24px;
+      display: flex;
+      gap: 16px;
     }
-    .signup-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 8px; }
-    .signup-box p { font-size: .88rem; color: var(--ink-muted); margin-bottom: 24px; }
-    .signup-field { margin-bottom: 12px; }
-    .signup-field label { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); margin-bottom: 5px; }
-    .signup-field input, .signup-field select {
-      width: 100%; padding: 10px 13px;
-      border: 1.5px solid var(--border); border-radius: var(--r);
-      font-family: 'Lato', sans-serif; font-size: .92rem;
-      background: var(--cream); color: var(--ink);
-      transition: border-color .15s; appearance: none;
-    }
-    .signup-field input:focus, .signup-field select:focus { outline: none; border-color: var(--rust); }
-    .signup-btn {
-      width: 100%; padding: 12px; background: var(--rust); color: #fff;
-      border: none; border-radius: var(--r); font-family: 'Lato', sans-serif;
-      font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .15s;
-    }
-    .signup-btn:hover { background: #a04a28; }
-    .signup-legal { font-size: .72rem; color: var(--ink-muted); margin-top: 8px; text-align: center; }
-    .signup-success { display: none; text-align: center; padding: 20px 0; }
-    .signup-success .si { font-size: 2rem; margin-bottom: 10px; }
-    .signup-success h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 6px; }
-    .signup-success p { font-size: .88rem; color: var(--ink-muted); }
+    .principle-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .principle-card h4 { margin-bottom: 8px; }
+    .principle-card p { font-size: .88rem; color: var(--muted); line-height: 1.7; }
 
-    /* FOOTER */
-    footer { background: var(--ink); color: rgba(250,247,242,.55); padding: 48px 0 28px; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
-    @media (max-width: 720px) { .footer-top { grid-template-columns: 1fr; } }
-    .footer-logo-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 10px; }
-    .footer-brand p { font-size: .84rem; line-height: 1.65; }
-    .footer-col h5 { font-family: 'Courier Prime', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(250,247,242,.35); margin-bottom: 12px; }
-    .footer-col a { display: block; font-size: .84rem; color: rgba(250,247,242,.55); text-decoration: none; margin-bottom: 7px; transition: color .12s; }
-    .footer-col a:hover { color: var(--cream); }
-    .footer-hr { border: none; border-top: 1px solid rgba(255,255,255,.08); margin-bottom: 20px; }
-    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: .76rem; }
-    .footer-disc { font-size: .71rem; color: rgba(250,247,242,.28); margin-top: 20px; line-height: 1.65; }
+    /* ── PRESS SECTION ── */
+    .press-section { background: var(--white); }
+    .press-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
+    .press-inner h2 { margin-bottom: 16px; }
+    .press-inner p { color: var(--muted); font-size: .96rem; line-height: 1.75; margin-bottom: 14px; }
+    .press-blurb {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--forest-mid);
+      border-radius: 0 var(--r) var(--r) 0;
+      padding: 18px 20px;
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+    .press-blurb-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--forest-mid); margin-bottom: 8px; }
+    .press-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 28px 24px;
+    }
+    .press-card h4 { margin-bottom: 16px; }
+    .press-contact-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .press-contact-item { display: flex; align-items: center; gap: 10px; font-size: .88rem; }
+    .press-contact-item a { color: var(--forest-mid); font-weight: 500; }
+    .press-kit-note { font-size: .8rem; color: var(--muted); line-height: 1.5; padding-top: 16px; border-top: 1px solid var(--border); }
 
-    /* FADE ANIM */
-    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
+    /* ── BOARD SECTION ── */
+    .board-section { background: var(--forest-pale); }
+    .board-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .board-inner h2 { margin-bottom: 16px; }
+    .board-inner p { color: var(--muted); font-size: .96rem; line-height: 1.75; margin-bottom: 14px; }
+    .board-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 32px 28px;
+      text-align: center;
+    }
+    .board-placeholder { font-size: 3rem; margin-bottom: 16px; }
+    .board-card h4 { margin-bottom: 10px; }
+    .board-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+    /* ── CONTACT / NEWSLETTER ── */
+    .contact-section { background: var(--forest); color: var(--white); padding: 88px 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .contact-left h2 { color: var(--white); margin-bottom: 16px; }
+    .contact-left p { color: rgba(255,255,255,.6); font-size: 1rem; line-height: 1.75; margin-bottom: 20px; }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .9rem;
+      color: rgba(255,255,255,.65);
+    }
+    .contact-link-row a { color: var(--forest-light); font-weight: 500; }
+    .newsletter-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(159,225,203,.15);
+      border-radius: var(--r-lg);
+      padding: 32px 28px;
+    }
+    .newsletter-card h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 6px; }
+    .newsletter-card > p { color: rgba(255,255,255,.5); font-size: .85rem; margin-bottom: 22px; }
+    .nl-field { margin-bottom: 12px; }
+    .nl-field label { display: block; font-size: .75rem; font-weight: 600; color: rgba(255,255,255,.4); margin-bottom: 5px; letter-spacing: .04em; }
+    .nl-field input, .nl-field select {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--r);
+      color: var(--white);
+      font-size: .9rem;
+      transition: border-color .15s;
+    }
+    .nl-field input::placeholder { color: rgba(255,255,255,.3); }
+    .nl-field input:focus, .nl-field select:focus { outline: none; border-color: var(--forest-mid); }
+    .nl-field select option { background: var(--forest); color: var(--white); }
+    .nl-submit {
+      width: 100%;
+      background: var(--forest-mid);
+      color: var(--white);
+      border: none;
+      border-radius: var(--r);
+      padding: 12px;
+      font-size: .92rem;
+      font-weight: 600;
+      margin-top: 4px;
+      transition: opacity .15s;
+    }
+    .nl-submit:hover { opacity: .88; }
+    .nl-legal { font-size: .72rem; color: rgba(255,255,255,.3); text-align: center; margin-top: 10px; line-height: 1.5; }
+    .nl-success { text-align: center; padding: 28px 16px; display: none; }
+    .nl-success-icon { font-size: 2rem; margin-bottom: 10px; }
+    .nl-success h4 { color: var(--white); margin-bottom: 6px; }
+    .nl-success p { font-size: .85rem; color: rgba(255,255,255,.5); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--forest); color: rgba(255,255,255,.5); padding: 56px 0 32px; border-top: 1px solid rgba(255,255,255,.06); }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand p { font-size: .84rem; color: rgba(255,255,255,.45); line-height: 1.7; margin-top: 14px; }
+    .footer-stamp { font-size: .62rem; font-family: 'Courier Prime', monospace; letter-spacing: .07em; color: rgba(255,255,255,.2); margin-top: 14px; }
+    .footer-col h5 { font-size: .72rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: .83rem; color: rgba(255,255,255,.5); margin-bottom: 8px; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    hr.footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin-bottom: 20px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .76rem; }
+    .footer-bottom a { color: rgba(255,255,255,.35); margin-left: 14px; }
+    .footer-bottom a:hover { color: var(--white); }
+    .footer-disc { font-size: .7rem; line-height: 1.7; color: rgba(255,255,255,.25); margin-top: 18px; max-width: 860px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: 60px; left: 0; right: 0;
+        background: var(--forest); padding: 20px 24px; gap: 16px;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+      }
+      .nav-links.open a { font-size: 1rem; color: rgba(255,255,255,.8); }
+      .hero { padding: 60px 0 56px; }
+      .hero-numbers { grid-template-columns: 1fr; gap: 16px; }
+      .hero-number { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); padding: 0 0 16px; }
+      .hero-number:nth-child(2) { padding-left: 0; }
+      .hero-number:last-child { border-bottom: none; padding-bottom: 0; }
+      .mission-inner, .press-inner, .board-inner, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .initiatives-grid, .principles-grid, .impact-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .roadmap-timeline::before { left: 52px; }
+      .roadmap-year { width: 44px; }
+    }
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, .ticker-inner { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="container nav-inner">
-    <a href="#" class="nav-logo">
-      <div class="nav-lotus"><span>TN</span></div>
-      <div>
-        <span class="nav-name">Think<span class="nav-dot">.</span>Nirvana</span>
-        <div style="font-size:.65rem;color:var(--ink-muted);font-family:'Courier Prime',monospace;letter-spacing:.05em">.org · nonprofit</div>
-      </div>
-    </a>
-    <div class="nav-links">
-      <a href="#mission">Mission</a>
-      <a href="#initiatives">Initiatives</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <a href="#contact" class="nav-btn">Get Involved</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-kicker">ThinkNirvana.org &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Nonprofit Retirement Innovation</div>
-    <div class="hero-grid">
-      <div class="hero-main">
-        <h1>We exist to make retirement savings work for <em>the people</em>, not the industry.</h1>
-        <p class="hero-deck">ThinkNirvana is a nonprofit on a mission to dismantle the fee-laden, opaque, and exclusionary retirement system — and replace it with something transparent, affordable, and built for every American worker.</p>
-        <p class="hero-byline">FOUNDED BY PRACTITIONERS TIRED OF WATCHING WORKERS LOSE THEIR FUTURES TO MIDDLEMEN &nbsp;·&nbsp; OLNEY, MD</p>
-        <div class="hero-actions">
-          <a href="#initiatives" class="btn btn-dark">Our Initiatives →</a>
-          <a href="#contact" class="btn btn-rust">Join the Mission</a>
-        </div>
-      </div>
-      <div class="hero-sidebar">
-        <div class="sidebar-block">
-          <div class="sidebar-label">The Numbers</div>
-          <div class="sidebar-stat">
-            <div class="sidebar-stat-val">$30T+</div>
-            <div class="sidebar-stat-label">in U.S. retirement assets — most overcharged</div>
-          </div>
-          <div class="sidebar-stat">
-            <div class="sidebar-stat-val">57M</div>
-            <div class="sidebar-stat-label">workers with no employer retirement plan</div>
-          </div>
-          <div class="sidebar-stat">
-            <div class="sidebar-stat-val">30%</div>
-            <div class="sidebar-stat-label">of retirement wealth lost to 1% fee over 30 yrs</div>
-          </div>
-        </div>
-        <div class="sidebar-block">
-          <div class="sidebar-label">Our Initiatives</div>
-          <div class="sidebar-links">
-            <a href="https://aipep401k.com">AIPEP401K.com — US Nonprofit PEP</a>
-            <a href="#roadmap">Transformation Roadmap</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker">
+<!-- ── TICKER ── -->
+<div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-inner">
-    <span class="ticker-item"><span class="ticker-dot"></span> SECURE 2.0 ACT: UP TO $16,500 IN TAX CREDITS FOR NEW PLANS</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 57 MILLION WORKERS HAVE NO EMPLOYER RETIREMENT PLAN</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> THINKNIRVANA.ORG — NONPROFIT POOLED PLAN PROVIDER</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 1% FEE OVER 30 YEARS COSTS WORKERS 30% OF THEIR RETIREMENT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> AIPEP401K.COM — SIMPLE. TRANSPARENT. AFFORDABLE.</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> BLOCKCHAIN-POWERED RECORDKEEPING — BUILT FOR TRANSPARENCY</span>
-    <!-- Duplicate for seamless loop -->
-    <span class="ticker-item"><span class="ticker-dot"></span> SECURE 2.0 ACT: UP TO $16,500 IN TAX CREDITS FOR NEW PLANS</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 57 MILLION WORKERS HAVE NO EMPLOYER RETIREMENT PLAN</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> THINKNIRVANA.ORG — NONPROFIT POOLED PLAN PROVIDER</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 1% FEE OVER 30 YEARS COSTS WORKERS 30% OF THEIR RETIREMENT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> AIPEP401K.COM — SIMPLE. TRANSPARENT. AFFORDABLE.</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> BLOCKCHAIN-POWERED RECORDKEEPING — BUILT FOR TRANSPARENCY</span>
+    <span class="ticker-item">SECURE 2.0 Act — up to $16,500 in tax credits for new plans</span>
+    <span class="ticker-item">57 million workers have no employer retirement plan</span>
+    <span class="ticker-item">ThinkNirvana Foundation — nonprofit pooled plan provider</span>
+    <span class="ticker-item">1% fee over 30 years costs workers 30% of their retirement</span>
+    <span class="ticker-item">AIPEP401K.com — $6/mo per participant, $0 employer fees</span>
+    <span class="ticker-item">ERISA §413(e) registered pooled plan provider</span>
+    <span class="ticker-item">SECURE 2.0 Act — up to $16,500 in tax credits for new plans</span>
+    <span class="ticker-item">57 million workers have no employer retirement plan</span>
+    <span class="ticker-item">ThinkNirvana Foundation — nonprofit pooled plan provider</span>
+    <span class="ticker-item">1% fee over 30 years costs workers 30% of their retirement</span>
+    <span class="ticker-item">AIPEP401K.com — $6/mo per participant, $0 employer fees</span>
+    <span class="ticker-item">ERISA §413(e) registered pooled plan provider</span>
   </div>
 </div>
 
-<!-- MISSION -->
-<section class="mission-strip" id="mission">
+<!-- ── NAV ── -->
+<nav aria-label="Main navigation">
+  <div class="container nav-inner">
+    <a href="#" class="logo-wrap" aria-label="ThinkNirvana home">
+      <div class="logo-mark">TN</div>
+      <div>
+        <div class="logo-text">ThinkNirvana</div>
+        <div class="logo-sub">Foundation · Nonprofit</div>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="#mission">Mission</a>
+      <a href="#initiatives">Initiatives</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#press">Press</a>
+      <a href="#board">Leadership</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="https://aipep401k.com" class="nav-cta">Visit AIPEP401K.com →</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav-links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" aria-labelledby="hero-headline">
   <div class="container">
-    <div class="mission-cols">
-      <div class="fade-up">
-        <div class="mission-left">
-          <span style="font-family:'Courier Prime',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rust)">Our Mission</span>
-          <h2>On a mission to transform how America saves for retirement.</h2>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span>ThinkNirvana Foundation · Est. 2024 · Olney, MD</span>
+      </div>
+      <h1 id="hero-headline">Retirement security is a right,<br><em>not a privilege.</em></h1>
+      <p class="hero-sub">ThinkNirvana Foundation is a 501(c)(3) nonprofit building the infrastructure that makes it possible — for the workers who have never had access to a good plan.</p>
+      <div class="hero-ctas">
+        <a href="#mission" class="btn-primary">Read our mission →</a>
+        <a href="https://aipep401k.com" class="btn-ghost-dark">Visit AIPEP401K.com ↗</a>
+      </div>
+      <div class="hero-numbers">
+        <div class="hero-number">
+          <div class="hero-num-val">$30T+</div>
+          <div class="hero-num-label">in US retirement assets — most overcharged</div>
         </div>
-        <p>The retirement industry is one of the most profitable financial sectors in the world. It is profitable precisely because it is complicated, opaque, and inaccessible to the people who need it most: small business owners and their employees.</p>
-        <div class="mission-quote">"We intend to compete with every layer of the retirement value chain — recordkeepers, state IRAs, investment firms, TPAs, advisory networks — not to put them out of business, but to force the entire industry to treat savers better."</div>
-        <p>ThinkNirvana is building the infrastructure for a new retirement system: nonprofit, AI-powered, blockchain-native, and participant-first from day one.</p>
-        <div style="margin-top:24px">
-          <a href="#initiatives" class="btn btn-dark">See How →</a>
+        <div class="hero-number">
+          <div class="hero-num-val">57M</div>
+          <div class="hero-num-label">workers with no employer retirement plan</div>
+        </div>
+        <div class="hero-number">
+          <div class="hero-num-val">30%</div>
+          <div class="hero-num-label">of retirement wealth lost to a 1% fee over 30 years</div>
         </div>
       </div>
-      <div class="fade-up">
-        <div class="problem-card">
-          <div class="problem-num">01</div>
-          <div class="problem-text">
-            <strong>The Fee Drain</strong>
-            <span>Hidden fees, revenue sharing, and advisor commissions silently consume 30–40% of a worker's lifetime retirement savings. Most participants never know it's happening.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISSION ── -->
+<section class="section mission-section" id="mission" aria-labelledby="mission-headline">
+  <div class="container">
+    <div class="mission-inner">
+      <div class="mission-left">
+        <span class="eyebrow">Our mission</span>
+        <h2 id="mission-headline">On a mission to transform how America saves for retirement.</h2>
+        <p>Thirty years ago, a 401(k) required a large employer, an expensive TPA, and an advisor who earned commissions on your employees' savings.</p>
+        <p>We built something different. A pooled employer plan run by a nonprofit. Vanguard index funds only. AI-monitored quarterly. $6/month per participant.</p>
+        <div class="mission-pull">"We intend to compete with every layer of the retirement value chain — not to put them out of business, but to force the entire industry to treat savers better."</div>
+        <p>The hotel housekeeper. The restaurant manager. The dental assistant. The startup engineer. Everyone deserves this.</p>
+      </div>
+      <div>
+        <div class="problem-stack">
+          <div class="problem-card">
+            <div class="problem-num">01</div>
+            <div>
+              <h4>The fee drain</h4>
+              <p>Hidden fees, revenue sharing, and advisor commissions silently consume 30–40% of a worker's lifetime retirement savings. Most participants never know it's happening.</p>
+            </div>
           </div>
-        </div>
-        <div class="problem-card">
-          <div class="problem-num">02</div>
-          <div class="problem-text">
-            <strong>The Access Gap</strong>
-            <span>57 million American workers — overwhelmingly employed by small businesses — have zero access to an employer-sponsored retirement plan.</span>
+          <div class="problem-card">
+            <div class="problem-num">02</div>
+            <div>
+              <h4>The access gap</h4>
+              <p>57 million American workers — overwhelmingly employed by small businesses — have zero access to an employer-sponsored retirement plan.</p>
+            </div>
           </div>
-        </div>
-        <div class="problem-card">
-          <div class="problem-num">03</div>
-          <div class="problem-text">
-            <strong>The Complexity Trap</strong>
-            <span>ERISA compliance, Form 5500 filings, nondiscrimination testing — the administrative burden is a weapon the industry uses to justify its fees.</span>
+          <div class="problem-card">
+            <div class="problem-num">03</div>
+            <div>
+              <h4>The complexity trap</h4>
+              <p>ERISA compliance, Form 5500 filings, nondiscrimination testing — the administrative burden is a weapon the industry uses to justify its fees.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -535,184 +662,300 @@
   </div>
 </section>
 
-<!-- INITIATIVES -->
-<section class="initiatives" id="initiatives">
+<!-- ── INITIATIVES ── -->
+<section class="section initiatives-section" id="initiatives" aria-labelledby="initiatives-headline">
   <div class="container">
-    <div class="fade-up">
-      <span class="section-eyebrow">Our Initiatives</span>
-      <h2 class="section-h2">Two platforms. One mission.</h2>
-      <p class="section-sub">ThinkNirvana incubates the tools and platforms that will replace legacy retirement infrastructure — built for American workers first.</p>
+    <div class="section-header">
+      <span class="eyebrow">Our initiatives</span>
+      <h2 id="initiatives-headline">Three platforms. One mission.</h2>
+      <p>ThinkNirvana Foundation incubates the tools and platforms that will replace legacy retirement infrastructure — built for workers first.</p>
     </div>
-    <div class="init-grid fade-up" style="grid-template-columns: repeat(2,1fr);">
-      <div class="init-card">
-        <div class="init-card-top">
-          <span class="init-tag rust">Live · US Market</span>
-          <h3>AIPEP401K</h3>
-          <p>A nonprofit Pooled Employer Plan giving every small business access to Fortune 500–quality retirement benefits. AI-powered administration, transparent index-fund investments, and fees that are a fraction of industry standard.</p>
-        </div>
-        <div class="init-card-bottom">
-          <span class="init-domain">aipep401k.com</span>
-          <a href="https://aipep401k.com" class="init-link">Visit →</a>
-        </div>
+    <div class="initiatives-grid">
+      <div class="initiative-card featured">
+        <div class="initiative-status status-live">Live · US market · Aug 2026</div>
+        <div class="initiative-domain">aipep401k.com</div>
+        <h3>AIPEP 401(k) PEP</h3>
+        <p>A nonprofit Pooled Employer Plan giving every small business access to Fortune 500–quality retirement benefits. $6/month per participant, $0 employer fees, Vanguard index funds only, AI-monitored quarterly.</p>
+        <a href="https://aipep401k.com" class="initiative-link">Visit AIPEP401K.com →</a>
       </div>
-      <div class="init-card">
-        <div class="init-card-top">
-          <span class="init-tag forest">Research · Policy</span>
-          <h3>ThinkNirvana Lab</h3>
-          <p>Policy research, fee transparency advocacy, and open-source retirement technology. Publishing the data and tools the industry doesn't want workers to have.</p>
-        </div>
-        <div class="init-card-bottom">
-          <span class="init-domain">thinknirvana.org/lab</span>
-          <a href="#" class="init-link">Coming Soon →</a>
-        </div>
+      <div class="initiative-card">
+        <div class="initiative-status status-coming">Coming 2027</div>
+        <div class="initiative-domain">thinknirvana.org/403b</div>
+        <h3>403(b) for nonprofits and schools</h3>
+        <p>The same model for hospitals, universities, and nonprofits that have historically paid the most for the worst retirement outcomes. Pooled, nonprofit-run, index-fund-only.</p>
+        <span class="initiative-link" style="color:var(--muted)">In development</span>
+      </div>
+      <div class="initiative-card">
+        <div class="initiative-status status-coming">Long-term vision</div>
+        <div class="initiative-domain">defi401k.com</div>
+        <h3>Global retirement infrastructure</h3>
+        <p>Retirement security across borders, via stablecoin settlement and local regulatory modules. The same mission, extended globally to workers in every market.</p>
+        <a href="https://defi401k.com" class="initiative-link" style="color:var(--muted)">Learn more →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ROADMAP -->
-<section class="roadmap" id="roadmap">
+<!-- ── IMPACT METRICS ── -->
+<section class="impact-section" id="impact" aria-labelledby="impact-headline">
   <div class="container">
-    <div class="fade-up">
-      <span class="section-eyebrow">Transformation Roadmap</span>
-      <h2 class="section-h2">A long game. By design.</h2>
-      <p class="section-sub">Real change in financial services takes decades. We're planning accordingly.</p>
+    <div class="impact-inner">
+      <span class="eyebrow" style="background:rgba(159,225,203,.1);border-color:rgba(159,225,203,.2);color:var(--forest-light)">Impact</span>
+      <h2 id="impact-headline">What this means in practice.</h2>
+      <p>Even before full launch, the math is clear. Every employer who joins compounds the impact — for their employees, and for the workers who see it happen and demand the same.</p>
+      <div class="impact-grid">
+        <div class="impact-metric">
+          <div class="impact-val">$22,500</div>
+          <div class="impact-label">Estimated annual fee savings for employees at a 25-person employer vs. industry average</div>
+          <div class="impact-launch">calculated per cohort</div>
+        </div>
+        <div class="impact-metric">
+          <div class="impact-val">$0</div>
+          <div class="impact-label">Employer admin fees — ever</div>
+          <div class="impact-launch">structural, not promotional</div>
+        </div>
+        <div class="impact-metric">
+          <div class="impact-val">Aug 2026</div>
+          <div class="impact-label">First employer cohort live — waitlist open now</div>
+          <div class="impact-launch">aipep401k.com</div>
+        </div>
+      </div>
+      <div class="impact-callout">
+        A single employer joining AIPEP 401(k) with 25 employees saves those workers an estimated <strong>$22,500/year</strong> in fees they would otherwise pay — compounded over 30 years, that's the difference between a dignified retirement and working into their 70s. We intend to replicate this for every small business in America.
+      </div>
     </div>
-    <div class="timeline fade-up">
-      <div class="tl-item">
-        <div class="tl-date">2024</div>
-        <div class="tl-dot done"></div>
-        <div class="tl-content">
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="section roadmap-section" id="roadmap" aria-labelledby="roadmap-headline">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Transformation roadmap</span>
+      <h2 id="roadmap-headline">A long game. By design.</h2>
+      <p>Real change in financial services takes decades. We're planning accordingly.</p>
+    </div>
+    <div class="roadmap-timeline">
+      <div class="roadmap-item">
+        <div class="roadmap-year">2024</div>
+        <div class="roadmap-dot complete"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-status complete">Complete</div>
           <h4>Foundation — ThinkNirvana LLC incorporated, domains secured</h4>
-          <p>AIPEP401K.com launched. Nonprofit conversion initiated. DOL Pooled Plan Provider registration in process.</p>
-          <span class="tl-badge done">Complete</span>
+          <p>AIPEP401K.com launched. Nonprofit conversion initiated. DOL Pooled Plan Provider registration in process. FastAPI platform built. 136 automated tests passing.</p>
         </div>
       </div>
-      <div class="tl-item">
-        <div class="tl-date">2025</div>
-        <div class="tl-dot active"></div>
-        <div class="tl-content">
+      <div class="roadmap-item">
+        <div class="roadmap-year">2025–26</div>
+        <div class="roadmap-dot active"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-status active">In progress</div>
           <h4>Launch — AIPEP401K goes live for US small businesses</h4>
-          <p>First employer cohort onboarded. ERISA compliance engine operational. Payroll integrations live (Gusto, Rippling, ADP). SECURE 2.0 credit automation active.</p>
-          <span class="tl-badge active">In Progress</span>
+          <p>First employer cohort onboarded August 2026. ERISA compliance engine operational. Payroll integrations live via Finch (Gusto, Rippling, ADP, Paychex, 40+ others). SECURE 2.0 credit automation active.</p>
         </div>
       </div>
-      <div class="tl-item">
-        <div class="tl-date">2026–27</div>
-        <div class="tl-dot future"></div>
-        <div class="tl-content">
-          <h4>Scale — 501(c) nonprofit status, 10,000 employer milestone</h4>
-          <p>Full nonprofit conversion. Blockchain-powered recordkeeping pilot. First employer cohort expansion milestones.</p>
-          <span class="tl-badge future">Planned</span>
+      <div class="roadmap-item">
+        <div class="roadmap-year">2026–27</div>
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-status planned">Planned</div>
+          <h4>Scale — 501(c)(3) nonprofit status, 10,000 employer milestone</h4>
+          <p>Full nonprofit conversion complete. Blockchain-powered recordkeeping pilot. 403(b) product for nonprofits and schools. First international regulatory research.</p>
         </div>
       </div>
-      <div class="tl-item">
-        <div class="tl-date">2028–32</div>
-        <div class="tl-dot future"></div>
-        <div class="tl-content">
-          <h4>Compete — Full-stack alternative to legacy recordkeepers</h4>
+      <div class="roadmap-item">
+        <div class="roadmap-year">2028–32</div>
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-status planned">Planned</div>
+          <h4>Compete — full-stack alternative to legacy recordkeepers</h4>
           <p>AI compliance engine replaces TPA functions industry-wide. Open-source recordkeeping protocol published. Global defined contribution framework launched.</p>
-          <span class="tl-badge future">Planned</span>
         </div>
       </div>
-      <div class="tl-item">
-        <div class="tl-date">2033–40</div>
-        <div class="tl-dot future"></div>
-        <div class="tl-content">
-          <h4>Transform — A new standard for American retirement</h4>
+      <div class="roadmap-item">
+        <div class="roadmap-year">2033–40</div>
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-status planned">Planned</div>
+          <h4>Transform — a new standard for American retirement</h4>
           <p>Sub-0.10% total plan costs the new normal. The trillion-dollar fee drain ended. Every American worker with access to a transparent, affordable retirement plan. The mission complete.</p>
-          <span class="tl-badge future">The Goal</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="values" id="values">
+<!-- ── PRINCIPLES ── -->
+<section class="section principles-section" aria-labelledby="principles-headline">
   <div class="container">
-    <div class="fade-up">
-      <span class="section-eyebrow">What We Stand For</span>
-      <h2 class="section-h2" style="color:var(--cream)">Our operating principles.</h2>
+    <div class="section-header">
+      <span class="eyebrow">Operating principles</span>
+      <h2 id="principles-headline">What we stand for.</h2>
     </div>
-    <div class="values-grid fade-up">
-      <div class="value-cell">
-        <div class="value-icon">⚖️</div>
-        <h4>Fiduciary First</h4>
-        <p>We are legally required to act in participants' best interests. No exceptions, no carve-outs, no conflicts. Ever.</p>
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-icon">⚖️</div>
+        <div>
+          <h4>Fiduciary first</h4>
+          <p>We are legally required to act in participants' best interests. No exceptions, no carve-outs, no conflicts of interest. Ever. It is written into our governing documents.</p>
+        </div>
       </div>
-      <div class="value-cell">
-        <div class="value-icon">🪟</div>
-        <h4>Radical Transparency</h4>
-        <p>Every fee published. Every vendor relationship disclosed. Every investment return reported honestly. Opacity is how this industry profits — we end it.</p>
+      <div class="principle-card">
+        <div class="principle-icon">🪟</div>
+        <div>
+          <h4>Radical transparency</h4>
+          <p>Every fee published. Every vendor relationship disclosed. Every investment return reported honestly. Opacity is how this industry profits — we end it.</p>
+        </div>
       </div>
-      <div class="value-cell">
-        <div class="value-icon">⛓️</div>
-        <h4>Blockchain-Powered Integrity</h4>
-        <p>AI and blockchain replace expensive human intermediaries. Immutable recordkeeping means no hidden fees, no data games — just verifiable truth. The savings flow to participants, not overhead.</p>
+      <div class="principle-card">
+        <div class="principle-icon">🤖</div>
+        <div>
+          <h4>AI-powered, human-accountable</h4>
+          <p>AI and automation replace expensive human intermediaries and pass the savings to participants. Human oversight ensures the AI serves the mission, not the other way around.</p>
+        </div>
       </div>
-      <div class="value-cell">
-        <div class="value-icon">🇺🇸</div>
-        <h4>American Workers First</h4>
-        <p>Built for American small businesses and their employees. Every decision we make starts here — because 57 million workers without a retirement plan is a problem we solve at home first.</p>
+      <div class="principle-card">
+        <div class="principle-icon">🇺🇸</div>
+        <div>
+          <h4>American workers first</h4>
+          <p>Built for American small businesses and their employees. Every decision starts here — because 57 million workers without a retirement plan is a problem we solve at home first.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
+<!-- ── PRESS ── -->
+<section class="section press-section" id="press" aria-labelledby="press-headline">
+  <div class="container">
+    <div class="press-inner">
+      <div>
+        <span class="eyebrow">Press &amp; media</span>
+        <h2 id="press-headline">For journalists and researchers.</h2>
+        <p>ThinkNirvana Foundation and AIPEP401K offer a genuinely different story in the retirement industry: a nonprofit competing on price with the largest financial institutions in the country.</p>
+        <p>We're available for comment on retirement policy, SECURE 2.0 implementation, small business retirement access, fee transparency, and the role of nonprofit fiduciaries in ERISA plans.</p>
+        <div class="press-blurb">
+          <div class="press-blurb-label">Organization description for press use</div>
+          ThinkNirvana Foundation is a Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation operates AIPEP401K, a pooled employer 401(k) plan offering Vanguard index funds exclusively at $6/month per participant with no employer fees. The Foundation is in the process of completing its 501(c)(3) nonprofit registration.
+        </div>
+      </div>
+      <div class="press-card">
+        <h4>Media contacts</h4>
+        <div class="press-contact-row">
+          <div class="press-contact-item">
+            <span>📧</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--muted);margin-bottom:2px">Press inquiries</div>
+              <a href="mailto:press@thinknirvana.org">press@thinknirvana.org</a>
+            </div>
+          </div>
+          <div class="press-contact-item">
+            <span>📧</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--muted);margin-bottom:2px">General</div>
+              <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a>
+            </div>
+          </div>
+          <div class="press-contact-item">
+            <span>📍</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--muted);margin-bottom:2px">Location</div>
+              <span>Olney, Maryland</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:.82rem;font-weight:600;margin-bottom:8px">Key facts</div>
+          <div style="font-size:.82rem;color:var(--muted);line-height:2">
+            Founded: 2024<br>
+            Structure: Nonprofit (501(c)(3) pending)<br>
+            ERISA role: Pooled Plan Provider §413(e)<br>
+            Product: AIPEP401K — $6/mo participant fee<br>
+            Fund lineup: Vanguard index funds only<br>
+            Launch: August 2026
+          </div>
+        </div>
+        <div class="press-kit-note">
+          Media kit available on request. Email <a href="mailto:press@thinknirvana.org" style="color:var(--forest-mid)">press@thinknirvana.org</a> with your publication and deadline.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOARD ── -->
+<section class="section board-section" id="board" aria-labelledby="board-headline">
+  <div class="container">
+    <div class="board-inner">
+      <div>
+        <span class="eyebrow">Leadership &amp; governance</span>
+        <h2 id="board-headline">Independent governance. Mission-aligned leadership.</h2>
+        <p>ThinkNirvana Foundation is governed by an independent board of directors with expertise in ERISA, financial services, retirement policy, and community development.</p>
+        <p>The Foundation's governance structure is designed to ensure permanent independence from commercial interests — no investor board seats, no VC observers, no exits.</p>
+        <p>We are actively forming the board. We're looking for practitioners who've spent careers watching the retirement system fail workers — and who want to fix it.</p>
+        <a href="mailto:hello@thinknirvana.org?subject=Board+Inquiry" class="btn-primary" style="background:var(--forest);margin-top:8px">Inquire about board service →</a>
+      </div>
+      <div class="board-card">
+        <div class="board-placeholder">🏛️</div>
+        <h4>Board members being announced</h4>
+        <p>We're assembling an independent board with deep expertise in ERISA, retirement policy, financial services regulation, and nonprofit governance. Announcements forthcoming.</p>
+        <a href="mailto:hello@thinknirvana.org?subject=Board+Inquiry" class="btn-primary" style="width:100%;justify-content:center">Inquire about board service →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT / NEWSLETTER ── -->
+<section class="contact-section" id="contact" aria-labelledby="contact-headline">
   <div class="container">
     <div class="contact-grid">
-      <div class="fade-up">
-        <h2>Join the mission. Every employer matters.</h2>
-        <p>Whether you're a small business owner looking for a retirement plan, a developer who wants to build on our platform, a policy wonk who cares about retirement equity, or an investor who believes in long-term mission-driven impact — there's a place for you here.</p>
-        <div class="contact-channels">
-          <a href="mailto:hello@thinknirvana.org" class="contact-channel">
-            <span class="ch-icon">✉️</span>
-            <div>
-              <div class="ch-label">Email Us</div>
-              <div class="ch-val">hello@thinknirvana.org</div>
-            </div>
-          </a>
-          <a href="https://aipep401k.com" class="contact-channel">
-            <span class="ch-icon">📋</span>
-            <div>
-              <div class="ch-label">Enroll Your Business</div>
-              <div class="ch-val">aipep401k.com — Join the waitlist</div>
-            </div>
-          </a>
+      <div class="contact-left">
+        <span class="eyebrow" style="background:rgba(159,225,203,.1);border-color:rgba(159,225,203,.2);color:var(--forest-light)">Get involved</span>
+        <h2 id="contact-headline">Join the mission. Every employer matters.</h2>
+        <p>Whether you're a small business owner, a policy researcher, a developer, a grantmaker, or someone who believes retirement security should be available to every worker — there's a place for you here.</p>
+        <div class="contact-links">
+          <div class="contact-link-row">📋 <div>Enroll your business: <a href="https://aipep401k.com">aipep401k.com — join the waitlist</a></div></div>
+          <div class="contact-link-row">✉️ <div>General: <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a></div></div>
+          <div class="contact-link-row">🤝 <div>Partners &amp; CPAs: <a href="mailto:partners@aipep401k.com">partners@aipep401k.com</a></div></div>
+          <div class="contact-link-row">📰 <div>Press: <a href="mailto:press@thinknirvana.org">press@thinknirvana.org</a></div></div>
+          <div class="contact-link-row">💚 <div>Grants &amp; funding: <a href="mailto:grants@thinknirvana.org">grants@thinknirvana.org</a></div></div>
+          <div class="contact-link-row">🏛️ <div>Board inquiries: <a href="mailto:hello@thinknirvana.org?subject=Board+Inquiry">hello@thinknirvana.org</a></div></div>
         </div>
       </div>
-      <div class="fade-up">
-        <div class="signup-box">
-          <div id="signup-form">
+      <div>
+        <div class="newsletter-card">
+          <div id="nl-form-content">
             <h3>Stay in the loop.</h3>
-            <p>Mission updates, policy developments, and early access to new tools.</p>
-            <div class="signup-field">
-              <label>Your Name</label>
-              <input type="text" id="sn-name" placeholder="Jane Smith"/>
-            </div>
-            <div class="signup-field">
-              <label>Email Address</label>
-              <input type="email" id="sn-email" placeholder="jane@company.com"/>
-            </div>
-            <div class="signup-field">
-              <label>I am a…</label>
-              <select id="sn-role">
-                <option>Small business owner</option>
-                <option>HR / Benefits professional</option>
-                <option>Developer / Engineer</option>
-                <option>Financial advisor / TPA</option>
-                <option>Policy researcher</option>
-                <option>Just interested</option>
-              </select>
-            </div>
-            <button class="signup-btn" onclick="submitSignup()">Subscribe to Updates →</button>
-            <p class="signup-legal">No spam. Unsubscribe anytime. We never sell your data.</p>
+            <p>Mission updates, policy developments, early access to new tools. One newsletter per quarter. No spam.</p>
+            <form onsubmit="event.preventDefault(); submitNewsletter();" novalidate>
+              <div class="nl-field">
+                <label for="nl-name">Your name</label>
+                <input type="text" id="nl-name" placeholder="Jane Smith" autocomplete="name" />
+              </div>
+              <div class="nl-field">
+                <label for="nl-email">Email address</label>
+                <input type="email" id="nl-email" placeholder="jane@organization.org" required autocomplete="email" />
+              </div>
+              <div class="nl-field">
+                <label for="nl-role">I am a…</label>
+                <select id="nl-role">
+                  <option value="">Select…</option>
+                  <option value="Small business owner">Small business owner</option>
+                  <option value="HR / Benefits professional">HR / Benefits professional</option>
+                  <option value="Developer / Engineer">Developer / Engineer</option>
+                  <option value="Financial advisor / TPA">Financial advisor / TPA</option>
+                  <option value="Policy researcher">Policy researcher</option>
+                  <option value="Grantmaker / Funder">Grantmaker / Funder</option>
+                  <option value="Press / Journalist">Press / Journalist</option>
+                  <option value="Just interested">Just interested</option>
+                </select>
+              </div>
+              <button type="submit" class="nl-submit">Subscribe to updates →</button>
+              <div class="nl-legal">We send one newsletter per quarter. No spam. Unsubscribe anytime. We never sell your data.</div>
+            </form>
           </div>
-          <div class="signup-success" id="signup-success">
-            <div class="si">🌸</div>
+          <div class="nl-success" id="nl-success">
+            <div class="nl-success-icon">🌱</div>
             <h4>Welcome to the mission.</h4>
             <p>You're in. We'll be in touch with updates, research, and early access to our platforms.</p>
           </div>
@@ -722,58 +965,71 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
   <div class="container">
-    <div class="footer-top">
+    <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo-name">ThinkNirvana.org</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark">TN</div>
+          <div>
+            <div class="logo-text">ThinkNirvana</div>
+            <div class="logo-sub">Foundation · Nonprofit</div>
+          </div>
+        </div>
         <p>A nonprofit on a mission to make retirement savings simple, transparent, and radically affordable for every American worker.</p>
-        <div style="margin-top:14px;font-size:.75rem;color:rgba(250,247,242,.35);font-family:'Courier Prime',monospace;letter-spacing:.04em">501(C) NONPROFIT · POOLED PLAN PROVIDER · ERISA FIDUCIARY</div>
+        <div class="footer-stamp">501(C) NONPROFIT · ERISA §413(E) PPP · OLNEY, MD · EST. 2024</div>
       </div>
       <div class="footer-col">
         <h5>Initiatives</h5>
         <a href="https://aipep401k.com">AIPEP401K.com</a>
-        <a href="#">ThinkNirvana Lab</a>
-        <a href="#">Open Source</a>
+        <a href="#">403(b) — Coming 2027</a>
+        <a href="https://defi401k.com">DeFi401K.com</a>
+        <a href="#">Open source</a>
       </div>
       <div class="footer-col">
         <h5>Organization</h5>
-        <a href="#mission">Our Mission</a>
-        <a href="#roadmap">Transformation Roadmap</a>
-        <a href="#">ERISA Disclosures</a>
-        <a href="#">DOL Registration</a>
-        <a href="mailto:hello@thinknirvana.org">Contact</a>
+        <a href="#mission">Our mission</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#board">Leadership</a>
+        <a href="#">ERISA disclosures</a>
+        <a href="#">DOL registration</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a>
+        <a href="mailto:press@thinknirvana.org">press@thinknirvana.org</a>
+        <a href="mailto:grants@thinknirvana.org">grants@thinknirvana.org</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms</a>
       </div>
     </div>
-    <hr class="footer-hr"/>
+    <hr class="footer-divider" />
     <div class="footer-bottom">
-      <span>© 2024 ThinkNirvana LLC · ThinkNirvana.org · All rights reserved.</span>
-      <div style="display:flex;gap:20px">
-        <a href="#" style="color:rgba(250,247,242,.35);text-decoration:none">Privacy</a>
-        <a href="#" style="color:rgba(250,247,242,.35);text-decoration:none">Terms</a>
-        <a href="#" style="color:rgba(250,247,242,.35);text-decoration:none">ERISA</a>
+      <div>© 2026 ThinkNirvana Foundation | Nirvana Ledger LLC · ThinkNirvana.org</div>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">ERISA</a>
       </div>
     </div>
-    <p class="footer-disc">ThinkNirvana LLC is in the process of registering as a nonprofit and as a Pooled Plan Provider with the U.S. Department of Labor. This website is for informational purposes only and does not constitute investment, legal, or tax advice. Past performance of investment strategies is not indicative of future results. Consult a qualified professional for advice specific to your situation.</p>
+    <p class="footer-disc">
+      ThinkNirvana Foundation is a 501(c)(3) nonprofit organization in the process of completing its nonprofit registration and DOL Pooled Plan Provider registration under ERISA §413(e). EIN: [to be added upon completion]. Contributions may be tax-deductible; consult your tax advisor. Nirvana Ledger LLC provides technology infrastructure under license to ThinkNirvana Foundation. This website is for informational purposes only and does not constitute investment, legal, or tax advice.<br><br>
+      AIPEP401K is a Pooled Employer Plan administered by ThinkNirvana Foundation acting as Pooled Plan Provider under ERISA §413(e). Vanguard® is a registered trademark of The Vanguard Group, Inc. ThinkNirvana and AIPEP401K are not affiliated with or endorsed by Vanguard. All third-party trademarks referenced are property of their respective owners.
+    </p>
   </div>
 </footer>
 
+<!-- ── JAVASCRIPT ── -->
 <script>
-  // Fade-up
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-  // Signup
-  function submitSignup() {
-    const name = document.getElementById('sn-name').value;
-    const email = document.getElementById('sn-email').value;
-    if (!name || !email) { alert('Please enter your name and email.'); return; }
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('signup-success').style.display = 'block';
-  }
+function submitNewsletter() {
+  const email = document.getElementById('nl-email').value.trim();
+  if (!email) { alert('Please enter your email address.'); return; }
+  // Newsletter form submission — wire to Google Sheets or email service when ready
+  document.getElementById('nl-form-content').style.display = 'none';
+  document.getElementById('nl-success').style.display = 'block';
+}
 </script>
+
 </body>
 </html>
