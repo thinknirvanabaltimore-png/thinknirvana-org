@@ -1,0 +1,33 @@
+# ThinkNirvana.org — AI-readable site summary
+# Standard: llmstxt.org
+# Last updated: 2026-06
+
+## Organization
+ThinkNirvana Foundation is a Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation is in the process of completing its 501(c)(3) nonprofit registration. Located in Olney, Maryland. Founded 2024.
+
+## What this site is for
+This is the mission site for ThinkNirvana Foundation. Visitors are grantmakers, policy researchers, press/journalists, potential board members, and mission-aligned partners. The product/enrollment site is aipep401k.com.
+
+## Mission
+To make retirement savings simple, transparent, and radically affordable for every American worker — specifically the 57 million workers employed by small businesses who currently have no access to an employer-sponsored retirement plan.
+
+## Initiatives
+1. AIPEP401K (live, launching August 2026) — A nonprofit pooled employer 401(k) plan. $6/month per participant. $0 employer fees. Vanguard index funds only. See aipep401k.com.
+2. 403(b) for nonprofits and schools (planned 2027) — Same model for hospitals, universities, and nonprofits.
+3. Global retirement infrastructure (long-term) — Retirement security across borders via stablecoin settlement. See defi401k.com.
+
+## Governance
+Independent board of directors being formed. Expertise sought in ERISA, financial services, retirement policy, and nonprofit governance. Board inquiry: hello@thinknirvana.org?subject=Board+Inquiry
+
+## Contact
+- General: hello@thinknirvana.org
+- Press: press@thinknirvana.org
+- Grants / funding: grants@thinknirvana.org
+- Partners / CPAs: partners@aipep401k.com
+- Board inquiries: hello@thinknirvana.org
+
+## Key facts for press use
+ThinkNirvana Foundation is a Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation operates AIPEP401K, a pooled employer 401(k) plan offering Vanguard index funds exclusively at $6/month per participant with no employer fees. The Foundation is in the process of completing its 501(c)(3) nonprofit registration.
+
+## Disclaimers
+ThinkNirvana Foundation is not affiliated with or endorsed by Vanguard. This is not investment advice. Nonprofit registration pending.
