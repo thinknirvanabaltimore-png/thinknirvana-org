@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-92TN60N26P');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy & Terms of Service — ThinkNirvana Foundation</title>
+  <meta name="description" content="Privacy Policy and Terms of Service for ThinkNirvana Foundation and AIPEP401K." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest:      #0D2B1E;
+      --forest-mid:  #1D9E75;
+      --forest-light:#9FE1CB;
+      --forest-pale: #E1F5EE;
+      --white:       #FFFFFF;
+      --text:        #111827;
+      --muted:       #5C6470;
+      --border:      #E5E7EB;
+      --bg:          #F9FAFB;
+      --r:           8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--white); -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--forest-mid); text-decoration: underline; }
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.25; }
+
+    /* NAV */
+    nav { background: var(--forest); padding: 0 24px; }
+    .nav-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 32px; height: 32px; border: 1.5px solid rgba(159,225,203,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: .85rem; font-style: italic; color: var(--forest-light); }
+    .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1rem; }
+    .nav-back { color: rgba(255,255,255,.65); font-size: .88rem; text-decoration: none; }
+    .nav-back:hover { color: var(--white); }
+
+    /* HERO */
+    .page-hero { background: var(--forest); color: var(--white); padding: 56px 24px 48px; }
+    .page-hero-inner { max-width: 860px; margin: 0 auto; }
+    .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 10px; }
+    .page-hero p { color: rgba(255,255,255,.6); font-size: .95rem; }
+
+    /* TABS */
+    .tab-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 24px; }
+    .tab-bar-inner { max-width: 860px; margin: 0 auto; display: flex; gap: 0; }
+    .tab-btn { background: none; border: none; border-bottom: 3px solid transparent; padding: 16px 24px 13px; font-size: .95rem; color: var(--muted); cursor: pointer; font-family: inherit; transition: all .15s; }
+    .tab-btn.active { border-bottom-color: var(--forest-mid); color: var(--text); font-weight: 500; }
+    .tab-btn:hover { color: var(--text); }
+
+    /* CONTENT */
+    .content-wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .effective-date { font-size: .82rem; color: var(--muted); font-family: 'Courier Prime', monospace; margin-bottom: 36px; background: var(--forest-pale); border: 1px solid var(--forest-light); border-radius: var(--r); padding: 10px 14px; display: inline-block; }
+
+    h2 { font-size: 1.4rem; margin: 40px 0 12px; color: var(--forest); }
+    h2:first-of-type { margin-top: 0; }
+    h3 { font-size: 1.05rem; margin: 28px 0 8px; }
+    p { margin-bottom: 14px; color: var(--text); font-size: .97rem; }
+    ul { margin: 0 0 14px 20px; }
+    ul li { margin-bottom: 8px; font-size: .97rem; color: var(--text); line-height: 1.65; }
+    .highlight-box { background: var(--forest-pale); border-left: 3px solid var(--forest-mid); border-radius: 0 var(--r) var(--r) 0; padding: 14px 18px; margin: 20px 0; font-size: .92rem; color: var(--forest); line-height: 1.65; }
+    .contact-block { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 20px 24px; margin-top: 36px; }
+    .contact-block h3 { margin-top: 0; margin-bottom: 12px; }
+    .contact-block p { margin-bottom: 6px; font-size: .92rem; }
+
+    /* FOOTER */
+    footer { background: var(--forest); color: rgba(255,255,255,.5); padding: 32px 24px; text-align: center; font-size: .82rem; }
+    footer a { color: rgba(255,255,255,.6); }
+    footer a:hover { color: var(--white); }
+
+    @media (max-width: 600px) {
+      .tab-btn { padding: 14px 14px 11px; font-size: .88rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://thinknirvana.org" class="logo-wrap">
+      <div class="logo-mark">TN</div>
+      <div class="logo-text">ThinkNirvana</div>
+    </a>
+    <a href="javascript:history.back()" class="nav-back">← Back</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1>Privacy Policy & Terms of Service</h1>
+    <p>ThinkNirvana Foundation · AIPEP401K · Nirvana Ledger LLC</p>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" onclick="showTab('privacy', this)">Privacy Policy</button>
+    <button class="tab-btn" onclick="showTab('terms', this)">Terms of Service</button>
+    <button class="tab-btn" onclick="showTab('erisa', this)">ERISA Disclosures</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- PRIVACY POLICY -->
+  <div class="tab-panel active" id="tab-privacy">
+    <div class="effective-date">Effective date: June 2026 · Last updated: June 17, 2026</div>
+
+    <div class="highlight-box">
+      Plain English summary: We collect only what we need to operate the waitlist and plan. We never sell your data. You can ask us to delete it anytime.
+    </div>
+
+    <h2>Who we are</h2>
+    <p>ThinkNirvana Foundation, Inc. ("ThinkNirvana," "we," "us," or "our") is a Maryland nonprofit corporation operating as a Pooled Plan Provider under ERISA §413(e). We operate AIPEP401K, a pooled employer 401(k) plan. Technology infrastructure is provided by Nirvana Ledger LLC under license.</p>
+    <p>This Privacy Policy covers ThinkNirvana Foundation, AIPEP401K, and the websites aipep401k.com and thinknirvana.org.</p>
+
+    <h2>What we collect</h2>
+    <h3>Waitlist and inquiry forms</h3>
+    <p>When you join the AIPEP401K waitlist or contact us, we collect:</p>
+    <ul>
+      <li>Name and email address</li>
+      <li>Company name and employee count (if provided)</li>
+      <li>Your role and current retirement plan status (if provided)</li>
+      <li>The page or source you came from</li>
+    </ul>
+
+    <h3>Plan participants (when the plan launches)</h3>
+    <p>For enrolled participants, we collect personal and financial information required by ERISA and IRS regulations, including name, Social Security Number, date of birth, compensation, and contribution elections. This information is encrypted at rest using AES-256 encryption and is never stored in plaintext.</p>
+
+    <h3>Website usage</h3>
+    <p>We use Google Analytics to understand how visitors use our sites. This includes page views, time on site, and general geographic region. We do not use advertising trackers or sell browsing data.</p>
+
+    <h2>How we use your information</h2>
+    <ul>
+      <li>To contact you about your waitlist status and plan availability</li>
+      <li>To send updates about ThinkNirvana Foundation and AIPEP401K (you can unsubscribe at any time)</li>
+      <li>To administer the retirement plan in compliance with ERISA and IRS regulations</li>
+      <li>To improve our websites and services</li>
+    </ul>
+
+    <h2>What we never do</h2>
+    <ul>
+      <li>We never sell your personal information to any third party</li>
+      <li>We never share your data with advertisers</li>
+      <li>We never use your retirement account data for marketing purposes</li>
+      <li>We never accept payment from fund companies in exchange for fund selection (no revenue sharing)</li>
+    </ul>
+
+    <h2>Data storage and security</h2>
+    <p>Waitlist data is stored in Google Sheets, accessible only to ThinkNirvana Foundation staff. Participant plan data (when the plan launches) is encrypted at rest using AES-256 via pgcrypto and transmitted over TLS 1.3. Bank account connections are verified via Plaid — we never store full account numbers.</p>
+
+    <h2>Your rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Request a copy of the personal data we hold about you</li>
+      <li>Ask us to correct inaccurate data</li>
+      <li>Ask us to delete your data (subject to legal retention requirements for plan records)</li>
+      <li>Unsubscribe from communications at any time</li>
+    </ul>
+    <p>To exercise any of these rights, email <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a> with the subject line "Privacy Request."</p>
+
+    <h2>Cookies</h2>
+    <p>Our websites use minimal cookies — only those required by Google Analytics for usage measurement. We do not use advertising cookies or cross-site tracking.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>We may update this policy as our services develop. Material changes will be noted at the top of this page with an updated effective date. Continued use of our sites constitutes acceptance of the updated policy.</p>
+
+    <div class="contact-block">
+      <h3>Privacy contact</h3>
+      <p>ThinkNirvana Foundation, Inc.</p>
+      <p>Olney, Maryland</p>
+      <p>Email: <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a></p>
+      <p>Subject line: "Privacy Request"</p>
+    </div>
+  </div>
+
+  <!-- TERMS OF SERVICE -->
+  <div class="tab-panel" id="tab-terms">
+    <div class="effective-date">Effective date: June 2026 · Last updated: June 17, 2026</div>
+
+    <div class="highlight-box">
+      Plain English summary: This site provides information about AIPEP401K and ThinkNirvana Foundation. It is not investment advice. The plan itself is governed by ERISA plan documents, not these terms.
+    </div>
+
+    <h2>Acceptance of terms</h2>
+    <p>By accessing aipep401k.com or thinknirvana.org (the "Sites"), you agree to these Terms of Service. If you do not agree, please do not use the Sites.</p>
+
+    <h2>What this site is</h2>
+    <p>These Sites provide general information about ThinkNirvana Foundation and the AIPEP401K pooled employer plan. They are not investment advisory platforms, financial planning tools, or retirement counseling services.</p>
+
+    <h2>Not investment advice</h2>
+    <p>Nothing on these Sites constitutes investment advice, legal advice, tax advice, or a recommendation to purchase any financial product. Fee comparisons and savings estimates are for illustrative purposes only based on publicly available industry data. Your actual results will vary based on your specific circumstances. Please consult a qualified financial, legal, or tax advisor before making any decisions.</p>
+
+    <h2>Waitlist and plan enrollment</h2>
+    <p>Joining the waitlist does not constitute enrollment in the AIPEP401K plan and creates no contractual obligation on either party. Actual plan enrollment is governed by a separate Adoption Agreement and Plan Document. Plan availability is subject to regulatory approvals and launch timeline.</p>
+
+    <h2>Accuracy of information</h2>
+    <p>We make reasonable efforts to keep information on these Sites accurate and current. However, we make no warranties about the completeness, accuracy, or timeliness of any information. SECURE 2.0 tax credit amounts and eligibility are subject to IRS guidance and your specific business circumstances.</p>
+
+    <h2>Intellectual property</h2>
+    <p>All content on these Sites — including text, design, code, and branding — is owned by ThinkNirvana Foundation, Inc. or Nirvana Ledger LLC and protected by copyright. "AIPEP401K" and "ThinkNirvana" are trademarks pending registration with the USPTO.</p>
+
+    <h2>Third-party trademarks</h2>
+    <p>Vanguard®, Fidelity®, Empower®, Gusto®, ADP®, Paychex®, and other third-party names referenced on these Sites are trademarks of their respective owners. ThinkNirvana Foundation is not affiliated with, endorsed by, or sponsored by any of these companies.</p>
+
+    <h2>Limitation of liability</h2>
+    <p>To the maximum extent permitted by law, ThinkNirvana Foundation and Nirvana Ledger LLC shall not be liable for any indirect, incidental, or consequential damages arising from your use of these Sites or reliance on information contained herein.</p>
+
+    <h2>Governing law</h2>
+    <p>These Terms are governed by the laws of the State of Maryland, without regard to conflict of law principles. Any disputes shall be resolved in the courts of Montgomery County, Maryland.</p>
+
+    <h2>Changes to these terms</h2>
+    <p>We may update these Terms at any time. Continued use of the Sites after changes are posted constitutes acceptance of the updated Terms.</p>
+
+    <div class="contact-block">
+      <h3>Questions about these terms</h3>
+      <p>ThinkNirvana Foundation, Inc.</p>
+      <p>Olney, Maryland</p>
+      <p>Email: <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a></p>
+    </div>
+  </div>
+
+  <!-- ERISA DISCLOSURES -->
+  <div class="tab-panel" id="tab-erisa">
+    <div class="effective-date">Effective date: June 2026 · Last updated: June 17, 2026</div>
+
+    <div class="highlight-box">
+      ERISA §413(e) requires pooled plan providers to maintain certain disclosures. This page provides general disclosure information. Plan-specific disclosures are provided to employers and participants through the formal plan enrollment process.
+    </div>
+
+    <h2>Plan identity</h2>
+    <p><strong>Plan name:</strong> AIPEP 401(k) Pooled Employer Plan</p>
+    <p><strong>Plan type:</strong> Pooled Employer Plan (PEP) — Defined Contribution 401(k)</p>
+    <p><strong>Pooled Plan Provider:</strong> ThinkNirvana Foundation, Inc.</p>
+    <p><strong>ERISA §413(e) registration:</strong> In process — registration being completed with the U.S. Department of Labor prior to first employer enrollment</p>
+    <p><strong>EIN:</strong> To be added upon completion of nonprofit registration</p>
+
+    <h2>Fiduciary roles</h2>
+    <ul>
+      <li><strong>Named Fiduciary (Investment):</strong> ThinkNirvana Foundation, Inc. — responsible for investment selection, monitoring, and the Investment Policy Statement</li>
+      <li><strong>Pooled Plan Provider (3(16) Plan Administrator):</strong> ThinkNirvana Foundation, Inc. — responsible for overall plan administration, ERISA compliance, participant notices, and Form 5500 filing</li>
+      <li><strong>Technology platform:</strong> Nirvana Ledger LLC — provides AI-powered recordkeeping and compliance engine under license</li>
+      <li><strong>Custodian / Trust vendor:</strong> Being finalized — announcement forthcoming before first employer cohort</li>
+    </ul>
+
+    <h2>Investment policy</h2>
+    <p>AIPEP 401(k) does not use a 3(38) investment manager. ThinkNirvana Foundation serves as Named Investment Fiduciary and makes all investment decisions directly, consistent with the plan's Investment Policy Statement (IPS). The IPS is available to participating employers upon request.</p>
+    <p>The plan offers five Vanguard index funds exclusively:</p>
+    <ul>
+      <li>Vanguard Total Stock Market ETF (VTI)</li>
+      <li>Vanguard Total International Stock ETF (VXUS)</li>
+      <li>Vanguard Total Bond Market ETF (BND)</li>
+      <li>Vanguard Federal Money Market Fund (VMFXX)</li>
+      <li>Vanguard Target Date series (VTIVX and series)</li>
+    </ul>
+    <p>No revenue sharing, sub-transfer agency fees, or 12b-1 fees are accepted from any fund company. The plan receives no compensation from fund providers.</p>
+
+    <h2>Fee disclosure summary</h2>
+    <p>Full fee disclosure is provided to employers and participants through the formal enrollment documents including the 408(b)(2) disclosure and participant fee disclosure notices. A summary:</p>
+    <ul>
+      <li><strong>Employer plan administration fee:</strong> $0</li>
+      <li><strong>Participant recordkeeping fee:</strong> Flat monthly fee deducted from participant accounts — disclosed in enrollment materials</li>
+      <li><strong>Investment expense ratios:</strong> 0.03%–0.15% annually (Vanguard institutional rates)</li>
+      <li><strong>Revenue sharing received by plan:</strong> $0</li>
+    </ul>
+
+    <h2>Form 5500</h2>
+    <p>As Pooled Plan Provider, ThinkNirvana Foundation files a single master Form 5500 on behalf of all participating employers annually. Individual employers are relieved of their Form 5500 filing obligation upon joining the plan.</p>
+
+    <h2>Plan documents</h2>
+    <p>The following documents govern plan operations and are available to employers and participants upon request:</p>
+    <ul>
+      <li>Plan Document and Summary Plan Description (SPD)</li>
+      <li>Adoption Agreement</li>
+      <li>Investment Policy Statement (IPS)</li>
+      <li>408(b)(2) Fee Disclosure</li>
+      <li>Participant Fee Disclosure (404(a)(5))</li>
+      <li>ERISA §413(e) Registration confirmation (upon completion)</li>
+    </ul>
+
+    <h2>Requesting disclosures</h2>
+    <p>Employers, participants, and their authorized representatives may request any plan document or disclosure by contacting us at:</p>
+
+    <div class="contact-block">
+      <h3>ERISA disclosure requests</h3>
+      <p>ThinkNirvana Foundation, Inc.</p>
+      <p>Olney, Maryland</p>
+      <p>Email: <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a></p>
+      <p>Subject line: "ERISA Disclosure Request"</p>
+      <p>We will respond within 5 business days.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>© 2026 ThinkNirvana Foundation | Nirvana Ledger LLC &nbsp;·&nbsp;
+    <a href="https://thinknirvana.org">ThinkNirvana.org</a> &nbsp;·&nbsp;
+    <a href="https://aipep401k.com">AIPEP401K.com</a> &nbsp;·&nbsp;
+    <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a>
+  </div>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
