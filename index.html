@@ -984,12 +984,12 @@
       <div id="fc-panel-back" class="fee-calc-panel" style="display:none">
         <div class="fee-calc-inputs">
           <div class="fee-calc-input-group">
-            <label for="fc-lb-balance">Starting balance</label>
+            <label for="fc-lb-balance">Current balance</label>
             <div class="fee-calc-input-wrap">
               <span class="fee-calc-prefix">$</span>
               <input type="number" id="fc-lb-balance" value="5000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
             </div>
-            <div class="fee-calc-hint">What you had when you started saving</div>
+            <div class="fee-calc-hint">What you have in your retirement account today</div>
           </div>
           <div class="fee-calc-input-group">
             <label for="fc-lb-years">Years already saving</label>
@@ -1067,7 +1067,7 @@
         <div class="fee-calc-gap-wrap" style="background:linear-gradient(135deg,#7C1D1D,#0D2B1E)">
           <div class="fee-calc-gap-label">What fees have already cost you</div>
           <div class="fee-calc-gap-number" id="fc-lb-gap">$—</div>
-          <div class="fee-calc-gap-sub">The difference between what you have today and what you would have had at near-zero fees</div>
+          <div class="fee-calc-gap-sub">Estimated gap between your current balance and what you might have had under near-zero fees — based on years saving and contributions. Your actual result varies by market timing and contribution history.</div>
         </div>
         <div class="fee-calc-paths">
           <div class="fee-calc-path high">
