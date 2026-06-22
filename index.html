@@ -926,69 +926,114 @@
   </div>
 </section>
 
-<!-- ── WHAT HAVE FEES COST YOU? CALCULATOR ── -->
+<!-- ── WHAT HAVE FEES COST YOU? CALCULATOR v2 ── -->
 <!-- Drop-in section for thinknirvana.org. No external dependencies. -->
 <section class="section fee-calc-section" id="fee-calculator" aria-labelledby="fee-calc-headline">
   <div class="container">
     <div class="section-header">
       <span class="eyebrow">The cost of the status quo</span>
       <h2 id="fee-calc-headline">What have fees cost you?</h2>
-      <p>Enter your numbers. See what the typical fee structure takes — and what staying near zero keeps.</p>
+      <p>See your number — looking forward or looking back.</p>
     </div>
 
     <div class="fee-calc-card">
-      <!-- INPUTS -->
-      <div class="fee-calc-inputs">
-        <div class="fee-calc-input-group">
-          <label for="fc-balance">Current retirement balance</label>
-          <div class="fee-calc-input-wrap">
-            <span class="fee-calc-prefix">$</span>
-            <input type="number" id="fc-balance" value="25000" min="0" max="10000000" step="1000" oninput="runCalc()" />
+
+      <!-- TOGGLE TABS -->
+      <div class="fee-calc-tabs" role="tablist">
+        <button class="fee-calc-tab active" role="tab" aria-selected="true"
+          onclick="switchCalcTab('forward', this)" id="tab-forward">
+          Looking forward
+          <span class="fee-calc-tab-sub">What fees will cost me</span>
+        </button>
+        <button class="fee-calc-tab" role="tab" aria-selected="false"
+          onclick="switchCalcTab('back', this)" id="tab-back">
+          Looking back
+          <span class="fee-calc-tab-sub">What fees have already cost me</span>
+        </button>
+      </div>
+
+      <!-- FORWARD INPUTS -->
+      <div id="fc-panel-forward" class="fee-calc-panel">
+        <div class="fee-calc-inputs">
+          <div class="fee-calc-input-group">
+            <label for="fc-balance">Current balance</label>
+            <div class="fee-calc-input-wrap">
+              <span class="fee-calc-prefix">$</span>
+              <input type="number" id="fc-balance" value="25000" min="0" max="10000000" step="1000" oninput="runCalc()" />
+            </div>
+          </div>
+          <div class="fee-calc-input-group">
+            <label for="fc-years">Years until retirement</label>
+            <div class="fee-calc-input-wrap">
+              <input type="number" id="fc-years" value="30" min="1" max="50" step="1" oninput="runCalc()" />
+              <span class="fee-calc-suffix">yrs</span>
+            </div>
+          </div>
+          <div class="fee-calc-input-group">
+            <label for="fc-contrib">Monthly contribution <span class="fee-calc-optional">(optional)</span></label>
+            <div class="fee-calc-input-wrap">
+              <span class="fee-calc-prefix">$</span>
+              <input type="number" id="fc-contrib" value="0" min="0" max="10000" step="50" oninput="runCalc()" />
+            </div>
           </div>
         </div>
-        <div class="fee-calc-input-group">
-          <label for="fc-years">Years until retirement</label>
-          <div class="fee-calc-input-wrap">
-            <input type="number" id="fc-years" value="30" min="1" max="50" step="1" oninput="runCalc()" />
-            <span class="fee-calc-suffix">yrs</span>
-          </div>
-        </div>
-        <div class="fee-calc-input-group">
-          <label for="fc-contrib">Monthly contribution <span class="fee-calc-optional">(optional)</span></label>
-          <div class="fee-calc-input-wrap">
-            <span class="fee-calc-prefix">$</span>
-            <input type="number" id="fc-contrib" value="0" min="0" max="10000" step="50" oninput="runCalc()" />
-          </div>
+        <div class="fee-calc-assumptions">
+          Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year
         </div>
       </div>
 
-      <!-- ASSUMPTIONS -->
-      <div class="fee-calc-assumptions">
-        <span>Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year</span>
+      <!-- LOOKBACK INPUTS -->
+      <div id="fc-panel-back" class="fee-calc-panel" style="display:none">
+        <div class="fee-calc-inputs">
+          <div class="fee-calc-input-group">
+            <label for="fc-lb-balance">Starting balance</label>
+            <div class="fee-calc-input-wrap">
+              <span class="fee-calc-prefix">$</span>
+              <input type="number" id="fc-lb-balance" value="5000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
+            </div>
+            <div class="fee-calc-hint">What you had when you started saving</div>
+          </div>
+          <div class="fee-calc-input-group">
+            <label for="fc-lb-years">Years already saving</label>
+            <div class="fee-calc-input-wrap">
+              <input type="number" id="fc-lb-years" value="15" min="1" max="50" step="1" oninput="runCalcBack()" />
+              <span class="fee-calc-suffix">yrs</span>
+            </div>
+            <div class="fee-calc-hint">How long you've been in a retirement plan</div>
+          </div>
+          <div class="fee-calc-input-group">
+            <label for="fc-lb-contrib">Monthly contribution <span class="fee-calc-optional">(optional)</span></label>
+            <div class="fee-calc-input-wrap">
+              <span class="fee-calc-prefix">$</span>
+              <input type="number" id="fc-lb-contrib" value="300" min="0" max="10000" step="50" oninput="runCalcBack()" />
+            </div>
+            <div class="fee-calc-hint">Average monthly amount saved</div>
+          </div>
+        </div>
+        <div class="fee-calc-assumptions">
+          Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year
+        </div>
       </div>
 
-      <!-- RESULTS -->
-      <div class="fee-calc-results" id="fc-results">
+      <!-- RESULTS — FORWARD -->
+      <div id="fc-results-forward" class="fee-calc-results">
         <div class="fee-calc-gap-wrap">
           <div class="fee-calc-gap-label">What high fees could cost you</div>
           <div class="fee-calc-gap-number" id="fc-gap">$—</div>
           <div class="fee-calc-gap-sub">The difference between a 1.0% fee plan and a near-zero fee plan over your time horizon</div>
         </div>
-
         <div class="fee-calc-paths">
           <div class="fee-calc-path high">
             <div class="fee-calc-path-label">Typical plan · 1.0%/yr</div>
             <div class="fee-calc-path-val" id="fc-high">$—</div>
-            <div class="fee-calc-path-sub">Ending balance</div>
+            <div class="fee-calc-path-sub">Projected ending balance</div>
           </div>
           <div class="fee-calc-path low">
             <div class="fee-calc-path-label">Near-zero fees · 0.1%/yr</div>
             <div class="fee-calc-path-val" id="fc-low">$—</div>
-            <div class="fee-calc-path-sub">Ending balance</div>
+            <div class="fee-calc-path-sub">Projected ending balance</div>
           </div>
         </div>
-
-        <!-- SVG CHART -->
         <div class="fee-calc-chart-wrap" aria-hidden="true">
           <svg id="fc-chart" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -1001,37 +1046,74 @@
                 <stop offset="100%" stop-color="#DC2626" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <!-- Grid lines -->
             <line x1="40" y1="10" x2="40" y2="175" stroke="#E5E7EB" stroke-width="1"/>
             <line x1="40" y1="175" x2="590" y2="175" stroke="#E5E7EB" stroke-width="1"/>
-            <!-- Paths filled by JS -->
             <path id="fc-area-low" fill="url(#grad-low)" opacity="0.8"/>
             <path id="fc-area-high" fill="url(#grad-high)" opacity="0.8"/>
             <path id="fc-line-high" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="5,3" opacity="0.7"/>
             <path id="fc-line-low" fill="none" stroke="#1D9E75" stroke-width="2.5"/>
-            <!-- Labels -->
             <text id="fc-label-low" x="595" y="30" text-anchor="end" font-size="10" fill="#1D9E75" font-family="system-ui,sans-serif">0.1%</text>
             <text id="fc-label-high" x="595" y="80" text-anchor="end" font-size="10" fill="#DC2626" font-family="system-ui,sans-serif">1.0%</text>
           </svg>
         </div>
-
-        <!-- SHARE -->
         <div class="fee-calc-share">
-          <button class="fee-calc-share-btn" onclick="shareResult()" id="fc-share-btn">
-            📋 Copy my number
-          </button>
-          <a class="fee-calc-share-btn fee-calc-share-li" id="fc-share-li" href="#" target="_blank" rel="noopener">
-            Share on LinkedIn
-          </a>
-          <a class="fee-calc-share-btn fee-calc-share-x" id="fc-share-x" href="#" target="_blank" rel="noopener">
-            Share on X
-          </a>
+          <button class="fee-calc-share-btn" onclick="shareResult('forward')" id="fc-share-btn">📋 Copy my number</button>
+          <a class="fee-calc-share-btn fee-calc-share-li" id="fc-share-li" href="#" target="_blank" rel="noopener">Share on LinkedIn</a>
+          <a class="fee-calc-share-btn fee-calc-share-x" id="fc-share-x" href="#" target="_blank" rel="noopener">Share on X</a>
         </div>
-
-        <!-- COMPLIANCE -->
         <p class="fee-calc-compliance">Illustrative estimate only. Assumes a 7% average annual return and fees deducted annually. Not a quote, a projection of any specific product, or a guarantee of results.</p>
       </div>
-    </div>
+
+      <!-- RESULTS — LOOKBACK -->
+      <div id="fc-results-back" class="fee-calc-results" style="display:none">
+        <div class="fee-calc-gap-wrap" style="background:linear-gradient(135deg,#7C1D1D,#0D2B1E)">
+          <div class="fee-calc-gap-label">What fees have already cost you</div>
+          <div class="fee-calc-gap-number" id="fc-lb-gap">$—</div>
+          <div class="fee-calc-gap-sub">The difference between what you have today and what you would have had at near-zero fees</div>
+        </div>
+        <div class="fee-calc-paths">
+          <div class="fee-calc-path high">
+            <div class="fee-calc-path-label">Typical plan · 1.0%/yr</div>
+            <div class="fee-calc-path-val" id="fc-lb-high">$—</div>
+            <div class="fee-calc-path-sub">Estimated balance today</div>
+          </div>
+          <div class="fee-calc-path low">
+            <div class="fee-calc-path-label">Near-zero fees · 0.1%/yr</div>
+            <div class="fee-calc-path-val" id="fc-lb-low">$—</div>
+            <div class="fee-calc-path-sub">What you could have today</div>
+          </div>
+        </div>
+        <div class="fee-calc-chart-wrap" aria-hidden="true">
+          <svg id="fc-chart-back" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="grad-low-b" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1D9E75" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="grad-high-b" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#DC2626" stop-opacity="0.08"/>
+                <stop offset="100%" stop-color="#DC2626" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="40" y1="10" x2="40" y2="175" stroke="#E5E7EB" stroke-width="1"/>
+            <line x1="40" y1="175" x2="590" y2="175" stroke="#E5E7EB" stroke-width="1"/>
+            <path id="fc-lb-area-low" fill="url(#grad-low-b)" opacity="0.8"/>
+            <path id="fc-lb-area-high" fill="url(#grad-high-b)" opacity="0.8"/>
+            <path id="fc-lb-line-high" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="5,3" opacity="0.7"/>
+            <path id="fc-lb-line-low" fill="none" stroke="#1D9E75" stroke-width="2.5"/>
+            <text id="fc-lb-label-low" x="595" y="30" text-anchor="end" font-size="10" fill="#1D9E75" font-family="system-ui,sans-serif">0.1%</text>
+            <text id="fc-lb-label-high" x="595" y="80" text-anchor="end" font-size="10" fill="#DC2626" font-family="system-ui,sans-serif">1.0%</text>
+          </svg>
+        </div>
+        <div class="fee-calc-share">
+          <button class="fee-calc-share-btn" onclick="shareResult('back')" id="fc-lb-share-btn">📋 Copy my number</button>
+          <a class="fee-calc-share-btn fee-calc-share-li" id="fc-lb-share-li" href="#" target="_blank" rel="noopener">Share on LinkedIn</a>
+          <a class="fee-calc-share-btn fee-calc-share-x" id="fc-lb-share-x" href="#" target="_blank" rel="noopener">Share on X</a>
+        </div>
+        <p class="fee-calc-compliance">Illustrative estimate only. Assumes a 7% average annual return and fees deducted annually. Not a quote, a projection of any specific product, or a guarantee of results.</p>
+      </div>
+
+    </div><!-- end fee-calc-card -->
 
     <!-- SOFT CTA -->
     <div class="fee-calc-cta">
@@ -1046,16 +1128,52 @@
 </section>
 
 <style>
-/* ── FEE CALCULATOR STYLES ── */
+/* ── FEE CALCULATOR STYLES v2 ── */
 .fee-calc-section { background: var(--bg); }
 .fee-calc-card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  padding: 36px 40px;
+  padding: 0 0 32px;
   max-width: 800px;
   margin: 0 auto;
+  overflow: hidden;
 }
+
+/* TABS */
+.fee-calc-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.fee-calc-tab {
+  background: var(--bg);
+  border: none;
+  padding: 18px 20px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+.fee-calc-tab:first-child { border-right: 1px solid var(--border); }
+.fee-calc-tab.active {
+  background: var(--white);
+  border-bottom-color: var(--forest-mid);
+  color: var(--forest);
+}
+.fee-calc-tab-sub { font-size: .75rem; font-weight: 400; color: var(--muted); }
+.fee-calc-tab.active .fee-calc-tab-sub { color: var(--forest-mid); }
+
+/* PANELS */
+.fee-calc-panel { padding: 0 32px; }
 .fee-calc-inputs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1070,6 +1188,7 @@
   margin-bottom: 6px;
 }
 .fee-calc-optional { font-weight: 400; color: var(--muted); }
+.fee-calc-hint { font-size: .72rem; color: var(--muted); margin-top: 5px; line-height: 1.4; }
 .fee-calc-input-wrap {
   display: flex;
   align-items: center;
@@ -1102,24 +1221,27 @@
   background: var(--white);
 }
 .fee-calc-assumptions {
-  font-size: .78rem;
+  font-size: .75rem;
   color: var(--muted);
   text-align: center;
-  padding: 10px;
+  padding: 8px 10px;
   background: var(--bg);
   border-radius: var(--r);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   line-height: 1.5;
 }
+
+/* RESULTS */
+.fee-calc-results { padding: 0 32px; }
 .fee-calc-gap-wrap {
   text-align: center;
   padding: 28px 20px;
   background: var(--forest);
   border-radius: var(--r-lg);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .fee-calc-gap-label {
-  font-size: .8rem;
+  font-size: .78rem;
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -1128,14 +1250,14 @@
 }
 .fee-calc-gap-number {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
   color: var(--forest-light);
   font-weight: 500;
   line-height: 1;
   margin-bottom: 8px;
 }
 .fee-calc-gap-sub {
-  font-size: .82rem;
+  font-size: .8rem;
   color: rgba(255,255,255,.5);
   max-width: 420px;
   margin: 0 auto;
@@ -1144,11 +1266,11 @@
 .fee-calc-paths {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 14px;
+  margin-bottom: 16px;
 }
 .fee-calc-path {
-  padding: 20px;
+  padding: 18px;
   border-radius: var(--r);
   border: 1px solid var(--border);
   text-align: center;
@@ -1156,41 +1278,40 @@
 .fee-calc-path.high { background: #FEF2F2; border-color: #FECACA; }
 .fee-calc-path.low  { background: var(--forest-pale); border-color: var(--forest-light); }
 .fee-calc-path-label {
-  font-size: .78rem;
+  font-size: .75rem;
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--muted);
 }
 .fee-calc-path.high .fee-calc-path-label { color: #DC2626; }
 .fee-calc-path.low  .fee-calc-path-label { color: var(--forest-mid); }
 .fee-calc-path-val {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 4px;
 }
 .fee-calc-path.high .fee-calc-path-val { color: #DC2626; }
 .fee-calc-path.low  .fee-calc-path-val { color: var(--forest); }
-.fee-calc-path-sub { font-size: .75rem; color: var(--muted); }
+.fee-calc-path-sub { font-size: .72rem; color: var(--muted); }
 .fee-calc-chart-wrap {
-  margin: 16px 0;
+  margin: 12px 0;
   border: 1px solid var(--border);
   border-radius: var(--r);
   overflow: hidden;
   background: var(--white);
-  padding: 12px 8px 4px;
+  padding: 10px 6px 4px;
 }
-#fc-chart { width: 100%; height: auto; display: block; }
+#fc-chart, #fc-chart-back { width: 100%; height: auto; display: block; }
 .fee-calc-share {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin: 16px 0 12px;
+  margin: 14px 0 10px;
 }
 .fee-calc-share-btn {
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: var(--r);
-  font-size: .85rem;
+  font-size: .82rem;
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
@@ -1201,22 +1322,23 @@
   font-family: inherit;
 }
 .fee-calc-share-btn:hover { border-color: var(--forest-mid); color: var(--forest-mid); }
-.fee-calc-share-li { background: #0A66C2; color: var(--white); border-color: #0A66C2; }
-.fee-calc-share-li:hover { opacity: .88; color: var(--white); }
-.fee-calc-share-x { background: #000; color: var(--white); border-color: #000; }
-.fee-calc-share-x:hover { opacity: .88; color: var(--white); }
+.fee-calc-share-li { background: #0A66C2; color: var(--white) !important; border-color: #0A66C2; }
+.fee-calc-share-li:hover { opacity: .88; }
+.fee-calc-share-x { background: #000; color: var(--white) !important; border-color: #000; }
+.fee-calc-share-x:hover { opacity: .88; }
 .fee-calc-compliance {
-  font-size: .75rem;
+  font-size: .72rem;
   color: var(--muted);
   line-height: 1.6;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
-  margin-top: 4px;
 }
+
+/* CTA */
 .fee-calc-cta {
   text-align: center;
-  margin-top: 48px;
-  padding: 36px;
+  margin-top: 40px;
+  padding: 32px;
   background: var(--forest-pale);
   border-radius: var(--r-lg);
   border: 1px solid var(--forest-light);
@@ -1225,13 +1347,13 @@
   margin-right: auto;
 }
 .fee-calc-cta h3 {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   color: var(--forest);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 .fee-calc-cta-btns {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -1251,125 +1373,161 @@
 .btn-outline-forest:hover { background: var(--forest); color: var(--white); }
 
 @media (max-width: 640px) {
-  .fee-calc-card { padding: 24px 18px; }
+  .fee-calc-panel, .fee-calc-results { padding: 0 16px; }
   .fee-calc-inputs { grid-template-columns: 1fr; }
   .fee-calc-paths { grid-template-columns: 1fr; }
   .fee-calc-share { flex-direction: column; }
-  .fee-calc-share-btn { text-align: center; }
+  .fee-calc-tab { padding: 14px 14px 12px; }
 }
 </style>
 
 <script>
-/* ── FEE CALCULATOR LOGIC ── */
+/* ── FEE CALCULATOR LOGIC v2 ── */
+var fc_mode = 'forward';
+
+function switchCalcTab(mode, btn) {
+  fc_mode = mode;
+  document.querySelectorAll('.fee-calc-tab').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  document.getElementById('fc-panel-forward').style.display = mode === 'forward' ? '' : 'none';
+  document.getElementById('fc-panel-back').style.display   = mode === 'back'    ? '' : 'none';
+  document.getElementById('fc-results-forward').style.display = mode === 'forward' ? '' : 'none';
+  document.getElementById('fc-results-back').style.display    = mode === 'back'    ? '' : 'none';
+  if (mode === 'forward') runCalc(); else runCalcBack();
+}
+
 function fmt(n) {
   return '$' + Math.round(n).toLocaleString('en-US');
 }
 
 function calcPath(balance, years, monthly, feeRate) {
-  let b = balance;
-  const annual = monthly * 12;
-  const snapshots = [b];
-  for (let y = 0; y < years; y++) {
+  var b = balance;
+  var annual = monthly * 12;
+  var snaps = [b];
+  for (var y = 0; y < years; y++) {
     b = (b + annual) * (1 + 0.07 - feeRate);
-    snapshots.push(b);
+    snaps.push(b);
   }
-  return { final: b, snapshots };
+  return { final: b, snaps: snaps };
 }
 
-function drawChart(highSnaps, lowSnaps, years) {
-  const svg = document.getElementById('fc-chart');
-  const W = 600, H = 200, PAD_L = 40, PAD_B = 25, PAD_T = 10, PAD_R = 10;
-  const plotW = W - PAD_L - PAD_R;
-  const plotH = H - PAD_B - PAD_T;
-  const maxVal = Math.max(...lowSnaps, ...highSnaps) * 1.05;
+function drawChart(chartId, highSnaps, lowSnaps, years) {
+  var svg = document.getElementById(chartId);
+  if (!svg) return;
+  var W=600, H=200, PL=40, PB=25, PT=10, PR=10;
+  var plotW=W-PL-PR, plotH=H-PB-PT;
+  var maxVal = Math.max.apply(null, lowSnaps.concat(highSnaps)) * 1.05;
+  if (maxVal === 0) maxVal = 1;
 
-  function px(i) { return PAD_L + (i / years) * plotW; }
-  function py(v) { return PAD_T + plotH - (v / maxVal) * plotH; }
-
-  function makePath(snaps) {
-    return snaps.map((v, i) => `${i === 0 ? 'M' : 'L'}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' ');
+  function px(i)  { return PL + (i/years)*plotW; }
+  function py(v)  { return PT + plotH - (v/maxVal)*plotH; }
+  function mkPath(s) {
+    return s.map(function(v,i){ return (i===0?'M':'L')+px(i).toFixed(1)+','+py(v).toFixed(1); }).join(' ');
   }
-  function makeArea(snaps) {
-    const base = PAD_T + plotH;
-    const pts = snaps.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' L');
-    return `M${PAD_L},${base} L${pts} L${px(years)},${base} Z`;
+  function mkArea(s) {
+    var base = PT+plotH;
+    var pts = s.map(function(v,i){ return px(i).toFixed(1)+','+py(v).toFixed(1); }).join(' L');
+    return 'M'+PL+','+base+' L'+pts+' L'+px(years)+','+base+' Z';
   }
 
-  document.getElementById('fc-line-high').setAttribute('d', makePath(highSnaps));
-  document.getElementById('fc-line-low').setAttribute('d', makePath(lowSnaps));
-  document.getElementById('fc-area-high').setAttribute('d', makeArea(highSnaps));
-  document.getElementById('fc-area-low').setAttribute('d', makeArea(lowSnaps));
+  var suffix = chartId === 'fc-chart-back' ? '-b' : '';
+  var prefix = chartId === 'fc-chart-back' ? 'fc-lb-' : 'fc-';
 
-  // Position labels at end of lines
-  const lastY_low = py(lowSnaps[years]);
-  const lastY_high = py(highSnaps[years]);
-  document.getElementById('fc-label-low').setAttribute('y', Math.max(PAD_T + 10, lastY_low - 4));
-  document.getElementById('fc-label-high').setAttribute('y', Math.max(PAD_T + 24, lastY_high - 4));
+  svg.querySelector('#fc'+suffix+'-line-high'  ) && svg.querySelector('#fc'+suffix+'-line-high').setAttribute('d', mkPath(highSnaps));
+  svg.querySelector('#fc'+suffix+'-line-low'   ) && svg.querySelector('#fc'+suffix+'-line-low' ).setAttribute('d', mkPath(lowSnaps));
+  svg.querySelector('#fc'+suffix+'-area-high'  ) && svg.querySelector('#fc'+suffix+'-area-high').setAttribute('d', mkArea(highSnaps));
+  svg.querySelector('#fc'+suffix+'-area-low'   ) && svg.querySelector('#fc'+suffix+'-area-low' ).setAttribute('d', mkArea(lowSnaps));
 
-  // Y-axis gridlines and labels
-  const existing = svg.querySelectorAll('.fc-grid');
-  existing.forEach(e => e.remove());
-  [0.25, 0.5, 0.75, 1.0].forEach(pct => {
-    const v = maxVal * pct;
-    const y = py(v);
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', PAD_L); line.setAttribute('x2', W - PAD_R);
-    line.setAttribute('y1', y); line.setAttribute('y2', y);
-    line.setAttribute('stroke', '#F3F4F6'); line.setAttribute('stroke-width', '1');
+  // Use IDs as declared in the SVG
+  var idLow  = chartId === 'fc-chart-back' ? 'fc-lb-label-low'  : 'fc-label-low';
+  var idHigh = chartId === 'fc-chart-back' ? 'fc-lb-label-high' : 'fc-label-high';
+  var elLow  = document.getElementById(idLow);
+  var elHigh = document.getElementById(idHigh);
+  if (elLow)  elLow.setAttribute('y',  Math.max(PT+10, py(lowSnaps[years])-4));
+  if (elHigh) elHigh.setAttribute('y', Math.max(PT+24, py(highSnaps[years])-4));
+
+  // Y gridlines
+  svg.querySelectorAll('.fc-grid').forEach(function(e){ e.remove(); });
+  [0.25,0.5,0.75,1.0].forEach(function(pct){
+    var v = maxVal*pct, y = py(v);
+    var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',PL); line.setAttribute('x2',W-PR);
+    line.setAttribute('y1',y);  line.setAttribute('y2',y);
+    line.setAttribute('stroke','#F3F4F6'); line.setAttribute('stroke-width','1');
     line.classList.add('fc-grid');
     svg.insertBefore(line, svg.firstChild);
-    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    txt.setAttribute('x', PAD_L - 4); txt.setAttribute('y', y + 3);
-    txt.setAttribute('text-anchor', 'end');
-    txt.setAttribute('font-size', '9');
-    txt.setAttribute('fill', '#9CA3AF');
-    txt.setAttribute('font-family', 'system-ui,sans-serif');
-    txt.textContent = v >= 1000000 ? `$${(v/1000000).toFixed(1)}M` : `$${(v/1000).toFixed(0)}K`;
+    var txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',PL-4); txt.setAttribute('y',y+3);
+    txt.setAttribute('text-anchor','end'); txt.setAttribute('font-size','9');
+    txt.setAttribute('fill','#9CA3AF'); txt.setAttribute('font-family','system-ui,sans-serif');
+    txt.textContent = v>=1000000 ? '$'+(v/1000000).toFixed(1)+'M' : '$'+(v/1000).toFixed(0)+'K';
     txt.classList.add('fc-grid');
     svg.appendChild(txt);
   });
 }
 
 function runCalc() {
-  const balance = parseFloat(document.getElementById('fc-balance').value) || 0;
-  const years   = Math.min(50, Math.max(1, parseInt(document.getElementById('fc-years').value) || 30));
-  const monthly = parseFloat(document.getElementById('fc-contrib').value) || 0;
-
-  const high = calcPath(balance, years, monthly, 0.01);
-  const low  = calcPath(balance, years, monthly, 0.001);
-  const gap  = low.final - high.final;
-
+  var balance = parseFloat(document.getElementById('fc-balance').value)||0;
+  var years   = Math.min(50,Math.max(1,parseInt(document.getElementById('fc-years').value)||30));
+  var monthly = parseFloat(document.getElementById('fc-contrib').value)||0;
+  var high = calcPath(balance, years, monthly, 0.01);
+  var low  = calcPath(balance, years, monthly, 0.001);
+  var gap  = low.final - high.final;
   document.getElementById('fc-gap').textContent  = fmt(gap);
   document.getElementById('fc-high').textContent = fmt(high.final);
   document.getElementById('fc-low').textContent  = fmt(low.final);
-
-  drawChart(high.snapshots, low.snapshots, years);
-  updateShareLinks(gap, low.final, high.final, years);
+  drawChart('fc-chart', high.snaps, low.snaps, years);
+  updateShare('forward', gap, years);
 }
 
-function updateShareLinks(gap, lowFinal, highFinal, years) {
-  const msg = `Over ${years} years, the difference between a 1% fee plan and a near-zero fee plan could cost me ${fmt(gap)}. That's what retirement fees do. Learn more at thinknirvana.org`;
-  const encoded = encodeURIComponent(msg);
-  document.getElementById('fc-share-li').href =
-    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://thinknirvana.org')}`;
-  document.getElementById('fc-share-x').href =
-    `https://x.com/intent/tweet?text=${encoded}`;
+function runCalcBack() {
+  var balance = parseFloat(document.getElementById('fc-lb-balance').value)||0;
+  var years   = Math.min(50,Math.max(1,parseInt(document.getElementById('fc-lb-years').value)||15));
+  var monthly = parseFloat(document.getElementById('fc-lb-contrib').value)||0;
+  var high = calcPath(balance, years, monthly, 0.01);
+  var low  = calcPath(balance, years, monthly, 0.001);
+  var gap  = low.final - high.final;
+  document.getElementById('fc-lb-gap').textContent  = fmt(gap);
+  document.getElementById('fc-lb-high').textContent = fmt(high.final);
+  document.getElementById('fc-lb-low').textContent  = fmt(low.final);
+  drawChart('fc-chart-back', high.snaps, low.snaps, years);
+  updateShare('back', gap, years);
 }
 
-function shareResult() {
-  const gap = document.getElementById('fc-gap').textContent;
-  const years = document.getElementById('fc-years').value;
-  const text = `Over ${years} years, the fee gap could cost me ${gap} in retirement savings. See what fees cost at thinknirvana.org`;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('fc-share-btn');
+function updateShare(mode, gap, years) {
+  var fmtGap = fmt(gap);
+  var url = encodeURIComponent('https://thinknirvana.org');
+  var verb = mode === 'back' ? 'already cost me' : 'could cost me';
+  var msg = 'Over '+years+' years, the difference between a 1% fee plan and a near-zero fee plan '+verb+' '+fmtGap+'. See your own number at thinknirvana.org';
+  var enc = encodeURIComponent(msg);
+  if (mode === 'forward') {
+    document.getElementById('fc-share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url='+url;
+    document.getElementById('fc-share-x').href  = 'https://x.com/intent/tweet?text='+enc;
+  } else {
+    document.getElementById('fc-lb-share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url='+url;
+    document.getElementById('fc-lb-share-x').href  = 'https://x.com/intent/tweet?text='+enc;
+  }
+}
+
+function shareResult(mode) {
+  var gapEl = mode === 'forward' ? 'fc-gap' : 'fc-lb-gap';
+  var yrsEl = mode === 'forward' ? 'fc-years' : 'fc-lb-years';
+  var btnEl = mode === 'forward' ? 'fc-share-btn' : 'fc-lb-share-btn';
+  var verb  = mode === 'back' ? 'already cost me' : 'could cost me';
+  var gap  = document.getElementById(gapEl).textContent;
+  var yrs  = document.getElementById(yrsEl).value;
+  var text = 'Over '+yrs+' years, fees '+verb+' '+gap+' in retirement savings. See your own number at thinknirvana.org';
+  navigator.clipboard.writeText(text).then(function(){
+    var btn = document.getElementById(btnEl);
     btn.textContent = '✓ Copied!';
-    setTimeout(() => btn.textContent = '📋 Copy my number', 2000);
-  }).catch(() => {
-    prompt('Copy this text:', text);
-  });
+    setTimeout(function(){ btn.textContent = '📋 Copy my number'; }, 2000);
+  }).catch(function(){ prompt('Copy this text:', text); });
 }
 
-// Run on load
 document.addEventListener('DOMContentLoaded', runCalc);
 </script>
 
