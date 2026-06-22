@@ -606,7 +606,7 @@
         <span>ThinkNirvana Foundation · Est. 2024 · Olney, MD</span>
       </div>
       <h1 id="hero-headline">Retirement security is a right,<br><em>not a privilege.</em></h1>
-      <p class="hero-sub">ThinkNirvana Foundation is a 501(c)(3) nonprofit building the infrastructure that makes it possible — for the workers who have never had access to a good plan.</p>
+      <p class="hero-sub">ThinkNirvana Foundation is a nonprofit corporation building the infrastructure that makes it possible — for the workers who have never had access to a good plan.</p>
       <div class="hero-ctas">
         <a href="#mission" class="btn-primary">Read our mission →</a>
         <a href="https://aipep401k.com" class="btn-ghost-dark">Visit AIPEP401K.com ↗</a>
@@ -757,7 +757,7 @@
         <div class="roadmap-content">
           <div class="roadmap-status active">In progress</div>
           <h4>Launch — AIPEP401K goes live for US small businesses</h4>
-          <p>First employer cohort onboarded August 2026. ERISA compliance engine operational. Payroll integrations live via Finch (Gusto, Rippling, ADP, Paychex, 40+ others). SECURE 2.0 credit automation active.</p>
+          <p>First employer cohort onboarded August 2026. ERISA compliance engine operational. Payroll integrations live via payroll API integration — supporting 40+ providers including Gusto, ADP, Paychex, and Rippling. SECURE 2.0 credit automation active.</p>
         </div>
       </div>
       <div class="roadmap-item">
@@ -842,7 +842,7 @@
         <p>We're available for comment on retirement policy, SECURE 2.0 implementation, small business retirement access, fee transparency, and the role of nonprofit fiduciaries in ERISA plans.</p>
         <div class="press-blurb">
           <div class="press-blurb-label">Organization description for press use</div>
-          ThinkNirvana Foundation is a Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation operates AIPEP401K, a pooled employer 401(k) plan offering Vanguard index funds exclusively at $6/month per participant with no employer fees. The Foundation is in the process of completing its 501(c)(3) nonprofit registration.
+          ThinkNirvana Foundation is a Maryland nonprofit corporation and registered Pooled Plan Provider under ERISA §413(e). The Foundation operates AIPEP401K, a pooled employer 401(k) plan offering Vanguard index funds exclusively at $6/month per participant with no employer fees. The Foundation is a nonprofit corporation incorporated in Maryland. Federal tax-exempt status pending IRS determination.
         </div>
       </div>
       <div class="press-card">
@@ -989,7 +989,7 @@
             <label for="fc-lb-balance">Current balance</label>
             <div class="fee-calc-input-wrap">
               <span class="fee-calc-prefix">$</span>
-              <input type="number" id="fc-lb-balance" value="5000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
+              <input type="number" id="fc-lb-balance" value="85000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
             </div>
             <div class="fee-calc-hint">What you have in your retirement account today</div>
           </div>
@@ -1011,7 +1011,7 @@
           </div>
         </div>
         <div class="fee-calc-assumptions">
-          Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year
+          Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year · current balance used as high-fee endpoint to back-calculate starting point
         </div>
       </div>
 
@@ -1075,12 +1075,12 @@
           <div class="fee-calc-path high">
             <div class="fee-calc-path-label">Typical plan · 1.0%/yr</div>
             <div class="fee-calc-path-val" id="fc-lb-high">$—</div>
-            <div class="fee-calc-path-sub">Estimated balance today</div>
+            <div class="fee-calc-path-sub">Your current balance (1% fees)</div>
           </div>
           <div class="fee-calc-path low">
             <div class="fee-calc-path-label">Near-zero fees · 0.1%/yr</div>
             <div class="fee-calc-path-val" id="fc-lb-low">$—</div>
-            <div class="fee-calc-path-sub">What you could have today</div>
+            <div class="fee-calc-path-sub">What you'd have at near-zero fees</div>
           </div>
         </div>
         <div class="fee-calc-chart-wrap" aria-hidden="true">
@@ -1494,12 +1494,32 @@ function runCalc() {
 }
 
 function runCalcBack() {
-  var balance = parseFloat(document.getElementById('fc-lb-balance').value)||0;
+  var currentBal = parseFloat(document.getElementById('fc-lb-balance').value)||0;
   var years   = Math.min(50,Math.max(1,parseInt(document.getElementById('fc-lb-years').value)||15));
   var monthly = parseFloat(document.getElementById('fc-lb-contrib').value)||0;
-  var high = calcPath(balance, years, monthly, 0.01);
-  var low  = calcPath(balance, years, monthly, 0.001);
+  var annual  = monthly * 12;
+
+  // Back-calculate implied starting balance from current balance
+  // assuming 1% fee plan (high fee path ending = currentBal)
+  // Reverse: startBal = (currentBal - annual*sumOfGrowthFactors) / growthFactor^years
+  // We solve iteratively: find startBal such that calcPath(startBal, years, monthly, 0.01).final == currentBal
+  // Simple approach: use ratio. Run high-fee path from $1, scale to match currentBal
+  var probe = calcPath(1, years, monthly, 0.01);
+  // If probe.final is the result of $1 start + contributions at 1%,
+  // we need to find startBal where calcPath(startBal, years, monthly, 0.01).final = currentBal
+  // calcPath(startBal) = startBal * growthFactor^years + contributions_component
+  // contributions_component is the same regardless of startBal
+  // So: currentBal = startBal * factor + contrib_part
+  // factor = (1.06)^years, contrib_part = probe.final - 1*(1.06^years)
+  var factor = Math.pow(1.06, years);
+  var contribPart = probe.final - factor;
+  var impliedStart = Math.max(0, (currentBal - contribPart) / factor);
+
+  // Now run both paths from the implied starting balance
+  var high = calcPath(impliedStart, years, monthly, 0.01);
+  var low  = calcPath(impliedStart, years, monthly, 0.001);
   var gap  = low.final - high.final;
+
   document.getElementById('fc-lb-gap').textContent  = fmt(gap);
   document.getElementById('fc-lb-high').textContent = fmt(high.final);
   document.getElementById('fc-lb-low').textContent  = fmt(low.final);
@@ -1613,7 +1633,7 @@ document.addEventListener('DOMContentLoaded', runCalc);
           </div>
         </div>
         <p>A nonprofit on a mission to make retirement savings simple, transparent, and radically affordable for every American worker.</p>
-        <div class="footer-stamp">501(C) NONPROFIT · ERISA §413(E) PPP · OLNEY, MD · EST. 2024</div>
+        <div class="footer-stamp">NONPROFIT CORP · MARYLAND · ERISA §413(E) PPP · OLNEY, MD · EST. 2024</div>
       </div>
       <div class="footer-col">
         <h5>Initiatives</h5>
@@ -1647,7 +1667,7 @@ document.addEventListener('DOMContentLoaded', runCalc);
       </div>
     </div>
     <p class="footer-disc">
-      ThinkNirvana Foundation is a 501(c)(3) nonprofit organization in the process of completing its nonprofit registration and DOL Pooled Plan Provider registration under ERISA §413(e). EIN: [to be added upon completion]. Contributions may be tax-deductible; consult your tax advisor. Nirvana Ledger LLC provides technology infrastructure under license to ThinkNirvana Foundation. This website is for informational purposes only and does not constitute investment, legal, or tax advice.<br><br>
+      ThinkNirvana Foundation is a nonprofit corporation incorporated in Maryland in the process of completing its nonprofit registration and DOL Pooled Plan Provider registration under ERISA §413(e). EIN: [to be added upon completion]. Nirvana Ledger LLC provides technology infrastructure under license to ThinkNirvana Foundation. This website is for informational purposes only and does not constitute investment, legal, or tax advice.<br><br>
       AIPEP401K is a Pooled Employer Plan administered by ThinkNirvana Foundation acting as Pooled Plan Provider under ERISA §413(e). Vanguard® is a registered trademark of The Vanguard Group, Inc. ThinkNirvana and AIPEP401K are not affiliated with or endorsed by Vanguard. All third-party trademarks referenced are property of their respective owners.
     </p>
   </div>
