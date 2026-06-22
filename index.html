@@ -984,12 +984,12 @@
       <div id="fc-panel-back" class="fee-calc-panel" style="display:none">
         <div class="fee-calc-inputs">
           <div class="fee-calc-input-group">
-            <label for="fc-lb-balance">Current balance</label>
+            <label for="fc-lb-balance">Starting balance</label>
             <div class="fee-calc-input-wrap">
               <span class="fee-calc-prefix">$</span>
               <input type="number" id="fc-lb-balance" value="5000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
             </div>
-            <div class="fee-calc-hint">What you have in your retirement account today</div>
+            <div class="fee-calc-hint">What you had when you started saving</div>
           </div>
           <div class="fee-calc-input-group">
             <label for="fc-lb-years">Years already saving</label>
@@ -1067,7 +1067,7 @@
         <div class="fee-calc-gap-wrap" style="background:linear-gradient(135deg,#7C1D1D,#0D2B1E)">
           <div class="fee-calc-gap-label">What fees have already cost you</div>
           <div class="fee-calc-gap-number" id="fc-lb-gap">$—</div>
-          <div class="fee-calc-gap-sub">Estimated gap between your current balance and what you might have had under near-zero fees — based on years saving and contributions. Your actual result varies by market timing and contribution history.</div>
+          <div class="fee-calc-gap-sub">The difference between what you have today and what you would have had at near-zero fees</div>
         </div>
         <div class="fee-calc-paths">
           <div class="fee-calc-path high">
@@ -1432,17 +1432,26 @@ function drawChart(chartId, highSnaps, lowSnaps, years) {
     return 'M'+PL+','+base+' L'+pts+' L'+px(years)+','+base+' Z';
   }
 
-  var suffix = chartId === 'fc-chart-back' ? '-b' : '';
-  var prefix = chartId === 'fc-chart-back' ? 'fc-lb-' : 'fc-';
+  var isBack = chartId === 'fc-chart-back';
 
-  svg.querySelector('#fc'+suffix+'-line-high'  ) && svg.querySelector('#fc'+suffix+'-line-high').setAttribute('d', mkPath(highSnaps));
-  svg.querySelector('#fc'+suffix+'-line-low'   ) && svg.querySelector('#fc'+suffix+'-line-low' ).setAttribute('d', mkPath(lowSnaps));
-  svg.querySelector('#fc'+suffix+'-area-high'  ) && svg.querySelector('#fc'+suffix+'-area-high').setAttribute('d', mkArea(highSnaps));
-  svg.querySelector('#fc'+suffix+'-area-low'   ) && svg.querySelector('#fc'+suffix+'-area-low' ).setAttribute('d', mkArea(lowSnaps));
+  var lineHighId = isBack ? 'fc-lb-line-high'  : 'fc-line-high';
+  var lineLowId  = isBack ? 'fc-lb-line-low'   : 'fc-line-low';
+  var areaHighId = isBack ? 'fc-lb-area-high'  : 'fc-area-high';
+  var areaLowId  = isBack ? 'fc-lb-area-low'   : 'fc-area-low';
 
-  // Use IDs as declared in the SVG
-  var idLow  = chartId === 'fc-chart-back' ? 'fc-lb-label-low'  : 'fc-label-low';
-  var idHigh = chartId === 'fc-chart-back' ? 'fc-lb-label-high' : 'fc-label-high';
+  var elLineHigh = document.getElementById(lineHighId);
+  var elLineLow  = document.getElementById(lineLowId);
+  var elAreaHigh = document.getElementById(areaHighId);
+  var elAreaLow  = document.getElementById(areaLowId);
+
+  if (elLineHigh) elLineHigh.setAttribute('d', mkPath(highSnaps));
+  if (elLineLow)  elLineLow.setAttribute('d',  mkPath(lowSnaps));
+  if (elAreaHigh) elAreaHigh.setAttribute('d', mkArea(highSnaps));
+  if (elAreaLow)  elAreaLow.setAttribute('d',  mkArea(lowSnaps));
+
+  // Labels
+  var idLow  = isBack ? 'fc-lb-label-low'  : 'fc-label-low';
+  var idHigh = isBack ? 'fc-lb-label-high' : 'fc-label-high';
   var elLow  = document.getElementById(idLow);
   var elHigh = document.getElementById(idHigh);
   if (elLow)  elLow.setAttribute('y',  Math.max(PT+10, py(lowSnaps[years])-4));
