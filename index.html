@@ -1067,7 +1067,7 @@
           <div class="fee-calc-gap-number" id="fc-lb-gap">$—</div>
           <div class="fee-calc-gap-sub" id="fc-lb-headline">Fees have likely cost you about $—.</div>
         </div>
-        <p class="fee-calc-compliance">Estimate based on a 1.33% avoidable annual fee (typical industry 1.60% vs ~0.27% low-cost), compounded over the years you've saved.</p>
+        <p class="fee-calc-compliance">Estimate based on the ~0.9% difference between a typical 1% industry fee and a 0.1% low-cost plan, compounded over the years you've saved.</p>
       </div>
 
     </div><!-- end fee-calc-card -->
@@ -1342,6 +1342,10 @@
 /* ── FEE CALCULATOR LOGIC v2 ── */
 var fc_mode = 'forward';
 
+const FEE_INDUSTRY = 0.01;    // 1%
+const FEE_LOWCOST  = 0.001;   // 0.1%
+const FEE_SPREAD   = FEE_INDUSTRY - FEE_LOWCOST;   // 0.009 = 0.9%
+
 function switchCalcTab(mode, btn) {
   fc_mode = mode;
   document.querySelectorAll('.fee-calc-tab').forEach(b => {
@@ -1440,8 +1444,8 @@ function runCalc() {
   var balance = parseFloat(document.getElementById('fc-balance').value)||0;
   var years   = Math.min(50,Math.max(1,parseInt(document.getElementById('fc-years').value)||30));
   var monthly = parseFloat(document.getElementById('fc-contrib').value)||0;
-  var high = calcPath(balance, years, monthly, 0.01);
-  var low  = calcPath(balance, years, monthly, 0.001);
+  var high = calcPath(balance, years, monthly, FEE_INDUSTRY);
+  var low  = calcPath(balance, years, monthly, FEE_LOWCOST);
   var gap  = low.final - high.final;
   document.getElementById('fc-gap').textContent  = fmt(gap);
   document.getElementById('fc-high').textContent = fmt(high.final);
@@ -1453,8 +1457,7 @@ function runCalc() {
 function runCalcBack() {
   var currentBalance = parseFloat(document.getElementById('fc-lb-balance').value) || 0;
   var yearsSaved = Math.min(50, Math.max(1, parseInt(document.getElementById('fc-lb-years').value) || 15));
-  var excessFeeRate = 0.0133;  // 1.33% avoidable annual fee (1.60% industry − 0.27% low-cost)
-  var feesCost = currentBalance * (Math.pow(1 + excessFeeRate, yearsSaved) - 1);
+  var feesCost = currentBalance * (Math.pow(1 + FEE_SPREAD, yearsSaved) - 1);
   document.getElementById('fc-lb-gap').textContent = fmt(feesCost);
   document.getElementById('fc-lb-headline').textContent = 'Fees have likely cost you about ' + fmt(feesCost) + '.';
 }
