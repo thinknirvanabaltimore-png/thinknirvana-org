@@ -351,6 +351,24 @@
     }
     .impact-callout strong { color: var(--forest-light); }
 
+    /* ── FEE TIERS ── */
+    .fee-tier-section { background: var(--bg); }
+    .fee-tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .fee-tier-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px 24px; text-align: center; }
+    .fee-tier-card.winner { border: 2px solid var(--forest-mid); background: var(--forest-pale); }
+    .fee-tier-label { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .fee-tier-card.winner .fee-tier-label { color: var(--forest-mid); }
+    .fee-tier-fee { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.2rem, 5.5vw, 3rem); color: var(--forest); font-weight: 500; line-height: 1.05; }
+    .fee-tier-card.winner .fee-tier-fee { color: var(--forest-mid); }
+    .fee-tier-fee-sub { font-size: .76rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-top: 4px; margin-bottom: 20px; }
+    .fee-tier-rows { border-top: 1px solid var(--border); padding-top: 14px; text-align: left; }
+    .fee-tier-card.winner .fee-tier-rows { border-top-color: var(--forest-light); }
+    .fee-tier-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: .9rem; }
+    .fee-tier-row .ft-k { color: var(--muted); }
+    .fee-tier-row .ft-v { font-weight: 700; color: var(--text); }
+    .fee-tier-foot { font-size: .78rem; color: var(--muted); line-height: 1.6; max-width: 760px; margin: 28px auto 0; text-align: center; }
+    @media (max-width: 768px) { .fee-tier-grid { grid-template-columns: 1fr; } }
+
     /* ── ROADMAP ── */
     .roadmap-section { background: var(--white); }
     .roadmap-timeline { position: relative; max-width: 760px; margin: 0 auto; }
@@ -732,6 +750,47 @@
         A single employer joining AIPEP 401(k) saves their employees significant annual fees — compounded over decades, that's the difference between a dignified retirement and working into their 70s.
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── FEE TIERS ── -->
+<section class="section fee-tier-section" aria-labelledby="fee-tier-headline">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">The math, reclaimed</span>
+      <h2 id="fee-tier-headline">What a sub-0.1% target really means</h2>
+      <p>Over a 30-year career, the fee you pay decides how much of your own money you keep. Here's the difference between the market, the new federal floor, and our target.</p>
+    </div>
+    <div class="fee-tier-grid">
+      <div class="fee-tier-card">
+        <div class="fee-tier-label">Market average</div>
+        <div class="fee-tier-fee">1.00%</div>
+        <div class="fee-tier-fee-sub">annual fee</div>
+        <div class="fee-tier-rows">
+          <div class="fee-tier-row"><span class="ft-k">Lost to fees</span><span class="ft-v">~$120,000</span></div>
+          <div class="fee-tier-row"><span class="ft-k">You keep</span><span class="ft-v">~84%</span></div>
+        </div>
+      </div>
+      <div class="fee-tier-card">
+        <div class="fee-tier-label">Federal TrumpIRA.gov cap</div>
+        <div class="fee-tier-fee">0.15%</div>
+        <div class="fee-tier-fee-sub">annual fee</div>
+        <div class="fee-tier-rows">
+          <div class="fee-tier-row"><span class="ft-k">Lost to fees</span><span class="ft-v">~$20,000</span></div>
+          <div class="fee-tier-row"><span class="ft-k">You keep</span><span class="ft-v">~97%</span></div>
+        </div>
+      </div>
+      <div class="fee-tier-card winner">
+        <div class="fee-tier-label">ThinkNirvana target</div>
+        <div class="fee-tier-fee">under 0.10%</div>
+        <div class="fee-tier-fee-sub">annual fee</div>
+        <div class="fee-tier-rows">
+          <div class="fee-tier-row"><span class="ft-k">Lost to fees</span><span class="ft-v">under $13,000</span></div>
+          <div class="fee-tier-row"><span class="ft-k">You keep</span><span class="ft-v">~98%</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="fee-tier-foot">Illustrative: about $8,000 saved per year over a 30-year career at a 7% average annual return, comparing total fees plus forgone growth against a zero-fee baseline. The 0.15% tier reflects the federal fee cap for IRAs listed on TrumpIRA.gov (April 2026 executive order). ThinkNirvana's sub-0.10% is a long-term target, not a current rate.</p>
   </div>
 </section>
 
