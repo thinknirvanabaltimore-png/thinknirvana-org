@@ -592,6 +592,7 @@
       <a href="#press">Press</a>
       <a href="#board">Leadership</a>
       <a href="find-your-plan.html">Find Your Plan</a>
+      <a href="#fee-calculator">Fee Calculator</a>
       <a href="#contact">Contact</a>
     </div>
     <a href="https://aipep401k.com" class="nav-cta">Visit AIPEP401K.com →</a>
@@ -611,6 +612,7 @@
       <div class="hero-ctas">
         <a href="find-your-plan.html" class="btn-primary">Find your plan →</a>
         <a href="#mission" class="btn-primary">Read our mission →</a>
+        <a href="#fee-calculator" class="btn-outline-light">See what fees have cost you →</a>
         <a href="https://aipep401k.com" class="btn-ghost-dark">Visit AIPEP401K.com ↗</a>
       </div>
       <div class="hero-numbers">
@@ -984,36 +986,28 @@
         </div>
       </div>
 
-      <!-- LOOKBACK INPUTS -->
+      <!-- LOOKBACK INPUTS (simplified: two fields + calculate) -->
       <div id="fc-panel-back" class="fee-calc-panel" style="display:none">
-        <div class="fee-calc-inputs">
+        <div class="fee-calc-inputs" style="grid-template-columns:1fr 1fr">
           <div class="fee-calc-input-group">
             <label for="fc-lb-balance">Current balance</label>
             <div class="fee-calc-input-wrap">
               <span class="fee-calc-prefix">$</span>
-              <input type="number" id="fc-lb-balance" value="85000" min="0" max="10000000" step="1000" oninput="runCalcBack()" />
+              <input type="number" id="fc-lb-balance" value="85000" min="0" max="10000000" step="1000" />
             </div>
-            <div class="fee-calc-hint">What you have in your retirement account today</div>
+            <div class="fee-calc-hint">Your current 401(k) / retirement balance</div>
           </div>
           <div class="fee-calc-input-group">
-            <label for="fc-lb-years">Years already saving</label>
+            <label for="fc-lb-years">Years saving</label>
             <div class="fee-calc-input-wrap">
-              <input type="number" id="fc-lb-years" value="15" min="1" max="50" step="1" oninput="runCalcBack()" />
+              <input type="number" id="fc-lb-years" value="15" min="1" max="50" step="1" />
               <span class="fee-calc-suffix">yrs</span>
             </div>
-            <div class="fee-calc-hint">How long you've been in a retirement plan</div>
-          </div>
-          <div class="fee-calc-input-group">
-            <label for="fc-lb-contrib">Monthly contribution <span class="fee-calc-optional">(optional)</span></label>
-            <div class="fee-calc-input-wrap">
-              <span class="fee-calc-prefix">$</span>
-              <input type="number" id="fc-lb-contrib" value="300" min="0" max="10000" step="50" oninput="runCalcBack()" />
-            </div>
-            <div class="fee-calc-hint">Average monthly amount saved</div>
+            <div class="fee-calc-hint">How many years you've been saving</div>
           </div>
         </div>
-        <div class="fee-calc-assumptions">
-          Assumes: 7% average annual return · fees deducted annually · contributions added at start of each year · current balance used as high-fee endpoint to back-calculate starting point
+        <div style="text-align:center;margin-bottom:24px">
+          <button type="button" class="btn-primary" onclick="runCalcBack()">Calculate →</button>
         </div>
       </div>
 
@@ -1066,53 +1060,14 @@
         <p class="fee-calc-compliance">Illustrative estimate only. Assumes a 7% average annual return and fees deducted annually. Not a quote, a projection of any specific product, or a guarantee of results.</p>
       </div>
 
-      <!-- RESULTS — LOOKBACK -->
+      <!-- RESULTS — LOOKBACK (simplified) -->
       <div id="fc-results-back" class="fee-calc-results" style="display:none">
         <div class="fee-calc-gap-wrap" style="background:linear-gradient(135deg,#7C1D1D,#0D2B1E)">
           <div class="fee-calc-gap-label">What fees have already cost you</div>
           <div class="fee-calc-gap-number" id="fc-lb-gap">$—</div>
-          <div class="fee-calc-gap-sub">Estimated gap between your current balance and what you might have had under near-zero fees — based on years saving and contributions. Your actual result varies by market timing and contribution history.</div>
+          <div class="fee-calc-gap-sub" id="fc-lb-headline">Fees have likely cost you about $—.</div>
         </div>
-        <div class="fee-calc-paths">
-          <div class="fee-calc-path high">
-            <div class="fee-calc-path-label">Typical plan · 1.0%/yr</div>
-            <div class="fee-calc-path-val" id="fc-lb-high">$—</div>
-            <div class="fee-calc-path-sub">Your current balance (1% fees)</div>
-          </div>
-          <div class="fee-calc-path low">
-            <div class="fee-calc-path-label">Near-zero fees · 0.1%/yr</div>
-            <div class="fee-calc-path-val" id="fc-lb-low">$—</div>
-            <div class="fee-calc-path-sub">What you'd have at near-zero fees</div>
-          </div>
-        </div>
-        <div class="fee-calc-chart-wrap" aria-hidden="true">
-          <svg id="fc-chart-back" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="grad-low-b" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#1D9E75" stop-opacity="0.15"/>
-                <stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/>
-              </linearGradient>
-              <linearGradient id="grad-high-b" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#DC2626" stop-opacity="0.08"/>
-                <stop offset="100%" stop-color="#DC2626" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <line x1="40" y1="10" x2="40" y2="175" stroke="#E5E7EB" stroke-width="1"/>
-            <line x1="40" y1="175" x2="590" y2="175" stroke="#E5E7EB" stroke-width="1"/>
-            <path id="fc-lb-area-low" fill="url(#grad-low-b)" opacity="0.8"/>
-            <path id="fc-lb-area-high" fill="url(#grad-high-b)" opacity="0.8"/>
-            <path id="fc-lb-line-high" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="5,3" opacity="0.7"/>
-            <path id="fc-lb-line-low" fill="none" stroke="#1D9E75" stroke-width="2.5"/>
-            <text id="fc-lb-label-low" x="595" y="30" text-anchor="end" font-size="10" fill="#1D9E75" font-family="system-ui,sans-serif">0.1%</text>
-            <text id="fc-lb-label-high" x="595" y="80" text-anchor="end" font-size="10" fill="#DC2626" font-family="system-ui,sans-serif">1.0%</text>
-          </svg>
-        </div>
-        <div class="fee-calc-share">
-          <button class="fee-calc-share-btn" onclick="shareResult('back')" id="fc-lb-share-btn">📋 Copy my number</button>
-          <a class="fee-calc-share-btn fee-calc-share-li" id="fc-lb-share-li" href="#" target="_blank" rel="noopener">Share on LinkedIn</a>
-          <a class="fee-calc-share-btn fee-calc-share-x" id="fc-lb-share-x" href="#" target="_blank" rel="noopener">Share on X</a>
-        </div>
-        <p class="fee-calc-compliance">Illustrative estimate only. Assumes a 7% average annual return and fees deducted annually. Not a quote, a projection of any specific product, or a guarantee of results.</p>
+        <p class="fee-calc-compliance">Estimate based on a 1.33% avoidable annual fee (typical industry 1.60% vs ~0.27% low-cost), compounded over the years you've saved.</p>
       </div>
 
     </div><!-- end fee-calc-card -->
@@ -1496,37 +1451,12 @@ function runCalc() {
 }
 
 function runCalcBack() {
-  var currentBal = parseFloat(document.getElementById('fc-lb-balance').value)||0;
-  var years   = Math.min(50,Math.max(1,parseInt(document.getElementById('fc-lb-years').value)||15));
-  var monthly = parseFloat(document.getElementById('fc-lb-contrib').value)||0;
-  var annual  = monthly * 12;
-
-  // Back-calculate implied starting balance from current balance
-  // assuming 1% fee plan (high fee path ending = currentBal)
-  // Reverse: startBal = (currentBal - annual*sumOfGrowthFactors) / growthFactor^years
-  // We solve iteratively: find startBal such that calcPath(startBal, years, monthly, 0.01).final == currentBal
-  // Simple approach: use ratio. Run high-fee path from $1, scale to match currentBal
-  var probe = calcPath(1, years, monthly, 0.01);
-  // If probe.final is the result of $1 start + contributions at 1%,
-  // we need to find startBal where calcPath(startBal, years, monthly, 0.01).final = currentBal
-  // calcPath(startBal) = startBal * growthFactor^years + contributions_component
-  // contributions_component is the same regardless of startBal
-  // So: currentBal = startBal * factor + contrib_part
-  // factor = (1.06)^years, contrib_part = probe.final - 1*(1.06^years)
-  var factor = Math.pow(1.06, years);
-  var contribPart = probe.final - factor;
-  var impliedStart = Math.max(0, (currentBal - contribPart) / factor);
-
-  // Now run both paths from the implied starting balance
-  var high = calcPath(impliedStart, years, monthly, 0.01);
-  var low  = calcPath(impliedStart, years, monthly, 0.001);
-  var gap  = low.final - high.final;
-
-  document.getElementById('fc-lb-gap').textContent  = fmt(gap);
-  document.getElementById('fc-lb-high').textContent = fmt(high.final);
-  document.getElementById('fc-lb-low').textContent  = fmt(low.final);
-  drawChart('fc-chart-back', high.snaps, low.snaps, years);
-  updateShare('back', gap, years);
+  var currentBalance = parseFloat(document.getElementById('fc-lb-balance').value) || 0;
+  var yearsSaved = Math.min(50, Math.max(1, parseInt(document.getElementById('fc-lb-years').value) || 15));
+  var excessFeeRate = 0.0133;  // 1.33% avoidable annual fee (1.60% industry − 0.27% low-cost)
+  var feesCost = currentBalance * (Math.pow(1 + excessFeeRate, yearsSaved) - 1);
+  document.getElementById('fc-lb-gap').textContent = fmt(feesCost);
+  document.getElementById('fc-lb-headline').textContent = 'Fees have likely cost you about ' + fmt(feesCost) + '.';
 }
 
 function updateShare(mode, gap, years) {
