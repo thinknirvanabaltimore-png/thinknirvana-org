@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Your Plan — the right retirement plan for your business</title>
+  <meta name="description" content="Answer a few questions and we'll point you to the right retirement plan — whether that's a pooled 401(k) with us, a Solo 401(k), a SEP-IRA, or your state program." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── DESIGN TOKENS (reused from index.html) ── */
+    :root {
+      --forest:        #0D2B1E;
+      --forest-mid:    #1D9E75;
+      --forest-light:  #9FE1CB;
+      --forest-pale:   #E1F5EE;
+      --amber:         #FAC775;
+      --amber-dark:    #854F0B;
+      --white:         #FFFFFF;
+      --text:          #111827;
+      --muted:         #5C6470;
+      --border:        #E5E7EB;
+      --bg:            #F9FAFB;
+      --r:             8px;
+      --r-lg:          16px;
+      --shadow:        0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:     0 4px 12px rgba(0,0,0,.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px; line-height: 1.6; color: var(--text);
+      background: var(--white); -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select { font-family: inherit; }
+
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.2; font-weight: 500; }
+    h1 { font-size: clamp(1.9rem, 5vw, 3rem); }
+    h2 { font-size: clamp(1.4rem, 3.5vw, 2.1rem); }
+    h3 { font-size: 1.15rem; }
+    p  { line-height: 1.7; }
+    .mono { font-family: 'Courier Prime', 'Courier New', monospace; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav { background: var(--forest); position: sticky; top: 0; z-index: 100; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; }
+    .logo-mark {
+      background: var(--forest-mid); color: var(--white); font-family: 'Courier Prime', monospace;
+      font-size: .72rem; font-weight: 700; line-height: 1.1; padding: 5px 7px; border-radius: 4px; text-align: center;
+    }
+    .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.05rem; }
+    .nav-back { color: rgba(255,255,255,.7); font-size: .88rem; }
+    .nav-back:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero { background: var(--forest); color: var(--white); padding: 64px 0 56px; }
+    .hero-inner { max-width: 720px; }
+    .hero h1 { color: var(--white); margin-bottom: 18px; }
+    .hero h1 em { font-style: italic; color: var(--forest-light); }
+    .hero-sub { font-size: 1.08rem; color: rgba(255,255,255,.74); line-height: 1.65; }
+
+    /* ── SECTION ── */
+    .section { padding: 56px 0; }
+    .chooser-section { background: var(--bg); }
+    .eyebrow {
+      display: inline-block; font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: #1A8A65; background: var(--forest-pale);
+      border: 1px solid var(--forest-light); border-radius: 999px; padding: 4px 12px; margin-bottom: 14px;
+    }
+
+    /* ── CHOOSER CARD + STEPS ── */
+    .chooser-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 32px 28px; max-width: 760px; margin: 0 auto; box-shadow: var(--shadow-md);
+    }
+    .fp-step { padding-top: 8px; }
+    .fp-step + .fp-step { margin-top: 28px; border-top: 1px solid var(--border); padding-top: 28px; }
+    .fp-step-num {
+      font-family: 'Courier Prime', monospace; font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--forest-mid); margin-bottom: 8px;
+    }
+    .fp-step h2 { font-size: 1.4rem; margin-bottom: 6px; }
+    .fp-step > p { color: var(--muted); font-size: .92rem; margin-bottom: 18px; }
+
+    .fp-field { margin-bottom: 16px; }
+    .fp-field label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+    .fp-field input, .fp-field select {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: var(--r);
+      font-size: .92rem; background: var(--white); color: var(--text);
+    }
+    .fp-field input:focus, .fp-field select:focus { outline: 2px solid var(--forest-mid); border-color: transparent; }
+    .fp-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .fp-inline-link { display: inline-block; font-size: .82rem; color: var(--forest-mid); font-weight: 600; margin-top: 2px; }
+    .fp-inline-link:hover { text-decoration: underline; }
+
+    /* choice buttons (Step 2 branches + sub-options) */
+    .fp-choice {
+      display: block; width: 100%; text-align: left; background: var(--white);
+      border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; margin-bottom: 12px;
+      font-size: .92rem; color: var(--text); transition: border-color .15s, background .15s;
+    }
+    .fp-choice:hover { border-color: var(--forest-mid); }
+    .fp-choice.selected { border-color: var(--forest-mid); background: var(--forest-pale); }
+    .fp-choice strong { display: block; font-size: .95rem; margin-bottom: 3px; }
+    .fp-choice .fp-choice-sub { color: var(--muted); font-size: .85rem; line-height: 1.5; }
+    .fp-guidance {
+      background: var(--forest-pale); border-left: 3px solid var(--forest-mid); border-radius: 0 var(--r) var(--r) 0;
+      padding: 12px 16px; font-size: .86rem; color: var(--forest); line-height: 1.55; margin: 4px 0 14px;
+    }
+
+    .fp-branch-opts { display: none; margin-top: 16px; }
+
+    /* buttons */
+    .btn-primary {
+      background: var(--forest-mid); color: var(--white); padding: 12px 24px; border-radius: var(--r);
+      font-size: .92rem; font-weight: 500; border: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-primary:disabled { opacity: .55; cursor: default; }
+    .btn-ghost {
+      background: none; border: none; color: var(--forest-mid); font-size: .9rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px; padding: 12px 4px;
+    }
+    .fp-actions { margin-top: 18px; }
+
+    /* mandate urgency banner */
+    .fp-mandate {
+      display: none; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: var(--r);
+      padding: 12px 16px; font-size: .86rem; color: var(--amber-dark); line-height: 1.55; margin-bottom: 18px;
+    }
+
+    .fp-legal { font-size: .78rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+
+    /* confirmation */
+    .fp-confirm {
+      display: none; max-width: 640px; margin: 0 auto; background: var(--white);
+      border: 1px solid var(--border); border-radius: var(--r-lg); padding: 40px 32px; text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    .fp-confirm-icon { font-size: 2.6rem; margin-bottom: 14px; }
+    .fp-confirm h2 { margin-bottom: 12px; }
+    .fp-confirm p { color: var(--muted); font-size: .95rem; margin-bottom: 12px; }
+    .fp-link { color: var(--forest-mid); font-weight: 600; }
+    .fp-link:hover { text-decoration: underline; }
+    .fp-checkbox { display: inline-flex; gap: 8px; align-items: flex-start; text-align: left; font-size: .88rem; color: var(--text); margin: 8px auto 0; max-width: 420px; }
+    .fp-checkbox input { margin-top: 3px; flex-shrink: 0; }
+    .fp-note { font-size: .85rem; color: var(--forest-mid); font-weight: 600; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-section { background: var(--white); }
+    .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.fp-compare { width: 100%; border-collapse: collapse; font-size: .84rem; min-width: 720px; }
+    table.fp-compare th {
+      background: var(--forest); color: var(--white); text-align: left; padding: 12px 14px; font-weight: 500; font-size: .8rem;
+    }
+    table.fp-compare th:first-child { border-radius: var(--r) 0 0 0; }
+    table.fp-compare th:last-child { border-radius: 0 var(--r) 0 0; }
+    table.fp-compare td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.fp-compare tr:nth-child(even) td { background: var(--bg); }
+    table.fp-compare td.plan { font-weight: 600; color: var(--text); }
+    table.fp-compare td.us { color: var(--forest); font-weight: 600; }
+    .fp-tag-us { background: var(--forest-pale); color: var(--forest); border: 1px solid var(--forest-light); border-radius: 999px; padding: 2px 8px; font-size: .72rem; font-weight: 700; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--forest); color: rgba(255,255,255,.55); padding: 40px 0; font-size: .82rem; }
+    footer a { color: rgba(255,255,255,.7); }
+    footer a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero { padding: 48px 0 40px; }
+      .chooser-card { padding: 24px 18px; }
+    }
+    @media (max-width: 480px) {
+      .fp-grid-2 { grid-template-columns: 1fr; }
+      .nav-back { font-size: .82rem; }
+      .chooser-card { padding: 20px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav aria-label="Main navigation">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo-wrap" aria-label="Home">
+      <div class="logo-mark" id="fp-mark">AI</div>
+      <div class="logo-text" id="fp-brand">AIPEP401K</div>
+    </a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <h1>Start with what works, <em>not what sounds perfect.</em></h1>
+      <p class="hero-sub">The best retirement plan isn't the fanciest one — it's the one you'll actually set up and keep. Answer a few questions and we'll point you to the right fit, whether that's us or somewhere else.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ── CHOOSER ── -->
+<section class="section chooser-section" id="fp-chooser" aria-labelledby="chooser-headline">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:28px">
+      <span class="eyebrow">Find your plan</span>
+      <h2 id="chooser-headline" style="font-size:clamp(1.5rem,3.5vw,2.1rem)">A few quick questions.</h2>
+    </div>
+
+    <form class="chooser-card" id="fp-form" novalidate>
+
+      <!-- STEP 1 -->
+      <div class="fp-step" id="step-1">
+        <div class="fp-step-num">Step 1 of 3</div>
+        <h2>Does your state already require a plan?</h2>
+        <p>Many states now require small employers to offer a retirement plan. Start here.</p>
+        <div class="fp-field">
+          <label for="fp-state">Your state</label>
+          <select id="fp-state" aria-describedby="fp-state-help">
+            <option value="">Select your state…</option>
+          </select>
+          <a class="fp-inline-link" id="fp-state-help" href="https://cri.georgetown.edu/states/" target="_blank" rel="noopener">Check your state →</a>
+        </div>
+        <div class="fp-actions">
+          <button type="button" class="btn-primary" id="to-step-2">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="fp-step" id="step-2" style="display:none">
+        <div class="fp-step-num">Step 2 of 3</div>
+        <h2>Who are you saving for?</h2>
+        <p>Pick the one that sounds most like you.</p>
+
+        <button type="button" class="fp-choice" id="branch-a" aria-pressed="false" onclick="selectBranch('A')">
+          <strong>Just me</strong>
+          <span class="fp-choice-sub">Owner-only — no W-2 employees besides a spouse.</span>
+        </button>
+        <button type="button" class="fp-choice" id="branch-b" aria-pressed="false" onclick="selectBranch('B')">
+          <strong>Me + employees</strong>
+          <span class="fp-choice-sub">You have (or will soon have) W-2 employees.</span>
+        </button>
+
+        <!-- Branch A options -->
+        <div class="fp-branch-opts" id="branchA-opts" role="group" aria-label="Owner-only options">
+          <button type="button" class="fp-choice fp-subopt" data-val="A1" onclick="selectSub('A1')">
+            <strong>Keep it simple / low effort</strong>
+            <span class="fp-choice-sub">Lowest-friction option to get money saved.</span>
+          </button>
+          <div class="fp-guidance" data-for="A1">A SEP-IRA or a free Solo 401(k) at a major brokerage (Vanguard, Fidelity, Schwab) is likely your simplest path.</div>
+
+          <button type="button" class="fp-choice fp-subopt" data-val="A2" onclick="selectSub('A2')">
+            <strong>Maximize Roth, mega-backdoor, loans, or alt assets</strong>
+            <span class="fp-choice-sub">You want every advanced lever available.</span>
+          </button>
+          <div class="fp-guidance" data-for="A2">A premium Solo 401(k) gives you those features. Our AI-native “Solo+” is on the roadmap — join the interest list and we'll notify you.</div>
+
+          <button type="button" class="fp-choice fp-subopt" data-val="A3" onclick="selectSub('A3')">
+            <strong>Planning to hire soon</strong>
+            <span class="fp-choice-sub">Employees are coming in the next year or so.</span>
+          </button>
+          <div class="fp-guidance" data-for="A3">Since employees are on the way, a pooled 401(k) (PEP) will serve you best — join the launch waitlist below.</div>
+        </div>
+
+        <!-- Branch B options -->
+        <div class="fp-branch-opts" id="branchB-opts" role="group" aria-label="Employer options">
+          <button type="button" class="fp-choice fp-subopt" data-val="B1" onclick="selectSub('B1')">
+            <strong>Simple, predictable — OK with a required employer contribution</strong>
+            <span class="fp-choice-sub">You want the least moving parts.</span>
+          </button>
+          <div class="fp-guidance" data-for="B1">A SIMPLE IRA may fit. If you'd rather have higher limits and flexibility later, a pooled 401(k) is worth a look.</div>
+
+          <button type="button" class="fp-choice fp-subopt" data-val="B2" onclick="selectSub('B2')">
+            <strong>Higher limits, flexible match, auto-enroll — and someone else carries compliance</strong>
+            <span class="fp-choice-sub">You want a real 401(k), handled for you.</span>
+          </button>
+          <div class="fp-guidance" data-for="B2">A 401(k) is the tool. Our PEP is done-for-you, pooled, and lowest cost — <span class="fp-tag-us">this is us</span>. A standalone 401(k) is also an option (our AI-native standalone is on the roadmap — interest list).</div>
+        </div>
+
+        <div class="fp-actions">
+          <button type="button" class="btn-primary" id="to-step-3" style="display:none">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="fp-step" id="step-3" style="display:none">
+        <div class="fp-step-num">Step 3 of 3</div>
+        <h2>A few details, and we'll match you.</h2>
+        <p>This is all we need to point you to the right plan.</p>
+
+        <div class="fp-mandate" id="fp-mandate" role="status">
+          ⚠️ Your state may already require action — you'll likely need to either join the state program or offer a qualifying plan.
+        </div>
+
+        <div class="fp-field">
+          <label for="w2">W-2 employees (not counting owners or a spouse)</label>
+          <input type="number" id="w2" min="0" max="10000" step="1" placeholder="0" inputmode="numeric" />
+        </div>
+        <div class="fp-field">
+          <label for="ownerOnly">Are you owner-only today?</label>
+          <select id="ownerOnly">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="fp-field">
+          <label for="hiring">Planning to hire within 12 months?</label>
+          <select id="hiring">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+            <option value="Already have">Already have employees</option>
+          </select>
+        </div>
+        <div class="fp-field">
+          <label for="state3">Your state</label>
+          <select id="state3">
+            <option value="">Select your state…</option>
+          </select>
+        </div>
+        <div class="fp-field">
+          <label for="currentPlan">Current plan, if any</label>
+          <select id="currentPlan">
+            <option value="None">None</option>
+            <option value="State auto-IRA">State auto-IRA</option>
+            <option value="SEP-IRA">SEP-IRA</option>
+            <option value="SIMPLE IRA">SIMPLE IRA</option>
+            <option value="Solo 401(k)">Solo 401(k)</option>
+            <option value="Other 401(k)">Other 401(k)</option>
+          </select>
+        </div>
+        <div class="fp-field">
+          <label for="lookingFor">What are you looking for?</label>
+          <select id="lookingFor">
+            <option value="Ready for a PEP">Ready for a PEP</option>
+            <option value="Notify me at launch">Notify me at launch</option>
+            <option value="Solo (roadmap)">Solo (roadmap)</option>
+            <option value="Standalone (roadmap)">Standalone (roadmap)</option>
+          </select>
+        </div>
+
+        <div class="fp-grid-2">
+          <div class="fp-field">
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" autocomplete="given-name" required />
+          </div>
+          <div class="fp-field">
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" autocomplete="family-name" />
+          </div>
+        </div>
+        <div class="fp-field">
+          <label for="email">Work email</label>
+          <input type="email" id="email" autocomplete="email" required />
+        </div>
+        <div class="fp-field">
+          <label for="company">Company</label>
+          <input type="text" id="company" autocomplete="organization" />
+        </div>
+
+        <div class="fp-actions">
+          <button type="submit" class="btn-primary" id="fp-submit">See my match →</button>
+        </div>
+        <p class="fp-legal">No sales calls. We'll use this only to point you to the right plan and notify you about availability.</p>
+      </div>
+
+    </form>
+
+    <!-- CONFIRMATION -->
+    <div class="fp-confirm" id="fp-confirm" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ── COMPARISON TABLE ── -->
+<section class="section compare-section" aria-labelledby="compare-headline">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:28px">
+      <span class="eyebrow">Honest comparison</span>
+      <h2 id="compare-headline" style="font-size:clamp(1.5rem,3.5vw,2.1rem)">Every option, side by side.</h2>
+    </div>
+    <div class="compare-wrap">
+      <table class="fp-compare" aria-label="Retirement plan comparison">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Who it's for</th>
+            <th>Employer match?</th>
+            <th>Effort / cost</th>
+            <th>Do we offer it?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="plan">State auto-IRA</td>
+            <td>Employers in mandate states with no plan</td>
+            <td>No</td>
+            <td>Lowest</td>
+            <td>No — we'll point you there</td>
+          </tr>
+          <tr>
+            <td class="plan">SEP-IRA</td>
+            <td>Owner-only / very small, simple</td>
+            <td>Owner-funded only</td>
+            <td>Low</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td class="plan">SIMPLE IRA</td>
+            <td>Small employers wanting easy, predictable</td>
+            <td>Required, fixed</td>
+            <td>Low</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td class="plan">Solo 401(k)</td>
+            <td>Self-employed, no employees (spouse OK)</td>
+            <td>N/A</td>
+            <td>Low–medium</td>
+            <td>Roadmap (“Solo+”)</td>
+          </tr>
+          <tr>
+            <td class="plan">PEP</td>
+            <td>Employers with employees who want it handled</td>
+            <td>Optional, flexible</td>
+            <td>We handle it</td>
+            <td class="us">Yes — <span class="fp-tag-us">this is us</span></td>
+          </tr>
+          <tr>
+            <td class="plan">Standalone 401(k)</td>
+            <td>Employers wanting full custom control</td>
+            <td>Optional, flexible</td>
+            <td>Higher</td>
+            <td>Roadmap (AI-native)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div id="fp-foot-brand" style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:6px">AIPEP401K</div>
+    <p>A nonprofit Pooled Employer Plan. <a href="index.html">Back to home →</a></p>
+  </div>
+</footer>
+
+<!-- ── SCRIPT ── -->
+<script>
+const SOURCE = "thinknirvana";   // "thinknirvana" or "aipep401k"
+const MANDATE_STATES = ["CA","CO","CT","DE","IL","MD","ME","MN","NJ","NY","OR","VA","WA"];
+/* Reuse the SAME Apps Script endpoint the existing index.html waitlist form posts to. */
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz2sryRvCQXrNsUHlQJxy8N0naADGILQ6HGdsX_qQPLCIQFqYGfIKC3xXcJdp4TdPd5-Q/exec";
+
+const STATES = [
+  ["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],
+  ["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["DC","District of Columbia"],["FL","Florida"],
+  ["GA","Georgia"],["HI","Hawaii"],["ID","Idaho"],["IL","Illinois"],["IN","Indiana"],
+  ["IA","Iowa"],["KS","Kansas"],["KY","Kentucky"],["LA","Louisiana"],["ME","Maine"],
+  ["MD","Maryland"],["MA","Massachusetts"],["MI","Michigan"],["MN","Minnesota"],["MS","Mississippi"],
+  ["MO","Missouri"],["MT","Montana"],["NE","Nebraska"],["NV","Nevada"],["NH","New Hampshire"],
+  ["NJ","New Jersey"],["NM","New Mexico"],["NY","New York"],["NC","North Carolina"],["ND","North Dakota"],
+  ["OH","Ohio"],["OK","Oklahoma"],["OR","Oregon"],["PA","Pennsylvania"],["RI","Rhode Island"],
+  ["SC","South Carolina"],["SD","South Dakota"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],
+  ["VT","Vermont"],["VA","Virginia"],["WA","Washington"],["WV","West Virginia"],["WI","Wisconsin"],["WY","Wyoming"]
+];
+
+/* Brand label derived from SOURCE so the page stays identical except this constant. */
+(function setBrand(){
+  var label = SOURCE === "thinknirvana" ? "ThinkNirvana" : "AIPEP401K";
+  var mark = SOURCE === "thinknirvana" ? "TN" : "AI";
+  var b = document.getElementById("fp-brand"); if (b) b.textContent = label;
+  var fb = document.getElementById("fp-foot-brand"); if (fb) fb.textContent = label;
+  var m = document.getElementById("fp-mark"); if (m) m.textContent = mark;
+})();
+
+function fillStates(sel) {
+  var opts = '<option value="">Select your state…</option>';
+  for (var i=0;i<STATES.length;i++){ opts += '<option value="'+STATES[i][0]+'">'+STATES[i][1]+'</option>'; }
+  sel.innerHTML = opts;
+}
+var state1 = document.getElementById('fp-state');
+var state3 = document.getElementById('state3');
+fillStates(state1); fillStates(state3);
+
+var step2 = document.getElementById('step-2');
+var step3 = document.getElementById('step-3');
+
+document.getElementById('to-step-2').addEventListener('click', function(){
+  step2.style.display = 'block';
+  step2.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+var branch = null, subChoice = null;
+function selectBranch(b){
+  branch = b; subChoice = null;
+  document.getElementById('branch-a').classList.toggle('selected', b==='A');
+  document.getElementById('branch-b').classList.toggle('selected', b==='B');
+  document.getElementById('branch-a').setAttribute('aria-pressed', b==='A');
+  document.getElementById('branch-b').setAttribute('aria-pressed', b==='B');
+  document.getElementById('branchA-opts').style.display = (b==='A') ? 'block' : 'none';
+  document.getElementById('branchB-opts').style.display = (b==='B') ? 'block' : 'none';
+  document.querySelectorAll('.fp-subopt').forEach(function(el){ el.classList.remove('selected'); });
+  document.getElementById('to-step-3').style.display = 'inline-flex';
+}
+function selectSub(val){
+  subChoice = val;
+  document.querySelectorAll('.fp-subopt').forEach(function(el){ el.classList.toggle('selected', el.dataset.val===val); });
+}
+
+document.getElementById('to-step-3').addEventListener('click', function(){
+  prefillStep3();
+  if (state1.value) state3.value = state1.value;
+  step3.style.display = 'block';
+  toggleMandateBanner();
+  step3.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+function prefillStep3(){
+  var owner = document.getElementById('ownerOnly');
+  var hiring = document.getElementById('hiring');
+  var looking = document.getElementById('lookingFor');
+  if (branch === 'A'){
+    owner.value = 'Yes';
+    if (subChoice === 'A3'){ hiring.value = 'Yes'; looking.value = 'Ready for a PEP'; }
+    else { hiring.value = 'No'; looking.value = 'Solo (roadmap)'; }
+  } else if (branch === 'B'){
+    owner.value = 'No';
+    hiring.value = 'Already have';
+    looking.value = (subChoice === 'B2') ? 'Ready for a PEP' : 'Notify me at launch';
+  }
+}
+
+function toggleMandateBanner(){
+  var st = state3.value || state1.value;
+  var cp = document.getElementById('currentPlan').value;
+  var show = MANDATE_STATES.indexOf(st) !== -1 && cp === 'None';
+  document.getElementById('fp-mandate').style.display = show ? 'block' : 'none';
+}
+state3.addEventListener('change', toggleMandateBanner);
+document.getElementById('currentPlan').addEventListener('change', toggleMandateBanner);
+
+document.getElementById('fp-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var w2raw = document.getElementById('w2').value;
+  var w2Employees = (w2raw === '' || isNaN(parseInt(w2raw,10))) ? 0 : parseInt(w2raw,10);
+  var ownerOnly = document.getElementById('ownerOnly').value;
+  var hiring12mo = document.getElementById('hiring').value;
+  var state = state3.value;
+  var currentPlan = document.getElementById('currentPlan').value;
+  var lookingFor = document.getElementById('lookingFor').value;
+  var firstName = document.getElementById('firstName').value.trim();
+  var lastName = document.getElementById('lastName').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var company = document.getElementById('company').value.trim();
+
+  if (!firstName || !email){ alert('Please enter your first name and email so we can send your match.'); return; }
+
+  var fitStatus;
+  if (w2Employees >= 1 || hiring12mo === 'Already have' || hiring12mo === 'Yes'){
+    fitStatus = 'pep_priority';
+  } else if (ownerOnly === 'Yes' && hiring12mo === 'No'){
+    fitStatus = (lookingFor === 'Standalone (roadmap)') ? 'roadmap_standalone' : 'roadmap_solo';
+  } else {
+    fitStatus = 'redirect';
+  }
+
+  var payload = {
+    timestamp: new Date().toISOString(),
+    source: SOURCE,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    company: company,
+    currentPlan: currentPlan,
+    employees: "",
+    w2Employees: w2Employees,
+    ownerOnly: ownerOnly,
+    hiring12mo: hiring12mo,
+    state: state,
+    lookingFor: lookingFor,
+    fitStatus: fitStatus
+  };
+
+  var btn = document.getElementById('fp-submit');
+  btn.disabled = true; btn.textContent = 'Submitting…';
+
+  fetch(GOOGLE_APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(){ showConfirmation(fitStatus, state); })
+  .catch(function(){
+    btn.disabled = false; btn.textContent = 'See my match →';
+    alert('Something went wrong. Please try again or email hello@thinknirvana.org.');
+  });
+});
+
+function showConfirmation(fitStatus, state){
+  document.getElementById('fp-chooser').style.display = 'none';
+  var box = document.getElementById('fp-confirm');
+  var html = '';
+  if (fitStatus === 'pep_priority'){
+    html = '<div class="fp-confirm-icon">🌱</div>' +
+      '<h2>You\'re a fit — you\'re on the list for the Aug 1 launch.</h2>' +
+      '<p>We\'ll be in touch with next steps before launch. No sales calls — just the details you need.</p>';
+  } else if (fitStatus === 'roadmap_solo' || fitStatus === 'roadmap_standalone'){
+    var planLabel = (fitStatus === 'roadmap_standalone') ? 'a standalone 401(k)' : 'a Solo 401(k) or SEP-IRA';
+    var roadmapLabel = (fitStatus === 'roadmap_standalone') ? 'standalone' : 'solo';
+    html = '<div class="fp-confirm-icon">🧭</div>' +
+      '<h2>' + planLabel.charAt(0).toUpperCase() + planLabel.slice(1) + ' is likely your best tool today — here\'s how to start.</h2>' +
+      '<p>For most owner-only businesses, ' + planLabel + ' at a major brokerage (Vanguard, Fidelity, or Schwab) is low-cost and quick to open. We\'ve saved your details.</p>' +
+      '<label class="fp-checkbox"><input type="checkbox" id="fp-ping" /> Want us to ping you if you hire, or when our AI-native ' + roadmapLabel + ' plan launches?</label>' +
+      '<p class="fp-note" id="fp-ping-note" style="display:none">Got it — we\'ll reach out.</p>';
+  } else {
+    var mandateNote = (MANDATE_STATES.indexOf(state) !== -1) ? ', and your state may require action soon' : '';
+    html = '<div class="fp-confirm-icon">📍</div>' +
+      '<h2>Here\'s your next step.</h2>' +
+      '<p>Based on your answers, a state-facilitated program or another plan type may be the right starting point' + mandateNote + '. We\'ve saved your info and will reach out if a pooled 401(k) becomes the right fit.</p>' +
+      '<p><a class="fp-link" href="https://cri.georgetown.edu/states/" target="_blank" rel="noopener">See your state\'s retirement program →</a></p>';
+  }
+  box.innerHTML = html;
+  box.style.display = 'block';
+  var ping = document.getElementById('fp-ping');
+  if (ping){
+    ping.addEventListener('change', function(e){
+      document.getElementById('fp-ping-note').style.display = e.target.checked ? 'block' : 'none';
+    });
+  }
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+</script>
+
+</body>
+</html>
