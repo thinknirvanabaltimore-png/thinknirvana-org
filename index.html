@@ -209,6 +209,13 @@
     .nav-links { display: flex; gap: 18px; }
     .nav-links a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color .15s; white-space: nowrap; }
     .nav-links a:hover { color: var(--white); }
+    .nav-dropdown { position: relative; }
+    .nav-drop-toggle { background: none; border: none; cursor: pointer; font-family: inherit; color: rgba(255,255,255,.6); font-size: .88rem; display: inline-flex; align-items: center; gap: 5px; padding: 0; transition: color .15s; }
+    .nav-drop-toggle:hover { color: var(--white); }
+    .nav-drop-menu { display: none; position: absolute; top: calc(100% + 12px); right: 0; left: auto; background: var(--forest); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 0; min-width: 212px; box-shadow: 0 10px 30px rgba(0,0,0,.35); z-index: 200; }
+    .nav-dropdown:hover .nav-drop-menu, .nav-dropdown:focus-within .nav-drop-menu, .nav-dropdown.open .nav-drop-menu { display: block; }
+    .nav-drop-menu a { display: block; padding: 9px 18px; color: rgba(255,255,255,.65); font-size: .88rem; white-space: nowrap; transition: color .15s, background .15s; }
+    .nav-drop-menu a:hover { color: var(--white); background: rgba(255,255,255,.06); }
     .nav-cta {
       background: transparent;
       border: 1px solid rgba(255,255,255,.2);
@@ -554,6 +561,9 @@
         border-bottom: 1px solid rgba(255,255,255,.1);
       }
       .nav-links.open a { font-size: 1rem; color: rgba(255,255,255,.8); }
+      .nav-dropdown { width: 100%; }
+      .nav-drop-toggle { color: rgba(255,255,255,.8); font-size: 1rem; }
+      .nav-drop-menu { display: block; position: static; transform: none; background: none; border: none; box-shadow: none; padding: 4px 0 0 14px; min-width: 0; }
       .hero { padding: 60px 0 56px; }
       .hero-numbers { grid-template-columns: 1fr; gap: 16px; }
       .hero-number { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); padding: 0 0 16px; }
@@ -610,7 +620,13 @@
       <a href="#board">Leadership</a>
       <a href="find-your-plan.html">Compare Plans</a>
       <a href="#fee-calculator">Fee Calculator</a>
-      <a href="/tools/plan-design/">Plan Design Tool</a>
+      <div class="nav-dropdown">
+        <button class="nav-drop-toggle" aria-haspopup="true" aria-expanded="false" onclick="this.parentElement.classList.toggle('open')">Tools <span aria-hidden="true">▾</span></button>
+        <div class="nav-drop-menu">
+          <a href="/tools/plan-design/">Plan Design Tool</a>
+          <a href="/tools/plan-design-visualizer/">Plan Design Visualizer</a>
+        </div>
+      </div>
       <a href="#contact">Contact</a>
     </div>
     <a href="https://aipep401k.com" class="nav-cta">Visit AIPEP401K.com →</a>

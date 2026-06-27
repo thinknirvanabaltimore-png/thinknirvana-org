@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8"/>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
 <script>
@@ -9,7 +10,6 @@
   gtag('js', new Date());
   gtag('config', 'G-92TN60N26P');
 </script>
-<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Nirvana Plan Design Visualizer — plan design for every US firm | ThinkNirvana</title>
 <meta name="description" content="Pick your company size, check the features your current plan carries, and see the administrative load and the fees that compound against employee balances over time — alongside a simpler, fully-automated alternative."/>
@@ -17,18 +17,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
-  :root{
-    /* Re-skinned to the live site palette (same value-mapping as the Plan Design Tool; no invented colors). */
-    --cream:#F9FAFB; --cream-2:#FFFFFF; --cream-3:#E5E7EB;
-    --ink:#111827; --ink-soft:#111827; --ink-muted:#5C6470;
-    --rust:#1D9E75; --rust-lt:#9FE1CB; --rust-bg:#E1F5EE;
-    --forest:#0D2B1E; --forest-lt:#1D9E75; --forest-bg:#E1F5EE;
-    --gold:#854F0B; --gold-bg:#F9FAFB;
-    --red:#9b2915;                                              /* real red retained (owner approved): cost/negative figures read red */
-    --border:#E5E7EB; --r:8px; --r-lg:16px;
-    --mono:'Courier Prime',monospace; --serif:'Playfair Display',serif; --sans:'Lato',sans-serif;
-    /* site-only tokens required by the injected nav/footer */
-    --white:#FFFFFF; --forest-light:#9FE1CB; --forest-mid:#1D9E75; --bg:#F9FAFB;
+      :root{
+    --cream:#0c2419; --cream-2:#103024; --cream-3:#16402d;
+    --ink:#f4f1e9; --ink-soft:#d4e0d7; --ink-muted:#9fb3a6;
+    --rust:#33c08c; --rust-lt:#46d6a0; --rust-bg:#143a29;
+    --forest:#33c08c; --forest-lt:#46d6a0; --forest-bg:#143a29; --forest-deep:#081f15;
+    --gold:#d9b25a; --gold-bg:#2a2415;
+    --red:#ef9a86; --red-bg:#3a201c;
+    --border:#244a38; --r:6px; --r-lg:14px;
+    --mono:'Courier Prime',monospace; --serif:'Playfair Display',serif; --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -41,25 +38,25 @@
   .masthead{border-bottom:2px solid var(--ink);background:var(--cream);}
   .masthead-top{display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border);}
   .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);}
-  .lotus{width:36px;height:36px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:var(--rust);font-size:.95rem;}
+  .lotus{width:36px;height:36px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:var(--rust);font-size:0.95rem;}
   .brand-name{font-family:var(--serif);font-size:1.18rem;letter-spacing:-.01em;}
   .brand-dot{color:var(--rust);}
-  .masthead-meta{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);text-align:right;line-height:1.5;}
+  .masthead-meta{font-family:var(--mono);font-size:0.77rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);text-align:right;line-height:1.5;}
   .masthead-title{padding:34px 0 24px;}
-  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .kicker{font-family:var(--mono);font-size:0.81rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
   .kicker::after{content:'';flex:1;height:1px;background:var(--border);}
   .masthead-title h1{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.05;letter-spacing:-.02em;font-weight:700;max-width:17ch;}
   .masthead-title h1 em{font-style:italic;color:var(--rust);}
   .masthead-title .deck{margin-top:18px;max-width:68ch;font-size:1.04rem;color:var(--ink-soft);border-top:1px solid var(--border);padding-top:16px;}
-  .tagline{margin-top:14px;font-family:var(--mono);font-size:.82rem;letter-spacing:.03em;color:var(--ink-muted);}
+  .tagline{margin-top:14px;font-family:var(--mono);font-size:0.89rem;letter-spacing:.03em;color:var(--ink-muted);}
   .tagline b{color:var(--forest);font-weight:700;}
 
   .toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap;padding-bottom:2px;}
-  .persona-note{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);}
+  .persona-note{font-family:var(--mono);font-size:0.73rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);}
   .viewtoggle{display:flex;align-items:center;gap:9px;}
-  .viewtoggle .vt-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);}
+  .viewtoggle .vt-label{font-family:var(--mono);font-size:0.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);}
   .seg-view{display:flex;border:1.5px solid var(--ink);border-radius:var(--r);overflow:hidden;}
-  .seg-view button{appearance:none;border:none;background:var(--cream);color:var(--ink-soft);font-family:var(--sans);font-size:.78rem;font-weight:700;padding:7px 15px;cursor:pointer;transition:background .15s,color .15s;}
+  .seg-view button{appearance:none;border:none;background:var(--cream);color:var(--ink-soft);font-family:var(--sans);font-size:0.85rem;font-weight:700;padding:7px 15px;cursor:pointer;transition:background .15s,color .15s;}
   .seg-view button.on{background:var(--ink);color:var(--cream);}
   .seg-view button:first-child{border-right:1.5px solid var(--ink);}
 
@@ -69,24 +66,24 @@
   @media(max-width:920px){.grid{grid-template-columns:1fr;}}
   .inputs{padding:30px 28px;border-right:1px solid var(--border);background:var(--cream-2);}
   @media(max-width:920px){.inputs{border-right:none;border-bottom:1px solid var(--border);}}
-  .inputs h2,.results h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+  .inputs h2,.results h2{font-family:var(--mono);font-size:0.79rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
   .inputs h2::before{content:'01';font-weight:700;color:var(--rust);}
   .results h2::before{content:'02';font-weight:700;color:var(--rust);}
 
   /* segment selector */
   .seg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:26px;}
   .seg3 button{appearance:none;cursor:pointer;border:1.5px solid var(--border);background:var(--cream);border-radius:var(--r);padding:12px 6px;text-align:center;transition:all .15s;}
-  .seg3 button .s-name{display:block;font-family:var(--sans);font-weight:700;font-size:.82rem;color:var(--ink-soft);}
-  .seg3 button .s-sub{display:block;font-family:var(--mono);font-size:.64rem;color:var(--ink-muted);margin-top:3px;}
+  .seg3 button .s-name{display:block;font-family:var(--sans);font-weight:700;font-size:0.89rem;color:var(--ink-soft);}
+  .seg3 button .s-sub{display:block;font-family:var(--mono);font-size:0.71rem;color:var(--ink-muted);margin-top:3px;}
   .seg3 button.on{background:var(--ink);border-color:var(--ink);}
   .seg3 button.on .s-name{color:var(--cream);}
   .seg3 button.on .s-sub{color:var(--gold);}
 
   .field{margin-bottom:24px;}
   .field-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
-  .field-label{font-size:.9rem;font-weight:700;color:var(--ink-soft);}
+  .field-label{font-size:0.97rem;font-weight:700;color:var(--ink-soft);}
   .field-val{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--rust);background:var(--rust-bg);padding:2px 9px;border-radius:4px;}
-  .field-sub{font-size:.74rem;color:var(--ink-muted);margin-top:7px;line-height:1.4;}
+  .field-sub{font-size:0.81rem;color:var(--ink-muted);margin-top:7px;line-height:1.4;}
 
   input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--cream-3);border-radius:3px;outline:none;}
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid var(--cream);box-shadow:0 1px 4px rgba(0,0,0,.25);transition:background .15s;}
@@ -94,128 +91,124 @@
   input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid var(--cream);}
   input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--rust);outline-offset:2px;}
 
-  .feat-label{font-size:.9rem;font-weight:700;color:var(--ink-soft);display:block;margin:4px 0 12px;}
+  .feat-label{font-size:0.97rem;font-weight:700;color:var(--ink-soft);display:block;margin:4px 0 12px;}
   .check-row{display:flex;align-items:flex-start;gap:11px;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:10px;cursor:pointer;background:var(--cream);transition:border-color .15s,background .15s;}
   .check-row:hover{border-color:var(--ink);}
   .check-row.on{border-color:var(--rust);background:var(--rust-bg);}
   .check-row input{margin-top:3px;accent-color:var(--rust);width:16px;height:16px;cursor:pointer;}
-  .check-row .ck-label{font-size:.85rem;font-weight:700;color:var(--ink-soft);}
-  .check-row .ck-sub{font-size:.72rem;color:var(--ink-muted);margin-top:2px;line-height:1.4;}
+  .check-row .ck-label{font-size:0.92rem;font-weight:700;color:var(--ink-soft);}
+  .check-row .ck-sub{font-size:0.79rem;color:var(--ink-muted);margin-top:2px;line-height:1.4;}
 
   /* results */
   .results{padding:30px 30px 36px;}
-  .takeaway{border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 26px;margin-bottom:24px;background:var(--cream-2);}
-  .takeaway .t-eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;}
-  .takeaway .t-val{font-family:var(--serif);font-size:2.7rem;line-height:1;letter-spacing:-.02em;color:var(--forest);}
-  .takeaway .t-sentence{font-size:1rem;color:var(--ink-soft);margin-top:14px;line-height:1.6;}
+  .takeaway{border:2px solid var(--forest-lt);border-radius:var(--r-lg);padding:24px 26px;margin-bottom:24px;background:var(--forest-deep);color:#f4f1e9;}
+  .takeaway .t-eyebrow{font-family:var(--mono);font-size:0.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest-lt);margin-bottom:10px;}
+  .takeaway .t-val{font-family:var(--serif);font-size:2.7rem;line-height:1;letter-spacing:-.02em;color:#ffffff;}
+  .takeaway .t-sentence{font-size:1rem;color:rgba(244,241,233,.85);margin-top:14px;line-height:1.6;} .takeaway .t-sentence b{color:#fff;}
   .takeaway .t-sentence b{color:var(--ink);}
 
-  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ink);border:2px solid var(--ink);border-radius:var(--r-lg);overflow:hidden;margin:24px 0;}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:24px 0;}
   @media(max-width:520px){.metrics{grid-template-columns:1fr;}}
   .metric{background:var(--cream);padding:20px 22px;}
-  .metric.feature{background:var(--ink);color:var(--cream);}
-  .metric .m-label{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
-  .metric.feature .m-label{color:var(--gold);}
+  .metric.feature{background:var(--forest-deep);color:#f4f1e9;}
+  .metric .m-label{font-family:var(--mono);font-size:0.71rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
+  .metric.feature .m-label{color:var(--forest-lt);}
   .metric .m-val{font-family:var(--serif);font-size:2rem;line-height:1;letter-spacing:-.02em;}
   .metric .m-val.forest{color:var(--forest);}
-  .metric .m-sub{font-size:.73rem;color:var(--ink-muted);margin-top:8px;}
+  .metric .m-sub{font-size:0.8rem;color:var(--ink-muted);margin-top:8px;}
   .metric.feature .m-sub{color:rgba(250,247,242,.6);}
 
   .counters{display:flex;gap:2px;background:var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px;}
   @media(max-width:520px){.counters{flex-direction:column;}}
   .counter{flex:1;background:var(--cream-2);padding:15px 16px;}
   .counter .c-val{font-family:var(--mono);font-weight:700;font-size:1.2rem;color:var(--ink);}
-  .counter .c-label{font-size:.72rem;color:var(--ink-muted);margin-top:2px;line-height:1.35;}
+  .counter .c-label{font-size:0.79rem;color:var(--ink-muted);margin-top:2px;line-height:1.35;}
 
   .chart-block{margin:8px 0 24px;border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 20px 12px;background:var(--cream-2);}
-  .chart-title{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;}
+  .chart-title{font-family:var(--mono);font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);margin-bottom:4px;} .chart-sub{font-size:0.82rem;color:var(--ink-muted);line-height:1.5;margin-bottom:12px;}
   .chart-headline{font-family:var(--serif);font-size:1.45rem;color:var(--forest);margin-bottom:14px;letter-spacing:-.01em;}
   svg .bar{transition:opacity .15s;} svg .bar:hover{opacity:.82;}
 
   /* architecture comparison */
   .arch{margin:6px 0 26px;}
-  .arch h3{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;}
+  .arch h3{font-family:var(--mono);font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;}
   .arch-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
   @media(max-width:680px){.arch-grid{grid-template-columns:1fr;}}
   .arch-card{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px 16px 18px;background:var(--cream-2);position:relative;}
   .arch-card .dot{width:8px;height:8px;border-radius:50%;position:absolute;top:16px;right:16px;}
-  .arch-card.legacy .dot{background:var(--rust);}
+  .arch-card.legacy .dot{background:var(--red);}
   .arch-card.bench .dot{background:var(--gold);}
   .arch-card.nirvana{border-color:var(--forest);background:var(--forest-bg);}
   .arch-card.nirvana .dot{background:var(--forest);}
-  .arch-card h4{font-size:.85rem;font-weight:700;color:var(--ink-soft);margin-bottom:6px;padding-right:14px;}
-  .arch-card p{font-size:.74rem;color:var(--ink-muted);line-height:1.5;min-height:62px;}
-  .arch-card .cost{display:block;margin-top:10px;font-family:var(--mono);font-size:.82rem;font-weight:700;}
-  .arch-card.legacy .cost{color:var(--rust);}
+  .arch-card h4{font-size:0.92rem;font-weight:700;color:var(--ink-soft);margin-bottom:6px;padding-right:14px;}
+  .arch-card p{font-size:0.81rem;color:var(--ink-muted);line-height:1.5;min-height:62px;}
+  .arch-card .cost{display:block;margin-top:10px;font-family:var(--mono);font-size:0.89rem;font-weight:700;}
+  .arch-card.legacy .cost{color:var(--red);}
   .arch-card.bench .cost{color:var(--gold);}
   .arch-card.nirvana .cost{color:var(--forest);}
   .benchmark-note{margin:6px 0 26px;border:1px solid var(--border);border-left:3px solid var(--forest);border-radius:var(--r-lg);padding:18px 20px;background:var(--forest-bg);}
-  .benchmark-note .bn-eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);margin-bottom:8px;}
-  .benchmark-note p{font-size:.82rem;color:var(--ink-soft);line-height:1.6;}
+  .benchmark-note .bn-eyebrow{font-family:var(--mono);font-size:0.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);margin-bottom:8px;}
+  .benchmark-note p{font-size:0.89rem;color:var(--ink-soft);line-height:1.6;}
   .benchmark-note p b{color:var(--ink);}
 
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 28px;}
-  .btn{appearance:none;cursor:pointer;font-family:var(--sans);font-size:.86rem;font-weight:700;padding:12px 22px;border-radius:var(--r);border:2px solid transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .15s;}
+  .btn{appearance:none;cursor:pointer;font-family:var(--sans);font-size:0.93rem;font-weight:700;padding:12px 22px;border-radius:var(--r);border:2px solid transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .15s;}
   .btn-dark{background:var(--ink);color:var(--cream);border-color:var(--ink);}
   .btn-dark:hover{background:var(--rust);border-color:var(--rust);}
   .btn-ghost{background:transparent;color:var(--ink);border-color:var(--border);}
   .btn-ghost:hover{border-color:var(--ink);}
 
   /* AIPEP hand-off */
-  .handoff{background:var(--ink);color:var(--cream);border-radius:var(--r-lg);padding:28px 30px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;}
+  .handoff{background:var(--forest-deep);color:#f4f1e9;border-radius:var(--r-lg);padding:28px 30px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;}
   @media(max-width:620px){.handoff{grid-template-columns:1fr;}}
-  .handoff .h-eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .handoff .h-eyebrow{font-family:var(--mono);font-size:0.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest-lt);margin-bottom:8px;}
   .handoff h3{font-family:var(--serif);font-size:1.5rem;line-height:1.15;letter-spacing:-.01em;}
-  .handoff p{color:rgba(250,247,242,.65);font-size:.86rem;margin-top:8px;max-width:52ch;}
-  .handoff .btn-gold{background:var(--gold);color:var(--ink);border-color:var(--gold);font-size:.92rem;padding:14px 26px;white-space:nowrap;}
-  .handoff .btn-gold:hover{background:#d9ad4d;border-color:#d9ad4d;}
+  .handoff p{color:rgba(250,247,242,.65);font-size:0.93rem;margin-top:8px;max-width:52ch;}
+  .handoff .btn-gold{background:var(--forest-lt);color:#0c2a1e;border-color:var(--forest-lt);font-size:0.92rem;padding:14px 26px;white-space:nowrap;}
+  .handoff .btn-gold:hover{background:#23b487;border-color:#23b487;}
 
   .thesis{background:var(--cream-2);border-top:2px solid var(--ink);padding:40px 0;margin-top:44px;}
   .thesis .wrap{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;}
   @media(max-width:680px){.thesis .wrap{grid-template-columns:1fr;}}
   .thesis h4{font-family:var(--serif);font-size:1.4rem;margin-bottom:8px;letter-spacing:-.01em;}
-  .thesis p{color:var(--ink-soft);font-size:.92rem;max-width:72ch;}
-  .footnote{font-family:var(--mono);font-size:.68rem;color:var(--ink-muted);text-align:center;padding:22px 0 40px;line-height:1.7;}
+  .thesis p{color:var(--ink-soft);font-size:0.92rem;max-width:72ch;}
+  .footnote{font-family:var(--mono);font-size:0.75rem;color:var(--ink-muted);text-align:center;padding:22px 0 40px;line-height:1.7;}
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
-
-  /* ===== INJECTED LIVE SITE CHROME (nav + footer) ===== */
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-  .site-nav { background: var(--forest); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .site-nav { background: #0D2B1E; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,.06); }
   .site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 24px; }
   .site-nav .logo-wrap { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-  .site-nav .logo-mark { width: 36px; height: 36px; border: 1.5px solid rgba(159,225,203,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: .9rem; font-style: italic; color: var(--forest-light); }
-  .site-nav .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; }
+  .site-nav .logo-mark { width: 36px; height: 36px; border: 1.5px solid rgba(159,225,203,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: .9rem; font-style: italic; color: #46d6a0; }
+  .site-nav .logo-text { color: #FFFFFF; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; }
   .site-nav .logo-sub  { color: rgba(255,255,255,.35); font-size: .78rem; letter-spacing: .1em; font-family: 'Courier Prime', monospace; text-transform: uppercase; }
   .site-nav .nav-links { display: flex; gap: 18px; }
   .site-nav .nav-links a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color .15s; white-space: nowrap; }
-  .site-nav .nav-links a:hover { color: var(--white); }
+  .site-nav .nav-links a:hover { color: #FFFFFF; }
   .site-nav .nav-cta { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); padding: 7px 16px; border-radius: var(--r); font-size: .88rem; transition: all .15s; flex-shrink: 0; }
-  .site-nav .nav-cta:hover { border-color: var(--white); color: var(--white); }
-  .site-nav .nav-mobile-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.4rem; }
-  footer.site-footer { background: var(--forest); color: rgba(255,255,255,.5); padding: 56px 0 32px; border-top: 1px solid rgba(255,255,255,.06); }
+  .site-nav .nav-cta:hover { border-color: #FFFFFF; color: #FFFFFF; }
+  .site-nav .nav-mobile-toggle { display: none; background: none; border: none; color: #FFFFFF; font-size: 1.4rem; }
+  footer.site-footer { background: #0D2B1E; color: rgba(255,255,255,.5); padding: 56px 0 32px; border-top: 1px solid rgba(255,255,255,.06); }
   .site-footer .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
   .site-footer .footer-brand p { font-size: .84rem; color: rgba(255,255,255,.45); line-height: 1.7; margin-top: 14px; }
   .site-footer .footer-stamp { font-size: .78rem; font-family: 'Courier Prime', monospace; letter-spacing: .07em; color: rgba(255,255,255,.2); margin-top: 14px; }
   .site-footer .footer-col h5 { font-size: .78rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 14px; }
   .site-footer .footer-col a { display: block; font-size: .88rem; color: rgba(255,255,255,.5); margin-bottom: 8px; transition: color .15s; }
-  .site-footer .footer-col a:hover { color: var(--white); }
+  .site-footer .footer-col a:hover { color: #FFFFFF; }
   .site-footer hr.footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin-bottom: 20px; }
   .site-footer .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .82rem; color: rgba(255,255,255,.4); }
   .site-footer .footer-bottom a { color: rgba(255,255,255,.35); margin-left: 14px; }
-  .site-footer .footer-bottom a:hover { color: var(--white); }
+  .site-footer .footer-bottom a:hover { color: #FFFFFF; }
   .site-footer .footer-disc { font-size: .78rem; line-height: 1.7; color: rgba(255,255,255,.25); margin-top: 18px; max-width: 860px; }
   @media (max-width: 768px) {
     .site-nav .nav-links, .site-nav .nav-cta { display: none; }
     .site-nav .nav-mobile-toggle { display: block; }
-    .site-nav .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0; background: var(--forest); padding: 20px 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .site-nav .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0; background: #0D2B1E; padding: 20px 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.1); }
     .site-footer .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
   }
 </style>
 </head>
 <body class="simple">
 
-<!-- ── INJECTED LIVE SITE NAV ── -->
 <nav class="site-nav" aria-label="Main navigation">
   <div class="container nav-inner">
     <a href="/" class="logo-wrap" aria-label="ThinkNirvana home">
@@ -317,44 +310,45 @@
         <h2>What scaling the legacy stack costs</h2>
 
         <div class="takeaway simple-only">
-          <div class="t-eyebrow" id="take-eyebrow">Wealth kept in employee accounts · 10-year horizon</div>
+          <div class="t-eyebrow" id="take-eyebrow">The Realized Nirvana Dividend · 10-year horizon</div>
           <div class="t-val" id="take-val">—</div>
           <div class="t-sentence" id="take-sentence">—</div>
         </div>
 
         <div class="metrics">
           <div class="metric feature">
-            <div class="m-label" id="m-wealth-label">Wealth kept in employee accounts · 10 yr</div>
+            <div class="m-label" id="m-wealth-label">The Realized Nirvana Dividend · 10 yr</div>
             <div class="m-val" id="m-wealth">—</div>
             <div class="m-sub" id="m-wealth-sub">The gap between our sub-0.10% fee <em>target</em> and the checked feature set, compounded over ten years.</div>
           </div>
           <div class="metric">
-            <div class="m-label">Annual operational value · employer</div>
+            <div class="m-label">Operational Drag · reclaimed annually</div>
             <div class="m-val forest" id="m-employer">—</div>
             <div class="m-sub">Administrative load plus retention value, redeployable each year.</div>
           </div>
         </div>
 
         <div class="counters">
-          <div class="counter"><div class="c-val" id="c-perpart">—</div><div class="c-label">Per participant · 10 yr</div></div>
+          <div class="counter"><div class="c-val" id="c-perpart">—</div><div class="c-label">Sovereign-style savings · per participant</div></div>
           <div class="counter"><div class="c-val" id="c-vendors">—</div><div class="c-label">Point solutions to manage</div></div>
           <div class="counter detail-only"><div class="c-val" id="c-hours">—</div><div class="c-label">HR admin hours saved / yr</div></div>
         </div>
 
         <div class="chart-block">
-          <div class="chart-title">Cumulative wealth kept in employee accounts — 10-year horizon</div>
+          <div class="chart-title">The Realized Nirvana Dividend</div>
+          <div class="chart-sub">Cumulative wealth returned to employer budgets and employee accounts over 10 years.</div>
           <div class="chart-headline" id="chart-head">—</div>
           <svg id="chart" viewBox="0 0 680 240" width="100%" role="img" aria-label="Ten-year cumulative employee wealth retained"></svg>
         </div>
 
         <div class="arch">
-          <h3>Three fee tiers, side by side</h3>
+          <h3>Alternative Architectural Paradigms</h3>
           <div class="arch-grid">
             <div class="arch-card legacy"><span class="dot"></span><h4>Market average</h4><p>A typical bundled plan — active or managed-account funds, advisory fees, and vesting layered onto recordkeeping and audit overhead.</p><span class="cost">1.00% annual fee</span></div>
             <div class="arch-card bench"><span class="dot"></span><h4>Federal fee cap · TrumpIRA.gov</h4><p>The federal cap for IRAs listed on TrumpIRA.gov (April 2026 executive order) — the new low-cost floor.</p><span class="cost">0.15% annual fee</span></div>
             <div class="arch-card nirvana"><span class="dot"></span><h4 id="alt-name">ThinkNirvana AIPEP</h4><p id="alt-desc">Safe Harbor 3% non-elective, 100% immediate vesting, automated compliance, zero-touch administration. Long-term fee target under 0.10% (timeline TBD).</p><span class="cost">Target: under 0.10%<sup>*</sup> · timeline TBD</span></div>
           </div>
-          <p style="font-size:.7rem;color:var(--ink-muted);margin-top:10px;line-height:1.5;"><sup>*</sup>ThinkNirvana&rsquo;s sub-0.10% is a long-term target, not a current rate. The 0.15% tier reflects the federal fee cap for IRAs listed on TrumpIRA.gov (April 2026 executive order). Fees plus forgone growth are illustrated at a 7% average annual return; final ThinkNirvana fees are set after T&amp;C and payroll RFPs.</p>
+          <p style="font-size:0.77rem;color:var(--ink-muted);margin-top:10px;line-height:1.5;"><sup>*</sup>ThinkNirvana&rsquo;s sub-0.10% is a long-term target, not a current rate. The 0.15% tier reflects the federal fee cap for IRAs listed on TrumpIRA.gov (April 2026 executive order). Fees plus forgone growth are illustrated at a 7% average annual return.</p>
         </div>
 
         <div class="benchmark-note">
@@ -371,7 +365,7 @@
           <div>
             <div class="h-eyebrow">The automated alternative</div>
             <h3 id="handoff-head">Move your plan toward our sub-0.10% fee target.</h3>
-            <p>AIPEP401K.com runs the fully-automated, immediately-vested 3% design this visualizer models — compliance, recordkeeping, and administration handled. Our sub-0.10% figure is a long-term mission target, below the federal 0.15% fee cap; it is not current pricing. Fees are set after the plan&rsquo;s T&amp;C and payroll RFPs.</p>
+            <p>AIPEP401K.com runs the fully-automated, immediately-vested 3% design this visualizer models — compliance, recordkeeping, and administration handled. Our sub-0.10% figure is a long-term mission target, below the federal 0.15% fee cap; it is not current pricing.</p>
           </div>
           <a class="btn btn-gold" href="https://aipep401k.com" target="_blank" rel="noopener">Automate at AIPEP401K.com →</a>
         </div>
@@ -380,7 +374,6 @@
   </div>
 </main>
 
-<!-- ── INJECTED LIVE SITE FOOTER ── -->
 <footer class="site-footer">
   <div class="container">
     <div class="footer-inner">
@@ -448,21 +441,30 @@
       features:[
         {id:'match',label:'Annual employer match (vs 3% non-elective)',sub:'Triggers year-end ADP/ACP testing.',admin:30,aum:0,share:1,retention:true},
         {id:'vesting',label:'Multi-year vesting schedule',sub:'Unvested employer dollars return to the plan when employees leave early.',admin:35,aum:0,share:1,retention:true},
-        {id:'advisor',label:'Advisor asset-based fees',sub:'An advisory fee layered on top of plan assets.',admin:0,aum:0.0025,share:1}
+        {id:'advisor',label:'Advisor asset-based fees',sub:'An advisory fee layered on top of plan assets.',admin:0,aum:0.0025,share:1},
+        {id:'annuity',label:'In-plan annuity / guaranteed lifetime income',sub:'Insurance spread (~0.85%) on the annuitized portion; adds menu and fiduciary complexity.',admin:15,aum:0.0085,share:0.20},
+        {id:'wellness',label:'Financial wellness program',sub:'Per-employee vendor subscription; often overlaps existing advisor services.',admin:36,aum:0,share:1},
+        {id:'hsa',label:'HSA administration',sub:'Separate account administration and payroll coordination.',admin:30,aum:0,share:1}
       ]},
     large:{name:'Large Enterprise',min:1000,max:9999,def:3500,baseAdmin:180,attrition:0.16,
       alt:{name:'Direct, zero-touch defaults',desc:'Automated non-elective contributions into low-cost index default portfolios — no payroll-file fracturing across vendors.'},
       features:[
         {id:'managed',label:'Auto-enrolled managed accounts',sub:'≈0.40% AUM on the ~35% of participants enrolled, compounding against their balances.',admin:24,aum:0.0040,share:0.35},
         {id:'plesa',label:'Emergency savings sidecar (PLESA)',sub:'Adds transaction and compliance tracking for small-balance accounts.',admin:30,aum:0,share:1},
-        {id:'loans',label:'Student-loan match (SECURE 2.0)',sub:'Requires manual payroll validation and coordination.',admin:48,aum:0,share:1}
+        {id:'loans',label:'Student-loan match (SECURE 2.0)',sub:'Requires manual payroll validation and coordination.',admin:48,aum:0,share:1},
+        {id:'annuity',label:'In-plan annuity / guaranteed lifetime income',sub:'Insurance spread (~0.85%) on the annuitized portion; adds menu and fiduciary complexity.',admin:15,aum:0.0085,share:0.20},
+        {id:'wellness',label:'Financial wellness program',sub:'Per-employee vendor subscription; often overlaps existing advisor services.',admin:36,aum:0,share:1},
+        {id:'hsa',label:'HSA administration',sub:'Separate account administration and payroll coordination.',admin:30,aum:0,share:1}
       ]},
     mega:{name:'Mega',min:10000,max:100000,def:25000,baseAdmin:240,attrition:0.20,
       alt:{name:'The Unified Trust (PPP)',desc:'Fully outsourced fiduciary model — ThinkNirvana carries the administrative liability under the pooled-plan framework.'},
       features:[
         {id:'tdf',label:'White-label target-date funds',sub:'A pricing premium versus low-cost index equivalents.',admin:0,aum:0.0020,share:1},
         {id:'consult',label:'Custom consulting / bundled TPA',sub:'Consultant retainers and audit overhead that scale with headcount.',admin:40,aum:0.0005,share:1},
-        {id:'nonqual',label:'Non-qualified plan administration',sub:'A separate administrative track for executive deferred comp.',admin:35,aum:0,share:1}
+        {id:'nonqual',label:'Non-qualified plan administration',sub:'A separate administrative track for executive deferred comp.',admin:35,aum:0,share:1},
+        {id:'annuity',label:'In-plan annuity / guaranteed lifetime income',sub:'Insurance spread (~0.85%) on the annuitized portion; adds menu and fiduciary complexity.',admin:15,aum:0.0085,share:0.20},
+        {id:'wellness',label:'Financial wellness program',sub:'Per-employee vendor subscription; often overlaps existing advisor services.',admin:36,aum:0,share:1},
+        {id:'hsa',label:'HSA administration',sub:'Separate account administration and payroll coordination.',admin:30,aum:0,share:1}
       ]}
   };
 
@@ -532,31 +534,33 @@
     var wealth10=series[9];
     var perPart=(bN-bL);
 
-    // render
+    // employer cumulative + combined dividend ("returned to employer budgets AND employee accounts")
+    var pluralV=' point solution'+(vendors===1?'':'s');
+    var dividendSeries=[], empRun=0;
+    for(var y2=0;y2<10;y2++){ empRun+=employerAnnual; dividendSeries.push(series[y2]+empRun); }
+    var dividend10=dividendSeries[9];
+
     $('m-employer').textContent=usdC(employerAnnual);
     $('c-perpart').textContent=usd(perPart);
     $('c-vendors').textContent=vendors+(vendors===1?' vendor':' vendors');
     $('c-hours').textContent=hours.toLocaleString('en-US')+' hrs';
-    var pluralV=' point solution'+(vendors===1?'':'s');
+
+    $('m-wealth-label').textContent='The Realized Nirvana Dividend · 10 yr';
+    $('m-wealth').textContent=usdC(dividend10);
+    $('m-wealth-sub').innerHTML='Cumulative wealth returned to employer budgets and employee accounts, vs the checked feature set.';
 
     if(seg==='mega'){
-      $('take-eyebrow').textContent='Wealth kept per participant · 10-year horizon';
+      $('take-eyebrow').textContent='Wealth returned · per participant · 10 yr';
       $('take-val').textContent=usd(perPart)+' / participant';
-      $('take-sentence').innerHTML='Across <b>'+participants.toLocaleString('en-US')+' participants</b>, a fully-automated design at our sub-0.10% fee target keeps about <b>'+usd(perPart)+
-        ' per participant</b> over ten years — about <b>'+usdC(wealth10)+'</b> across the whole workforce — while freeing roughly <b>'+usdC(employerAnnual)+
-        '/year</b> in operational load and consolidating <b>'+vendors+'</b>'+pluralV+'.';
-      $('m-wealth-label').textContent='Wealth kept per participant · 10 yr';
-      $('m-wealth').textContent=usd(perPart);
-      $('m-wealth-sub').innerHTML='Per participant, vs the checked feature set, at our sub-0.10% fee <em>target</em> — about '+usdC(wealth10)+' across the workforce.';
+      $('take-sentence').innerHTML='Across <b>'+participants.toLocaleString('en-US')+' participants</b>, a simpler, fully-automated design returns roughly <b>'+usd(perPart)+
+        ' per participant</b> to employee accounts over ten years — and about <b>'+usdC(dividend10)+'</b> in total to employer budgets and employee accounts combined, while reclaiming ~<b>'+usdC(employerAnnual)+
+        '/yr</b> in operational drag and consolidating <b>'+vendors+'</b>'+pluralV+'.';
     } else {
-      $('take-eyebrow').textContent='Wealth kept in employee accounts · 10-year horizon';
-      $('take-val').textContent=usdC(wealth10);
-      $('take-sentence').innerHTML='For <b>'+H.toLocaleString('en-US')+' employees</b>, simplifying to a fully-automated design at our sub-0.10% fee target keeps about <b>'+usdC(wealth10)+
-        '</b> in employee accounts over ten years — roughly <b>'+usd(perPart)+' per participant</b> — while freeing about <b>'+usdC(employerAnnual)+
-        '/year</b> in operational load and consolidating <b>'+vendors+'</b>'+pluralV+'.';
-      $('m-wealth-label').textContent='Wealth kept in employee accounts · 10 yr';
-      $('m-wealth').textContent=usdC(wealth10);
-      $('m-wealth-sub').innerHTML='The gap between our sub-0.10% fee <em>target</em> and the checked feature set, compounded over ten years.';
+      $('take-eyebrow').textContent='The Realized Nirvana Dividend · 10-year horizon';
+      $('take-val').textContent=usdC(dividend10);
+      $('take-sentence').innerHTML='For <b>'+H.toLocaleString('en-US')+' employees</b>, a simpler, fully-automated design returns about <b>'+usdC(dividend10)+
+        '</b> over ten years to employer budgets and employee accounts — including ~<b>'+usdC(employerAnnual)+
+        '/yr</b> in operational drag reclaimed and ~<b>'+usd(perPart)+'</b> per participant in retained savings — while consolidating <b>'+vendors+'</b>'+pluralV+'.';
     }
 
     $('alt-name').textContent=s.alt.name;
@@ -565,11 +569,11 @@
       ? 'Outsource the whole plan — toward our sub-0.10% fee target.'
       : 'Move your plan toward our sub-0.10% fee target.';
 
-    renderChart(series);
-    $('chart-head').textContent=usdC(wealth10)+' kept in employee accounts over a decade';
+    renderChart(dividendSeries);
+    $('chart-head').textContent=usdC(dividend10)+' returned over a decade';
 
     state={seg:s.name,H:H,S:S,T:T,bal:bal,part:part,vendors:vendors,legacyFee:legacyFee,
-      wealth10:wealth10,perPart:perPart,employerAnnual:employerAnnual,hours:hours,series:series,alt:s.alt.name};
+      wealth10:wealth10,perPart:perPart,dividend10:dividend10,employerAnnual:employerAnnual,hours:hours,series:dividendSeries,alt:s.alt.name};
   }
 
   function renderChart(values){
@@ -579,23 +583,23 @@
     while(svg.firstChild)svg.removeChild(svg.firstChild);
     var base=document.createElementNS(ns,'line');
     base.setAttribute('x1',padL);base.setAttribute('x2',W-padR);base.setAttribute('y1',H-padB);base.setAttribute('y2',H-padB);
-    base.setAttribute('stroke','#ddd5c8');base.setAttribute('stroke-width','1');svg.appendChild(base);
+    base.setAttribute('stroke','#244a38');base.setAttribute('stroke-width','1');svg.appendChild(base);
     values.forEach(function(v,i){
       var bh=Math.max(2,(v/max)*chartH),x=padL+i*(bw+gap),y=H-padB-bh;
       var rect=document.createElementNS(ns,'rect');rect.setAttribute('class','bar');
       rect.setAttribute('x',x);rect.setAttribute('y',y);rect.setAttribute('width',bw);rect.setAttribute('height',bh);rect.setAttribute('rx','3');
-      rect.setAttribute('fill',i===n-1?'#2d5a3d':(i%2?'#3d7a52':'#c49a3c'));
+      rect.setAttribute('fill',i===n-1?'#46d6a0':(i%2?'#1d9e75':'#2c9e78'));
       rect.setAttribute('opacity',i===n-1?'1':'.8');
       var tt=document.createElementNS(ns,'title');tt.textContent='Year '+(i+1)+': '+usd(v);rect.appendChild(tt);
       svg.appendChild(rect);
       var lbl=document.createElementNS(ns,'text');
       lbl.setAttribute('x',x+bw/2);lbl.setAttribute('y',H-padB+15);lbl.setAttribute('text-anchor','middle');
-      lbl.setAttribute('font-family',"'Courier Prime',monospace");lbl.setAttribute('font-size','10');lbl.setAttribute('fill','#7a7268');
+      lbl.setAttribute('font-family',"'Courier Prime',monospace");lbl.setAttribute('font-size','10');lbl.setAttribute('fill','#9fb3a6');
       lbl.textContent=(i+1);svg.appendChild(lbl);
       if(i===0||i===n-1){
         var vt=document.createElementNS(ns,'text');
         vt.setAttribute('x',x+bw/2);vt.setAttribute('y',y-5);vt.setAttribute('text-anchor','middle');
-        vt.setAttribute('font-family',"'Courier Prime',monospace");vt.setAttribute('font-size','10');vt.setAttribute('font-weight','700');vt.setAttribute('fill','#1c1a17');
+        vt.setAttribute('font-family',"'Courier Prime',monospace");vt.setAttribute('font-size','10');vt.setAttribute('font-weight','700');vt.setAttribute('fill','#f4f1e9');
         vt.textContent=usdC(v);svg.appendChild(vt);
       }
     });
@@ -636,9 +640,9 @@
     ['Segment',s.seg],['Headcount',s.H.toLocaleString('en-US')],['Average salary',usd(s.S)],['Annual turnover',(s.T*100).toFixed(0)+'%'],
     ['Point solutions today',s.vendors.toString()],['Legacy all-in fund/fee load',(s.legacyFee*100).toFixed(2)+'%'],
     ['— EMPLOYEE WEALTH —',''],
-    ['Per participant kept (10 yr)',usd(s.perPart),'#2d5a3d'],['Wealth kept in accounts (10 yr)',usd(s.wealth10),'#2d5a3d'],
+    ['Sovereign-style savings / participant (10 yr)',usd(s.perPart),'#15623f'],['The Realized Nirvana Dividend (10 yr)',usd(s.dividend10),'#15623f'],
     ['— EMPLOYER —',''],
-    ['HR admin hours saved / yr',s.hours.toLocaleString('en-US')+' hrs','#2d5a3d'],['Annual operational value',usd(s.employerAnnual),'#2d5a3d'],
+    ['HR admin hours saved / yr',s.hours.toLocaleString('en-US')+' hrs','#15623f'],['Operational drag reclaimed (annual)',usd(s.employerAnnual),'#15623f'],
     ['Recommended design',s.alt]
   ];}
   var foot='Directional illustration based on published planning benchmarks. Fee-compounding applies the same assumed return to both designs to isolate cost. Not legal, tax, or investment advice.';
