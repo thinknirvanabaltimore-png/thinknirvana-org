@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-92TN60N26P');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nirvana Plan Design Tool — the only one you'll ever need | ThinkNirvana</title>
+<meta name="description" content="A clear, side-by-side look at what your retirement plan design returns — to your employees and your bottom line. Adjust the inputs, see the impact, decide for yourself."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    /* Re-skinned to the live site palette (values from the site's :root; no invented colors).
+       Token names kept so existing var() usage adopts the site palette automatically.
+       Site :root lacks a red and a light-amber, so cost/warning tints fall back to amber-dark / neutral. */
+    --cream:#F9FAFB; --cream-2:#FFFFFF; --cream-3:#E5E7EB;       /* was faf7f2/f2ede4/e8e0d4 → --bg/--white/--border */
+    --ink:#111827; --ink-soft:#111827; --ink-muted:#5C6470;     /* was 1c1a17/3d3830/7a7268 → --text/--text/--muted */
+    --rust:#1D9E75; --rust-lt:#9FE1CB; --rust-bg:#E1F5EE;       /* was b85c38/d4784e/fdf0ea → --forest-mid/--forest-light/--forest-pale */
+    --forest:#0D2B1E; --forest-lt:#1D9E75; --forest-bg:#E1F5EE; /* was 2d5a3d/3d7a52/eaf3ec → --forest/--forest-mid/--forest-pale */
+    --gold:#854F0B; --gold-bg:#F9FAFB;                          /* was c49a3c/fdf6e3 → --amber-dark/--bg (no light-amber token) */
+    --red:#9b2915; --red-bg:#fdecea;                            /* restored (owner approved): negative/cost figures read red */
+    --border:#E5E7EB; --r:8px; --r-lg:16px;                     /* was ddd5c8/6px/14px → --border/--r/--r-lg */
+    --mono:'Courier Prime',monospace; --serif:'Playfair Display',serif; --sans:'Lato',sans-serif;
+    /* site-only tokens required by the injected nav/footer */
+    --white:#FFFFFF; --forest-light:#9FE1CB; --forest-mid:#1D9E75; --bg:#F9FAFB;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* view modes */
+  body.simple .detail-only{display:none!important;}
+  body.detailed .simple-only{display:none!important;}
+
+  /* ===== MASTHEAD ===== */
+  .masthead{border-bottom:2px solid var(--ink);background:var(--cream);}
+  .masthead-top{display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border);}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);}
+  .lotus{width:36px;height:36px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:var(--rust);font-size:.95rem;}
+  .brand-name{font-family:var(--serif);font-size:1.18rem;letter-spacing:-.01em;}
+  .brand-dot{color:var(--rust);}
+  .masthead-meta{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);text-align:right;line-height:1.5;}
+
+  .masthead-title{padding:34px 0 24px;}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .kicker::after{content:'';flex:1;height:1px;background:var(--border);}
+  .masthead-title h1{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.05;letter-spacing:-.02em;font-weight:700;max-width:16ch;}
+  .masthead-title h1 em{font-style:italic;color:var(--rust);}
+  .masthead-title .deck{margin-top:18px;max-width:66ch;font-size:1.04rem;color:var(--ink-soft);border-top:1px solid var(--border);padding-top:16px;}
+  .tagline{margin-top:14px;font-family:var(--mono);font-size:.82rem;letter-spacing:.03em;color:var(--ink-muted);}
+  .tagline b{color:var(--forest);font-weight:700;}
+
+  /* tab row + view toggle */
+  .tabrow{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-top:14px;flex-wrap:wrap;}
+  .tabs{display:flex;gap:2px;flex-wrap:wrap;}
+  .tab{appearance:none;border:1px solid var(--border);border-bottom:none;background:var(--cream-2);color:var(--ink-muted);
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:13px 18px;cursor:pointer;
+    border-radius:var(--r) var(--r) 0 0;position:relative;top:1px;transition:background .15s,color .15s;display:flex;align-items:center;gap:9px;}
+  .tab:hover:not(.is-soon){color:var(--ink);background:var(--cream-3);}
+  .tab.is-active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+  .tab.is-soon{cursor:not-allowed;opacity:.5;}
+  .tab .soon-badge{font-size:.6rem;background:var(--cream-3);color:var(--ink-muted);padding:2px 6px;border-radius:3px;letter-spacing:.04em;}
+  .tab.is-active .soon-badge{background:rgba(255,255,255,.15);color:var(--cream);}
+  .tab .dot{width:6px;height:6px;border-radius:50%;background:var(--forest);}
+  .tab.is-soon .dot{background:var(--ink-muted);}
+
+  .viewtoggle{display:flex;align-items:center;gap:9px;padding-bottom:6px;}
+  .viewtoggle .vt-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);}
+  .seg-view{display:flex;border:1.5px solid var(--ink);border-radius:var(--r);overflow:hidden;}
+  .seg-view button{appearance:none;border:none;background:var(--cream);color:var(--ink-soft);font-family:var(--sans);font-size:.78rem;font-weight:700;padding:7px 15px;cursor:pointer;transition:background .15s,color .15s;}
+  .seg-view button.on{background:var(--ink);color:var(--cream);}
+  .seg-view button:first-child{border-right:1.5px solid var(--ink);}
+
+  /* ===== PANEL ===== */
+  .panel{display:none;border:2px solid var(--ink);border-top:none;background:var(--cream);}
+  .panel.is-active{display:block;}
+  .panel-grid{display:grid;grid-template-columns:380px 1fr;}
+  @media(max-width:900px){.panel-grid{grid-template-columns:1fr;}}
+
+  .inputs{padding:30px 28px;border-right:1px solid var(--border);background:var(--cream-2);}
+  @media(max-width:900px){.inputs{border-right:none;border-bottom:1px solid var(--border);}}
+  .inputs h2,.results h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+  .inputs h2::before{content:'01';font-weight:700;color:var(--rust);}
+  .results h2::before{content:'02';font-weight:700;color:var(--rust);}
+
+  .field{margin-bottom:26px;}
+  .field-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+  .field-label{font-size:.9rem;font-weight:700;color:var(--ink-soft);}
+  .field-val{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--rust);background:var(--rust-bg);padding:2px 9px;border-radius:4px;}
+  .field-sub{font-size:.74rem;color:var(--ink-muted);margin-top:7px;line-height:1.4;}
+
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--cream-3);border-radius:3px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid var(--cream);box-shadow:0 1px 4px rgba(0,0,0,.25);transition:background .15s;}
+  input[type=range]::-webkit-slider-thumb:hover{background:var(--rust);}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid var(--cream);}
+  input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--rust);outline-offset:2px;}
+
+  .seg{display:flex;border:1.5px solid var(--ink);border-radius:var(--r);overflow:hidden;}
+  .seg button{flex:1;appearance:none;border:none;background:var(--cream);color:var(--ink-soft);font-family:var(--sans);font-size:.82rem;font-weight:700;padding:10px 8px;cursor:pointer;transition:background .15s,color .15s;}
+  .seg button.on{background:var(--ink);color:var(--cream);}
+  .seg button:first-child{border-right:1.5px solid var(--ink);}
+
+  select{width:100%;font-family:var(--sans);font-size:.9rem;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--cream);color:var(--ink);cursor:pointer;}
+  select:focus-visible{outline:2px solid var(--rust);outline-offset:1px;border-color:var(--ink);}
+
+  .check-row{display:flex;align-items:flex-start;gap:11px;padding:11px 12px;border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:10px;cursor:pointer;background:var(--cream);transition:border-color .15s,background .15s;}
+  .check-row:hover{border-color:var(--ink);}
+  .check-row.on{border-color:var(--forest);background:var(--forest-bg);}
+  .check-row input{margin-top:3px;accent-color:var(--forest);width:16px;height:16px;cursor:pointer;}
+  .check-row .ck-label{font-size:.86rem;font-weight:700;color:var(--ink-soft);}
+  .check-row .ck-sub{font-size:.72rem;color:var(--ink-muted);margin-top:2px;}
+
+  .alert{font-size:.8rem;line-height:1.5;padding:12px 14px;border-radius:var(--r);margin-top:14px;border-left:3px solid;}
+  .alert b{font-weight:700;}
+  .alert-warn{background:var(--gold-bg);border-color:var(--gold);color:var(--ink-soft);}
+  .alert-ok{background:var(--forest-bg);border-color:var(--forest);color:var(--forest);}
+  .alert-info{background:var(--cream);border-color:var(--border);color:var(--ink-muted);}
+
+  .results{padding:30px 30px 36px;}
+
+  /* simple takeaway */
+  .takeaway{border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 26px;margin-bottom:24px;background:var(--cream-2);}
+  .takeaway .t-eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;}
+  .takeaway .t-val{font-family:var(--serif);font-size:2.7rem;line-height:1;letter-spacing:-.02em;color:var(--forest);}
+  .takeaway .t-sentence{font-size:1rem;color:var(--ink-soft);margin-top:14px;line-height:1.6;}
+  .takeaway .t-sentence b{color:var(--ink);}
+
+  .ledger{width:100%;border-collapse:collapse;margin-bottom:8px;}
+  .ledger th{text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:400;padding:0 0 10px;border-bottom:1px solid var(--ink);}
+  .ledger td{padding:13px 0;border-bottom:1px solid var(--border);vertical-align:top;}
+  .ledger tr:hover td{background:rgba(184,92,56,.03);}
+  .ledger .l-item{font-weight:700;font-size:.92rem;}
+  .ledger .l-insight{font-size:.78rem;color:var(--ink-muted);}
+  .ledger .l-val{font-family:var(--mono);font-weight:700;font-size:1rem;text-align:right;white-space:nowrap;}
+  .ledger .pos{color:var(--forest);} .ledger .neg{color:var(--rust);}
+
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ink);border:2px solid var(--ink);border-radius:var(--r-lg);overflow:hidden;margin:26px 0;}
+  @media(max-width:520px){.metrics{grid-template-columns:1fr;}}
+  .metric{background:var(--cream);padding:22px 22px 20px;}
+  .metric.feature{background:var(--ink);color:var(--cream);}
+  .metric .m-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
+  .metric.feature .m-label{color:var(--gold);}
+  .metric .m-val{font-family:var(--serif);font-size:2.1rem;line-height:1;letter-spacing:-.02em;}
+  .metric .m-val.rust{color:var(--rust);} .metric .m-val.forest{color:var(--forest);}
+  .metric .m-sub{font-size:.74rem;color:var(--ink-muted);margin-top:8px;}
+  .metric.feature .m-sub{color:rgba(250,247,242,.6);}
+
+  .counters{display:flex;gap:2px;background:var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px;}
+  @media(max-width:520px){.counters{flex-direction:column;}}
+  .counter{flex:1;background:var(--cream-2);padding:15px 16px;}
+  .counter .c-val{font-family:var(--mono);font-weight:700;font-size:1.2rem;color:var(--ink);}
+  .counter .c-label{font-size:.72rem;color:var(--ink-muted);margin-top:2px;line-height:1.35;}
+
+  .chart-block{margin:8px 0 24px;border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 20px 12px;background:var(--cream-2);}
+  .chart-title{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;}
+  .chart-headline{font-family:var(--serif);font-size:1.45rem;color:var(--forest);margin-bottom:14px;letter-spacing:-.01em;}
+  svg .bar{transition:opacity .15s;} svg .bar:hover{opacity:.8;}
+
+  .deficit{display:none;margin:0 0 24px;border:1.5px solid var(--gold);background:var(--gold-bg);border-radius:var(--r-lg);padding:18px 20px;}
+  .deficit.show{display:block;}
+  body.simple .deficit{display:none!important;}
+  .deficit .d-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;}
+  .deficit .d-val{font-family:var(--serif);font-size:1.8rem;color:var(--rust);line-height:1;}
+  .deficit .d-sub{font-size:.78rem;color:var(--ink-soft);margin-top:8px;}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+  .btn{appearance:none;cursor:pointer;font-family:var(--sans);font-size:.86rem;font-weight:700;padding:12px 22px;border-radius:var(--r);border:2px solid transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .15s;}
+  .btn-dark{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+  .btn-dark:hover{background:var(--rust);border-color:var(--rust);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .soon-panel{padding:64px 32px;text-align:center;}
+  .soon-panel .lotus{margin:0 auto 22px;width:54px;height:54px;font-size:1.3rem;}
+  .soon-panel h3{font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;}
+  .soon-panel p{max-width:56ch;margin:0 auto 8px;color:var(--ink-soft);font-size:.96rem;}
+  .soon-panel .roadmap-tag{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);background:var(--forest-bg);padding:6px 14px;border-radius:4px;margin-top:18px;}
+
+  .thesis{background:var(--ink);color:var(--cream);padding:44px 0;margin-top:48px;}
+  .thesis .wrap{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;}
+  @media(max-width:680px){.thesis .wrap{grid-template-columns:1fr;}}
+  .thesis .lotus{border-color:var(--cream);color:var(--gold);width:50px;height:50px;}
+  .thesis h4{font-family:var(--serif);font-size:1.5rem;margin-bottom:8px;letter-spacing:-.01em;}
+  .thesis p{color:rgba(250,247,242,.65);font-size:.92rem;max-width:70ch;}
+  .footnote{font-family:var(--mono);font-size:.68rem;color:var(--ink-muted);text-align:center;padding:22px 0 40px;line-height:1.7;}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ===== INJECTED LIVE SITE CHROME (nav + footer) ===== */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .site-nav { background: var(--forest); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 24px; }
+  .site-nav .logo-wrap { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .site-nav .logo-mark { width: 36px; height: 36px; border: 1.5px solid rgba(159,225,203,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: .9rem; font-style: italic; color: var(--forest-light); }
+  .site-nav .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; }
+  .site-nav .logo-sub  { color: rgba(255,255,255,.35); font-size: .78rem; letter-spacing: .1em; font-family: 'Courier Prime', monospace; text-transform: uppercase; }
+  .site-nav .nav-links { display: flex; gap: 18px; }
+  .site-nav .nav-links a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color .15s; white-space: nowrap; }
+  .site-nav .nav-links a:hover { color: var(--white); }
+  .site-nav .nav-cta { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); padding: 7px 16px; border-radius: var(--r); font-size: .88rem; transition: all .15s; flex-shrink: 0; }
+  .site-nav .nav-cta:hover { border-color: var(--white); color: var(--white); }
+  .site-nav .nav-mobile-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.4rem; }
+  footer.site-footer { background: var(--forest); color: rgba(255,255,255,.5); padding: 56px 0 32px; border-top: 1px solid rgba(255,255,255,.06); }
+  .site-footer .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .site-footer .footer-brand p { font-size: .84rem; color: rgba(255,255,255,.45); line-height: 1.7; margin-top: 14px; }
+  .site-footer .footer-stamp { font-size: .78rem; font-family: 'Courier Prime', monospace; letter-spacing: .07em; color: rgba(255,255,255,.2); margin-top: 14px; }
+  .site-footer .footer-col h5 { font-size: .78rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 14px; }
+  .site-footer .footer-col a { display: block; font-size: .88rem; color: rgba(255,255,255,.5); margin-bottom: 8px; transition: color .15s; }
+  .site-footer .footer-col a:hover { color: var(--white); }
+  .site-footer hr.footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin-bottom: 20px; }
+  .site-footer .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .82rem; color: rgba(255,255,255,.4); }
+  .site-footer .footer-bottom a { color: rgba(255,255,255,.35); margin-left: 14px; }
+  .site-footer .footer-bottom a:hover { color: var(--white); }
+  .site-footer .footer-disc { font-size: .78rem; line-height: 1.7; color: rgba(255,255,255,.25); margin-top: 18px; max-width: 860px; }
+  @media (max-width: 768px) {
+    .site-nav .nav-links, .site-nav .nav-cta { display: none; }
+    .site-nav .nav-mobile-toggle { display: block; }
+    .site-nav .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0; background: var(--forest); padding: 20px 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .site-footer .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body class="simple">
+
+<!-- ── INJECTED LIVE SITE NAV ── -->
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="container nav-inner">
+    <a href="/" class="logo-wrap" aria-label="ThinkNirvana home">
+      <div class="logo-mark">TN</div>
+      <div>
+        <div class="logo-text">ThinkNirvana</div>
+        <div class="logo-sub">Foundation · Nonprofit</div>
+      </div>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="/#mission">Mission</a>
+      <a href="/#initiatives">Initiatives</a>
+      <a href="/#roadmap">Roadmap</a>
+      <a href="/#press">Press</a>
+      <a href="/#board">Leadership</a>
+      <a href="/find-your-plan.html">Compare Plans</a>
+      <a href="/#fee-calculator">Fee Calculator</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <a href="https://aipep401k.com" class="nav-cta">Visit AIPEP401K.com →</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav-links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-title">
+      <div class="kicker">The Plan Design Tool</div>
+      <h1>Your plan design, in <em>plain numbers.</em></h1>
+      <p class="deck">Set your headcount, pay, and turnover, and see what a simple, modern plan design returns — to your people and to your bottom line. The numbers are yours to weigh; the tool just makes them clear.</p>
+      <p class="tagline"><b>The Nirvana Plan Design Tool</b> — the only one you'll ever need.</p>
+    </div>
+    <div class="tabrow">
+      <nav class="tabs" role="tablist" aria-label="Coverage lines">
+        <button class="tab is-active" role="tab" data-tab="retire" aria-selected="true"><span class="dot"></span>Retirement · 401(k)/PEP</button>
+        <button class="tab is-soon" role="tab" data-tab="income"><span class="dot"></span>Income Protection<span class="soon-badge">live</span></button>
+        <button class="tab is-soon" role="tab" data-tab="health" disabled><span class="dot"></span>Health &amp; Wellness<span class="soon-badge">soon</span></button>
+        <button class="tab is-soon" role="tab" data-tab="leave" disabled><span class="dot"></span>Leave &amp; Compliance<span class="soon-badge">soon</span></button>
+      </nav>
+      <div class="viewtoggle">
+        <span class="vt-label">View</span>
+        <div class="seg-view" id="view-toggle">
+          <button data-view="simple" class="on">Simple</button>
+          <button data-view="detailed">Detailed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ RETIREMENT ============ -->
+  <section class="panel is-active" id="panel-retire" role="tabpanel">
+    <div class="panel-grid">
+      <div class="inputs">
+        <h2>Your workforce</h2>
+
+        <div class="field">
+          <div class="field-head"><span class="field-label">Workforce headcount</span><span class="field-val" id="r-hc-out">500</span></div>
+          <input type="range" id="r-hc" min="3" max="10000" step="1" value="500"/>
+        </div>
+        <div class="field">
+          <div class="field-head"><span class="field-label">Average salary</span><span class="field-val" id="r-sal-out">$90,000</span></div>
+          <input type="range" id="r-sal" min="30000" max="250000" step="1000" value="90000"/>
+        </div>
+        <div class="field">
+          <div class="field-head"><span class="field-label">Annual turnover</span><span class="field-val" id="r-to-out">15%</span></div>
+          <input type="range" id="r-to" min="2" max="100" step="1" value="15"/>
+        </div>
+
+        <!-- advanced inputs -->
+        <div class="field detail-only">
+          <div class="field-head"><span class="field-label">Replacement cost multiplier</span><span class="field-val" id="r-mult-out">1.0×</span></div>
+          <input type="range" id="r-mult" min="0.5" max="2" step="0.1" value="1.0"/>
+          <p class="field-sub">Industry benchmark for replacing an employee. 1.0× of salary is a common planning figure; adjust to your own experience.</p>
+        </div>
+        <div class="field detail-only">
+          <span class="field-label" style="display:block;margin-bottom:9px;">Contribution design — Safe Harbor</span>
+          <div class="seg" id="r-sh">
+            <button data-sh="match">Annual match</button>
+            <button data-sh="nonelect" class="on">3% non-elective</button>
+          </div>
+          <div id="r-sh-alert" class="alert alert-ok"><b>Safe Harbor status built in.</b> No year-end ADP/ACP testing required.</div>
+        </div>
+        <div class="field detail-only">
+          <span class="field-label" style="display:block;margin-bottom:9px;">Current vesting schedule</span>
+          <select id="r-vest">
+            <option value="immediate">Immediate</option>
+            <option value="cliff3">3-Year Cliff</option>
+            <option value="graded5">5-Year Graded</option>
+          </select>
+          <p class="field-sub">Multi-year schedules return unvested employer dollars to the plan when workers leave early — shown below as forfeited goodwill.</p>
+        </div>
+        <div class="field detail-only">
+          <span class="field-label" style="display:block;margin-bottom:9px;">Self-service features</span>
+          <label class="check-row" id="r-loans-row"><input type="checkbox" id="r-loans"/><span><span class="ck-label">Self-service employee loans</span><span class="ck-sub">Adds HR hours saved. No added plan cost.</span></span></label>
+          <label class="check-row" id="r-sdba-row"><input type="checkbox" id="r-sdba"/><span><span class="ck-label">Self-directed brokerage (SDBA)</span><span class="ck-sub">Automated workflows, no added admin load.</span></span></label>
+        </div>
+      </div>
+
+      <div class="results">
+        <h2>Your plan, in numbers</h2>
+
+        <!-- SIMPLE takeaway -->
+        <div class="takeaway simple-only">
+          <div class="t-eyebrow">Estimated annual value · simple modern design</div>
+          <div class="t-val" id="r-take-val">—</div>
+          <div class="t-sentence" id="r-take-sentence">—</div>
+        </div>
+
+        <!-- DETAILED ledger -->
+        <table class="ledger detail-only">
+          <thead><tr><th style="width:42%">What it costs &amp; returns</th><th>Annual</th><th style="text-align:right">How it's figured</th></tr></thead>
+          <tbody>
+            <tr><td class="l-item">Replacement cost<div class="l-insight">Hiring &amp; training departing roles</div></td><td class="l-val neg" id="r-repl">—</td><td class="l-insight" style="text-align:right">Headcount × turnover × salary × multiplier.</td></tr>
+            <tr><td class="l-item">Benefits-tied turnover<div class="l-insight">Share linked to benefits experience</div></td><td class="l-val neg" id="r-leak">—</td><td class="l-insight" style="text-align:right">10% of replacement cost (planning benchmark).</td></tr>
+            <tr><td class="l-item">Total workforce spend<div class="l-insight">Gross annual payroll</div></td><td class="l-val" id="r-spend">—</td><td class="l-insight" style="text-align:right">The pool the plan supports.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="metrics">
+          <div class="metric detail-only">
+            <div class="m-label">Retention value</div>
+            <div class="m-val forest" id="r-dividend">—</div>
+            <div class="m-sub">Value retained by improving benefits-driven attrition (40% planning factor).</div>
+          </div>
+          <div class="metric detail-only">
+            <div class="m-label">Administrative value</div>
+            <div class="m-val forest" id="r-admin">—</div>
+            <div class="m-sub">Illustrative: $120 → $48 per participant in automated recordkeeping &amp; admin.</div>
+          </div>
+          <div class="metric feature" style="grid-column:1/-1;">
+            <div class="m-label">Total estimated annual value</div>
+            <div class="m-val" id="r-total">—</div>
+            <div class="m-sub">Retention value + administrative value — redeployable to pay, savings, or the bottom line.</div>
+          </div>
+        </div>
+
+        <div class="counters">
+          <div class="counter"><div class="c-val" id="r-perhead">—</div><div class="c-label">Value per employee / year</div></div>
+          <div class="counter detail-only"><div class="c-val" id="r-hours">—</div><div class="c-label">HR admin hours saved / year</div></div>
+          <div class="counter detail-only"><div class="c-val" id="r-testing">—</div><div class="c-label">Year-end compliance tests</div></div>
+        </div>
+
+        <div class="deficit" id="r-deficit-box">
+          <div class="d-label">Forfeited goodwill · vesting</div>
+          <div class="d-val" id="r-deficit">—</div>
+          <div class="d-sub" id="r-deficit-sub">Unvested employer dollars returned to the plan when workers leave early each year.</div>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-title">Cumulative value — 10-year horizon</div>
+          <div class="chart-headline" id="r-chart-head">—</div>
+          <svg id="r-chart" viewBox="0 0 680 240" width="100%" role="img" aria-label="10-year cumulative value projection"></svg>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-dark" id="r-export">↓ Download executive summary</button>
+          <button class="btn btn-ghost" id="r-print">Print one-pager</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INCOME PROTECTION ============ -->
+  <section class="panel" id="panel-income" role="tabpanel">
+    <div class="panel-grid">
+      <div class="inputs">
+        <h2>Your coverage</h2>
+        <div class="field">
+          <div class="field-head"><span class="field-label">Workforce headcount</span><span class="field-val" id="i-hc-out">500</span></div>
+          <input type="range" id="i-hc" min="3" max="10000" step="1" value="500"/>
+        </div>
+        <div class="field">
+          <div class="field-head"><span class="field-label">Average salary</span><span class="field-val" id="i-sal-out">$90,000</span></div>
+          <input type="range" id="i-sal" min="30000" max="250000" step="1000" value="90000"/>
+        </div>
+        <div class="field">
+          <span class="field-label" style="display:block;margin-bottom:9px;">Lines of coverage</span>
+          <label class="check-row on" id="i-std-row"><input type="checkbox" id="i-std" checked/><span><span class="ck-label">Short-Term Disability (STD)</span><span class="ck-sub">≈ 0.50% of covered payroll at pure-premium rates.</span></span></label>
+          <label class="check-row on" id="i-ltd-row"><input type="checkbox" id="i-ltd" checked/><span><span class="ck-label">Long-Term Disability (LTD)</span><span class="ck-sub">≈ 0.35% of covered payroll.</span></span></label>
+          <label class="check-row on" id="i-life-row"><input type="checkbox" id="i-life" checked/><span><span class="ck-label">Basic Group Term Life (1× salary)</span><span class="ck-sub">≈ 0.15% of covered payroll.</span></span></label>
+        </div>
+        <div class="field detail-only">
+          <div class="field-head"><span class="field-label">Commission built into premium</span><span class="field-val" id="i-comm-out">15%</span></div>
+          <input type="range" id="i-comm" min="0" max="30" step="1" value="15"/>
+          <p class="field-sub">Standard group premiums typically include a commission of 10–25%, whether or not advisory services are used.</p>
+        </div>
+        <div class="field detail-only">
+          <div class="field-head"><span class="field-label">Annual consulting / RFP fee</span><span class="field-val" id="i-rfp-out">$75,000</span></div>
+          <input type="range" id="i-rfp" min="0" max="150000" step="5000" value="75000"/>
+        </div>
+        <div class="alert alert-info detail-only">Coverage comes in many variants — elimination periods, "own occupation" vs "any occupation" definitions, and more. Matching your census to standard actuarial tables turns that into a clear, like-for-like comparison.</div>
+      </div>
+
+      <div class="results">
+        <h2>Your coverage, in numbers</h2>
+
+        <div class="takeaway simple-only">
+          <div class="t-eyebrow">Estimated annual value · direct, transparent pricing</div>
+          <div class="t-val" id="i-take-val">—</div>
+          <div class="t-sentence" id="i-take-sentence">—</div>
+        </div>
+
+        <table class="ledger detail-only">
+          <thead><tr><th style="width:46%">Premium flow</th><th>Annual</th><th style="text-align:right">Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="l-item">Estimated fair premium<div class="l-insight">Selected lines, pure-risk pricing</div></td><td class="l-val" id="i-prem">—</td><td class="l-insight" style="text-align:right">The risk transfer, to the carrier.</td></tr>
+            <tr><td class="l-item">Embedded commission<div class="l-insight">Included in standard premiums</div></td><td class="l-val neg" id="i-comm-leak">—</td><td class="l-insight" style="text-align:right">A share of every premium dollar.</td></tr>
+            <tr><td class="l-item">Consulting / RFP fee<div class="l-insight">Typical engagement fee</div></td><td class="l-val neg" id="i-rfp-leak">—</td><td class="l-insight" style="text-align:right">Annual, where applicable.</td></tr>
+            <tr><td class="l-item">Nirvana platform fee<div class="l-insight">Illustrative flat fee — not a quote</div></td><td class="l-val" id="i-fee">—</td><td class="l-insight" style="text-align:right">$18 / employee / year (illustrative).</td></tr>
+          </tbody>
+        </table>
+
+        <div class="metrics">
+          <div class="metric feature" style="grid-column:1/-1;">
+            <div class="m-label">Estimated annual value · direct pricing</div>
+            <div class="m-val" id="i-total">—</div>
+            <div class="m-sub">Embedded commission + consulting fee − the flat platform fee — yours to redirect to coverage or compensation.</div>
+          </div>
+        </div>
+
+        <div class="counters">
+          <div class="counter"><div class="c-val" id="i-perhead">—</div><div class="c-label">Value per employee / year</div></div>
+          <div class="counter detail-only"><div class="c-val" id="i-pct">—</div><div class="c-label">Beyond the pure risk transfer</div></div>
+          <div class="counter detail-only"><div class="c-val" id="i-lines">—</div><div class="c-label">Coverage lines analyzed</div></div>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-title">Cumulative value — 10-year horizon</div>
+          <div class="chart-headline" id="i-chart-head">—</div>
+          <svg id="i-chart" viewBox="0 0 680 240" width="100%" role="img" aria-label="10-year cumulative value projection"></svg>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-dark" id="i-export">↓ Download executive summary</button>
+          <button class="btn btn-ghost" id="i-print">Print one-pager</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-health" role="tabpanel">
+    <div class="soon-panel"><div class="lotus">N</div><h3>Health &amp; Wellness</h3>
+      <p>Next on the roadmap: a clear, side-by-side view of medical plan design — stop-loss, level-funding, and pharmacy pricing made easy to compare.</p>
+      <span class="roadmap-tag">Same tool · another line of coverage</span></div>
+  </section>
+  <section class="panel" id="panel-leave" role="tabpanel">
+    <div class="soon-panel"><div class="lotus">N</div><h3>Leave &amp; Compliance</h3>
+      <p>Pick a clean, unified PTO and parental-leave design and let automated multi-state compliance tracking handle the rest.</p>
+      <span class="roadmap-tag">Same tool · another line of coverage</span></div>
+  </section>
+
+</main>
+
+<!-- ── INJECTED LIVE SITE FOOTER ── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark">TN</div>
+          <div>
+            <div class="logo-text">ThinkNirvana</div>
+            <div class="logo-sub">Foundation · Nonprofit</div>
+          </div>
+        </div>
+        <p>A nonprofit on a mission to make retirement savings simple, transparent, and radically affordable for every American worker.</p>
+        <div class="footer-stamp">NONPROFIT CORP · MARYLAND · ERISA §413(E) PPP · OLNEY, MD · EST. 2024</div>
+      </div>
+      <div class="footer-col">
+        <h5>Initiatives</h5>
+        <a href="https://aipep401k.com">AIPEP401K.com</a>
+        <a href="#">403(b) — Coming 2027</a>
+      </div>
+      <div class="footer-col">
+        <h5>Organization</h5>
+        <a href="/#mission">Our mission</a>
+        <a href="/#roadmap">Roadmap</a>
+        <a href="/#board">Leadership</a>
+        <a href="/privacy.html">ERISA disclosures</a>
+        <a href="#">DOL registration</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:hello@thinknirvana.org">hello@thinknirvana.org</a>
+        <a href="mailto:press@thinknirvana.org">press@thinknirvana.org</a>
+        <a href="mailto:grants@thinknirvana.org">grants@thinknirvana.org</a>
+        <a href="/privacy.html">Privacy policy</a>
+        <a href="/privacy.html">Terms</a>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <div>© 2026 ThinkNirvana Foundation | Nirvana Ledger LLC · ThinkNirvana.org</div>
+      <div>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy.html">Terms</a>
+        <a href="/privacy.html">ERISA</a>
+      </div>
+    </div>
+    <p class="footer-disc">
+      ThinkNirvana Foundation is a nonprofit corporation incorporated in Maryland in the process of completing its nonprofit registration and DOL Pooled Plan Provider registration under ERISA §413(e). EIN: [to be added upon completion]. Nirvana Ledger LLC provides technology infrastructure under license to ThinkNirvana Foundation. This website is for informational purposes only and does not constitute investment, legal, or tax advice.<br><br>
+      AIPEP401K is a Pooled Employer Plan administered by ThinkNirvana Foundation acting as Pooled Plan Provider under ERISA §413(e). Vanguard® is a registered trademark of The Vanguard Group, Inc. ThinkNirvana and AIPEP401K are not affiliated with or endorsed by Vanguard. All third-party trademarks referenced are property of their respective owners.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- CONFIG ----------
+     Set ONLY_RETIREMENT = true for the aipep401k.com build (Retirement Plan Design Tool only).
+     Leave false for thinknirvana.org (full multi-line tool). ----------------------------------- */
+  var ONLY_RETIREMENT = false;
+
+  var usd  = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+  var usdC = function(n){ var a=Math.abs(n);
+    if(a>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
+    if(a>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
+    return '$'+Math.round(n).toLocaleString('en-US'); };
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- config: retirement-only ---------- */
+  if (ONLY_RETIREMENT){
+    document.querySelectorAll('.tab').forEach(function(t){ if(t.getAttribute('data-tab')!=='retire') t.style.display='none'; });
+    document.querySelector('.masthead-meta').innerHTML = 'Retirement Plan Design Tool<br/>Total Rewards · Decision Brief';
+  }
+
+  /* ---------- view toggle ---------- */
+  document.querySelectorAll('#view-toggle button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('#view-toggle button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      document.body.className = b.getAttribute('data-view'); // 'simple' | 'detailed'
+    });
+  });
+
+  /* ---------- tabs ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      if (t.hasAttribute('disabled')) return;
+      var id=t.getAttribute('data-tab');
+      tabs.forEach(function(x){x.classList.remove('is-active');x.setAttribute('aria-selected','false');});
+      t.classList.add('is-active'); t.setAttribute('aria-selected','true');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('is-active');});
+      $('panel-'+id).classList.add('is-active');
+    });
+  });
+
+  /* ---------- chart ---------- */
+  function renderChart(svgId, values, accent){
+    var svg=$(svgId), W=680,H=240,padL=8,padR=8,padB=26,padT=14,n=values.length;
+    var max=Math.max.apply(null,values)||1, gap=10, bw=(W-padL-padR-gap*(n-1))/n, chartH=H-padB-padT;
+    var ns='http://www.w3.org/2000/svg';
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var base=document.createElementNS(ns,'line');
+    base.setAttribute('x1',padL);base.setAttribute('x2',W-padR);base.setAttribute('y1',H-padB);base.setAttribute('y2',H-padB);
+    base.setAttribute('stroke','#ddd5c8');base.setAttribute('stroke-width','1');svg.appendChild(base);
+    values.forEach(function(v,i){
+      var bh=Math.max(2,(v/max)*chartH), x=padL+i*(bw+gap), y=H-padB-bh;
+      var rect=document.createElementNS(ns,'rect');
+      rect.setAttribute('class','bar');rect.setAttribute('x',x);rect.setAttribute('y',y);
+      rect.setAttribute('width',bw);rect.setAttribute('height',bh);rect.setAttribute('rx','3');
+      rect.setAttribute('fill', i===n-1?accent:(i%2?'#d4784e':'#3d7a52'));
+      rect.setAttribute('opacity', i===n-1?'1':'.78');
+      var tt=document.createElementNS(ns,'title');tt.textContent='Year '+(i+1)+': '+usd(v);rect.appendChild(tt);
+      svg.appendChild(rect);
+      var lbl=document.createElementNS(ns,'text');
+      lbl.setAttribute('x',x+bw/2);lbl.setAttribute('y',H-padB+15);lbl.setAttribute('text-anchor','middle');
+      lbl.setAttribute('font-family',"'Courier Prime',monospace");lbl.setAttribute('font-size','10');lbl.setAttribute('fill','#7a7268');
+      lbl.textContent=(i+1);svg.appendChild(lbl);
+      if(i===0||i===n-1){
+        var vt=document.createElementNS(ns,'text');
+        vt.setAttribute('x',x+bw/2);vt.setAttribute('y',y-5);vt.setAttribute('text-anchor','middle');
+        vt.setAttribute('font-family',"'Courier Prime',monospace");vt.setAttribute('font-size','10');vt.setAttribute('font-weight','700');vt.setAttribute('fill','#1c1a17');
+        vt.textContent=usdC(v);svg.appendChild(vt);
+      }
+    });
+  }
+  function cumulative(annual,g){var a=[],run=0;for(var y=0;y<10;y++){run+=annual*Math.pow(1+g,y);a.push(run);}return a;}
+
+  /* ===================== RETIREMENT ===================== */
+  var R={hc:$('r-hc'),sal:$('r-sal'),to:$('r-to'),mult:$('r-mult'),vest:$('r-vest'),loans:$('r-loans'),sdba:$('r-sdba'),sh:'nonelect'};
+  var rState={};
+  function rCalc(){
+    var H=+R.hc.value,S=+R.sal.value,T=+R.to.value/100,M=+R.mult.value;
+    var spend=H*S, turnoverCost=H*T*S*M, leak=turnoverCost*0.10, dividend=leak*0.40, admin=H*(120-48), total=dividend+admin;
+    var departing=H*T, empContrib=0.03*S, vf={immediate:0,cliff3:2.0,graded5:1.5}[R.vest.value], deficit=departing*empContrib*vf;
+    var hours=H*0.5+(R.loans.checked?H*0.15:0)+(R.sdba.checked?H*0.10:0);
+
+    $('r-hc-out').textContent=H.toLocaleString('en-US');
+    $('r-sal-out').textContent=usd(S);
+    $('r-to-out').textContent=(T*100).toFixed(0)+'%';
+    $('r-mult-out').textContent=M.toFixed(1)+'×';
+
+    $('r-repl').textContent=usd(turnoverCost);
+    $('r-leak').textContent=usd(leak);
+    $('r-spend').textContent=usd(spend);
+    $('r-dividend').textContent=usdC(dividend);
+    $('r-admin').textContent=usdC(admin);
+    $('r-total').textContent=usdC(total);
+
+    $('r-perhead').textContent=usd(total/H)+'/yr';
+    $('r-hours').textContent=Math.round(hours).toLocaleString('en-US')+' hrs';
+    $('r-testing').textContent=R.sh==='nonelect'?'0 required':'ADP + ACP';
+
+    $('r-take-val').textContent=usdC(total)+' / year';
+    $('r-take-sentence').innerHTML='For <b>'+H.toLocaleString('en-US')+' employees</b> at <b>'+usd(S)+
+      '</b>, a simple, fully-vested 3% plan design returns about <b>'+usdC(total)+
+      ' a year</b> — roughly <b>'+usd(total/H)+' per employee</b>. Over a decade, that compounds toward '+usdC(cumulative(total,0.04)[9])+'.';
+
+    var box=$('r-deficit-box');
+    if(vf>0){box.classList.add('show');$('r-deficit').textContent=usd(deficit);
+      $('r-deficit-sub').textContent=Math.round(departing).toLocaleString('en-US')+' workers leaving early forfeit unvested employer dollars each year under a '+(R.vest.value==='cliff3'?'3-year cliff':'5-year graded')+' schedule.';
+    }else{box.classList.remove('show');}
+
+    var series=cumulative(total,0.04);
+    renderChart('r-chart',series,'#b85c38');
+    $('r-chart-head').textContent=usdC(series[9])+' over a decade';
+
+    rState={H:H,S:S,T:T,M:M,spend:spend,turnoverCost:turnoverCost,leak:leak,dividend:dividend,admin:admin,total:total,hours:Math.round(hours),deficit:deficit,vest:R.vest.value,sh:R.sh,series:series};
+  }
+  document.querySelectorAll('#r-sh button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#r-sh button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');R.sh=b.getAttribute('data-sh');
+      var a=$('r-sh-alert');
+      if(R.sh==='match'){a.className='alert alert-warn';a.innerHTML='<b>Annual match design.</b> Requires year-end ADP/ACP testing, which adds operational steps.';}
+      else{a.className='alert alert-ok';a.innerHTML='<b>Safe Harbor status built in.</b> No year-end ADP/ACP testing required.';}
+      rCalc();
+    });
+  });
+  ['r-hc','r-sal','r-to','r-mult'].forEach(function(id){$(id).addEventListener('input',rCalc);});
+  R.vest.addEventListener('change',rCalc);
+  [R.loans,R.sdba].forEach(function(c){c.addEventListener('change',function(){c.closest('.check-row').classList.toggle('on',c.checked);rCalc();});});
+
+  /* ===================== INCOME PROTECTION ===================== */
+  var I={hc:$('i-hc'),sal:$('i-sal'),std:$('i-std'),ltd:$('i-ltd'),life:$('i-life'),comm:$('i-comm'),rfp:$('i-rfp')};
+  var iState={};
+  function iCalc(){
+    var H=+I.hc.value,S=+I.sal.value,payroll=H*S;
+    var rate=(I.std.checked?0.005:0)+(I.ltd.checked?0.0035:0)+(I.life.checked?0.0015:0);
+    var premium=payroll*rate, commPct=+I.comm.value/100, commLeak=premium*commPct, rfp=+I.rfp.value, fee=H*18, total=commLeak+rfp-fee;
+    var lines=(I.std.checked?1:0)+(I.ltd.checked?1:0)+(I.life.checked?1:0);
+
+    $('i-hc-out').textContent=H.toLocaleString('en-US');
+    $('i-sal-out').textContent=usd(S);
+    $('i-comm-out').textContent=(commPct*100).toFixed(0)+'%';
+    $('i-rfp-out').textContent=usd(rfp);
+
+    $('i-prem').textContent=usd(premium);
+    $('i-comm-leak').textContent=usd(commLeak);
+    $('i-rfp-leak').textContent=usd(rfp);
+    $('i-fee').textContent=usd(fee);
+    $('i-total').textContent=usdC(total);
+    $('i-perhead').textContent=usd(total/H)+'/yr';
+    var pctBeyond=(premium+rfp)>0?(commLeak/(premium+rfp))*100:0;
+    $('i-pct').textContent=pctBeyond.toFixed(0)+'%';
+    $('i-lines').textContent=lines+' of 3';
+
+    $('i-take-val').textContent=usdC(total)+' / year';
+    $('i-take-sentence').innerHTML='With <b>'+lines+' of 3</b> core lines for <b>'+H.toLocaleString('en-US')+
+      ' employees</b>, going direct with transparent pricing frees about <b>'+usdC(total)+
+      ' a year</b> — roughly <b>'+usd(total/H)+' per employee</b> — to put back into coverage or pay.';
+
+    var series=cumulative(total,0.03);
+    renderChart('i-chart',series,'#b85c38');
+    $('i-chart-head').textContent=usdC(series[9])+' over a decade';
+
+    iState={H:H,S:S,payroll:payroll,premium:premium,commPct:commPct,commLeak:commLeak,rfp:rfp,fee:fee,total:total,lines:lines,series:series};
+  }
+  ['i-hc','i-sal','i-comm','i-rfp'].forEach(function(id){$(id).addEventListener('input',iCalc);});
+  [I.std,I.ltd,I.life].forEach(function(c){c.addEventListener('change',function(){c.closest('.check-row').classList.toggle('on',c.checked);iCalc();});});
+
+  /* ===================== EXPORT ===================== */
+  function summaryHTML(title,rows,footer){
+    var body=rows.map(function(r){return '<tr><td style="padding:9px 0;border-bottom:1px solid #ddd5c8;font-weight:700">'+r[0]+'</td><td style="padding:9px 0;border-bottom:1px solid #ddd5c8;text-align:right;font-family:monospace;font-weight:700;color:'+(r[2]||'#1c1a17')+'">'+r[1]+'</td></tr>';}).join('');
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+title+'</title>'+
+      '<style>body{font-family:Georgia,serif;color:#1c1a17;max-width:680px;margin:40px auto;padding:0 28px;}'+
+      'h1{font-size:26px;border-bottom:2px solid #1c1a17;padding-bottom:10px;}'+
+      '.k{font-family:monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#b85c38;}'+
+      'table{width:100%;border-collapse:collapse;margin:18px 0;}'+
+      '.foot{font-size:11px;color:#7a7268;margin-top:24px;border-top:1px solid #ddd5c8;padding-top:12px;}</style></head>'+
+      '<body><div class="k">ThinkNirvana · Plan Design Tool</div><h1>'+title+'</h1><table>'+body+'</table><p class="foot">'+footer+'</p></body></html>';
+  }
+  function download(name,html){var blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);}
+  function printHTML(html){var w=window.open('','_blank');w.document.write(html);w.document.close();w.focus();setTimeout(function(){w.print();},350);}
+
+  function rRows(){var s=rState;return [
+    ['Workforce headcount',s.H.toLocaleString('en-US')],['Average salary',usd(s.S)],['Annual turnover',(s.T*100).toFixed(0)+'%'],
+    ['— HR METRICS —',''],
+    ['Replacement cost (annual)',usd(s.turnoverCost),'#9b2915'],['Benefits-tied turnover',usd(s.leak),'#9b2915'],
+    ['Forfeited goodwill (vesting)',usd(s.deficit),'#9b2915'],['HR admin hours saved / yr',s.hours.toLocaleString('en-US')+' hrs','#2d5a3d'],
+    ['— CFO METRICS —',''],
+    ['Retention value',usd(s.dividend),'#2d5a3d'],['Administrative value',usd(s.admin),'#2d5a3d'],
+    ['TOTAL ESTIMATED ANNUAL VALUE',usd(s.total),'#2d5a3d'],['10-year cumulative',usd(s.series[9]),'#2d5a3d']
+  ];}
+  function iRows(){var s=iState;return [
+    ['Workforce headcount',s.H.toLocaleString('en-US')],['Covered payroll',usd(s.payroll)],['Coverage lines',s.lines+' of 3'],
+    ['Estimated fair premium',usd(s.premium)],['Embedded commission',usd(s.commLeak),'#9b2915'],['Consulting / RFP fee',usd(s.rfp),'#9b2915'],
+    ['Nirvana platform fee',usd(s.fee)],['ESTIMATED ANNUAL VALUE',usd(s.total),'#2d5a3d'],['10-year cumulative',usd(s.series[9]),'#2d5a3d']
+  ];}
+  var rFoot='Retirement plan design (401k/PEP). Planning benchmarks: replacement cost, 10% benefits-linked turnover share, 40% improvement factor, $120→$48 admin. For illustration only — not legal, tax, or actuarial advice.';
+  var iFoot='Income protection (STD/LTD/Life). Premiums modeled as a share of covered payroll at pure-premium rates. For illustration only — not legal, tax, or actuarial advice. Platform fee is illustrative; ThinkNirvana pricing is disclosed after the T&C and payroll RFPs.';
+
+  $('r-export').addEventListener('click',function(){download('Nirvana_Retirement_Plan_Design_Summary.html',summaryHTML('Retirement Plan Design — Executive Summary',rRows(),rFoot));});
+  $('r-print').addEventListener('click',function(){printHTML(summaryHTML('Retirement Plan Design — Executive Summary',rRows(),rFoot));});
+  $('i-export').addEventListener('click',function(){download('Nirvana_IncomeProtection_Summary.html',summaryHTML('Income Protection — Executive Summary',iRows(),iFoot));});
+  $('i-print').addEventListener('click',function(){printHTML(summaryHTML('Income Protection — Executive Summary',iRows(),iFoot));});
+
+  rCalc(); iCalc();
+})();
+</script>
+</body>
+</html>
