@@ -26,7 +26,7 @@
     --rust:#1D9E75; --rust-lt:#9FE1CB; --rust-bg:#E1F5EE;       /* was b85c38/d4784e/fdf0ea → --forest-mid/--forest-light/--forest-pale */
     --forest:#0D2B1E; --forest-lt:#1D9E75; --forest-bg:#E1F5EE; /* was 2d5a3d/3d7a52/eaf3ec → --forest/--forest-mid/--forest-pale */
     --gold:#854F0B; --gold-bg:#F9FAFB;                          /* was c49a3c/fdf6e3 → --amber-dark/--bg (no light-amber token) */
-    --red:#854F0B; --red-bg:#F9FAFB;                            /* was 9b2915/fdecea → --amber-dark/--bg (no red token) */
+    --red:#9b2915; --red-bg:#fdecea;                            /* restored (owner approved): negative/cost figures read red */
     --border:#E5E7EB; --r:8px; --r-lg:16px;                     /* was ddd5c8/6px/14px → --border/--r/--r-lg */
     --mono:'Courier Prime',monospace; --serif:'Playfair Display',serif; --sans:'Lato',sans-serif;
     /* site-only tokens required by the injected nav/footer */
@@ -362,7 +362,7 @@
           <div class="metric detail-only">
             <div class="m-label">Administrative value</div>
             <div class="m-val forest" id="r-admin">—</div>
-            <div class="m-sub">$120 → $48 per participant in automated recordkeeping &amp; admin.</div>
+            <div class="m-sub">Illustrative: $120 → $48 per participant in automated recordkeeping &amp; admin.</div>
           </div>
           <div class="metric feature" style="grid-column:1/-1;">
             <div class="m-label">Total estimated annual value</div>
@@ -443,7 +443,7 @@
             <tr><td class="l-item">Estimated fair premium<div class="l-insight">Selected lines, pure-risk pricing</div></td><td class="l-val" id="i-prem">—</td><td class="l-insight" style="text-align:right">The risk transfer, to the carrier.</td></tr>
             <tr><td class="l-item">Embedded commission<div class="l-insight">Included in standard premiums</div></td><td class="l-val neg" id="i-comm-leak">—</td><td class="l-insight" style="text-align:right">A share of every premium dollar.</td></tr>
             <tr><td class="l-item">Consulting / RFP fee<div class="l-insight">Typical engagement fee</div></td><td class="l-val neg" id="i-rfp-leak">—</td><td class="l-insight" style="text-align:right">Annual, where applicable.</td></tr>
-            <tr><td class="l-item">Nirvana platform fee<div class="l-insight">Flat, transparent, per employee</div></td><td class="l-val" id="i-fee">—</td><td class="l-insight" style="text-align:right">$18 / employee / year.</td></tr>
+            <tr><td class="l-item">Nirvana platform fee<div class="l-insight">Illustrative flat fee — not a quote</div></td><td class="l-val" id="i-fee">—</td><td class="l-insight" style="text-align:right">$18 / employee / year (illustrative).</td></tr>
           </tbody>
         </table>
 
@@ -739,7 +739,7 @@
     ['Nirvana platform fee',usd(s.fee)],['ESTIMATED ANNUAL VALUE',usd(s.total),'#2d5a3d'],['10-year cumulative',usd(s.series[9]),'#2d5a3d']
   ];}
   var rFoot='Retirement plan design (401k/PEP). Planning benchmarks: replacement cost, 10% benefits-linked turnover share, 40% improvement factor, $120→$48 admin. For illustration only — not legal, tax, or actuarial advice.';
-  var iFoot='Income protection (STD/LTD/Life). Premiums modeled as a share of covered payroll at pure-premium rates. For illustration only — not legal, tax, or actuarial advice.';
+  var iFoot='Income protection (STD/LTD/Life). Premiums modeled as a share of covered payroll at pure-premium rates. For illustration only — not legal, tax, or actuarial advice. Platform fee is illustrative; ThinkNirvana pricing is disclosed after the T&C and payroll RFPs.';
 
   $('r-export').addEventListener('click',function(){download('Nirvana_Retirement_Plan_Design_Summary.html',summaryHTML('Retirement Plan Design — Executive Summary',rRows(),rFoot));});
   $('r-print').addEventListener('click',function(){printHTML(summaryHTML('Retirement Plan Design — Executive Summary',rRows(),rFoot));});
