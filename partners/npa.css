@@ -59,7 +59,26 @@
   font-weight:700; font-size:.85rem;
 }
 .npa-nav .npa-cta:hover { background:var(--accent-2); color:#06160e; }
-@media (max-width:720px){ .npa-nav a:not(.npa-cta){ display:none; } }
+
+/* hamburger */
+.npa-burger { display:none; background:none; border:0; cursor:pointer; width:42px; height:42px; flex-direction:column; justify-content:center; align-items:center; gap:5px; padding:8px; }
+.npa-burger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:transform .2s, opacity .2s; }
+.npa-burger.x span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.npa-burger.x span:nth-child(2){ opacity:0; }
+.npa-burger.x span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+@media (max-width:720px){
+  .npa-burger { display:flex; }
+  .npa-nav {
+    position:absolute; top:62px; left:0; right:0;
+    flex-direction:column; align-items:stretch; gap:0;
+    background:var(--bg-2); border-bottom:1px solid var(--line);
+    padding:6px 0; display:none;
+  }
+  .npa-nav.open { display:flex; }
+  .npa-nav a { padding:13px 24px; font-size:.96rem; }
+  .npa-nav .npa-cta { margin:8px 24px; text-align:center; padding:11px 18px; }
+}
 
 /* ---------- buttons ---------- */
 .npa .btn {
