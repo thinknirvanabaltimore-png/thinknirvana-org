@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-92TN60N26P');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The PEP Playbook — Nirvana Partner Alliance | ThinkNirvana</title>
+  <meta name="description" content="Articles and videos for the new fiduciaries — how to introduce, position, and close a low-cost PEP 401(k) for the small businesses you serve."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../npa.css"/>
+</head>
+<body>
+<div class="npa">
+
+  <header class="npa-head">
+    <div class="wrap npa-head-in">
+      <a class="npa-brand" href="/partners/">
+        <span class="npa-mark">N</span>
+        <span><b>The Nirvana Partner Alliance</b><span>The PEP Playbook</span></span>
+      </a>
+      <nav class="npa-nav">
+        <a href="/partners/">Alliance</a>
+        <a href="https://thinknirvana.org">Mission</a>
+        <a href="https://aipep401k.com">AIPEP401K</a>
+        <a class="npa-cta" href="mailto:partners@thinknirvana.org?subject=Nirvana%20Partner%20Alliance%20%E2%80%94%20Application">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="npa-hero" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="npa-kicker">The PEP Playbook</div>
+      <h1>How to bring a <em>PEP 401(k)</em> to your clients.</h1>
+      <p class="dek">Short, practical pieces for CPAs, CFOs, CHROs, attorneys, P&amp;C agents, and bankers — how to introduce the idea, answer the fee question, and hand off to onboarding. New articles and videos added weekly.</p>
+    </div>
+  </section>
+
+  <section class="npa-sec" style="border-bottom:none">
+    <div class="wrap">
+      <div class="npa-filters" id="filters">
+        <button class="npa-pill active" data-aud="all">All</button>
+        <button class="npa-pill" data-aud="CPA">CPAs</button>
+        <button class="npa-pill" data-aud="CFO">CFOs</button>
+        <button class="npa-pill" data-aud="CHRO">CHROs</button>
+        <button class="npa-pill" data-aud="Attorney">Attorneys</button>
+        <button class="npa-pill" data-aud="P&amp;C">P&amp;C Agents</button>
+        <button class="npa-pill" data-aud="Banker">Bankers</button>
+      </div>
+      <div class="npa-posts" id="posts"></div>
+      <div class="npa-empty" id="empty" style="display:none">No pieces in this category yet — check back soon, or <a href="mailto:partners@thinknirvana.org" style="color:var(--accent)">suggest a topic</a>.</div>
+    </div>
+  </section>
+
+  <footer class="npa-foot">
+    <div class="wrap">
+      <div class="npa-foot-in">
+        <span>© 2026 ThinkNirvana · The Nirvana Partner Alliance</span>
+        <span>
+          <a href="/partners/">Alliance</a>
+          <a href="https://thinknirvana.org">Mission</a>
+          <a href="https://aipep401k.com">AIPEP401K</a>
+          <a href="mailto:partners@thinknirvana.org">partners@thinknirvana.org</a>
+        </span>
+      </div>
+      <p class="disc">Educational content for partners and prospective partners. Informational only — not investment, legal, or tax advice. Cost figures shown are illustrative benchmarks for discussion, not a price quote.</p>
+    </div>
+  </footer>
+
+  <!-- video modal -->
+  <div class="npa-modal" id="modal">
+    <div class="npa-modal-box">
+      <button class="npa-modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="frame"><iframe id="modalFrame" src="" allow="accelerated-graphics; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let ALL = [], filter = 'all';
+  const postsEl = document.getElementById('posts');
+  const emptyEl = document.getElementById('empty');
+
+  function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function render(){
+    const list = ALL.filter(p => filter==='all' || (p.audience||[]).includes(filter));
+    postsEl.innerHTML = '';
+    emptyEl.style.display = list.length ? 'none' : 'block';
+    list.forEach(p => {
+      const isVideo = p.type === 'video';
+      const card = document.createElement(isVideo ? 'div' : 'a');
+      card.className = 'npa-card';
+      if (!isVideo) card.href = p.file;
+      const dur = isVideo ? (p.minutes? p.minutes+' min watch':'Video')
+                          : (p.minutes? p.minutes+' min read':'Article');
+      card.innerHTML =
+        '<div class="meta">'+
+          '<span class="npa-badge '+(isVideo?'video':'article')+'">'+(isVideo?'Video':'Article')+'</span>'+
+          '<span class="aud">'+esc((p.audience||[]).join(' · '))+'</span>'+
+        '</div>'+
+        '<h3>'+esc(p.title)+'</h3>'+
+        '<p class="cdek">'+esc(p.dek)+'</p>'+
+        '<div class="cfoot"><span>'+esc(p.date||'')+'</span><span>'+dur+'</span></div>';
+      if (isVideo) card.addEventListener('click', ()=>openVideo(p.embedUrl, p.orientation));
+      postsEl.appendChild(card);
+    });
+  }
+
+  // filters
+  document.getElementById('filters').addEventListener('click', e=>{
+    const b = e.target.closest('.npa-pill'); if(!b) return;
+    document.querySelectorAll('.npa-pill').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filter = b.dataset.aud.replace('&amp;','&');
+    render();
+  });
+
+  // video modal
+  const modal = document.getElementById('modal');
+  const modalBox = modal.querySelector('.npa-modal-box');
+  const frame = document.getElementById('modalFrame');
+  function openVideo(url, orientation){
+    modalBox.classList.toggle('vertical', orientation === 'vertical');
+    frame.src = url; modal.classList.add('open');
+  }
+  function closeVideo(){ modal.classList.remove('open'); frame.src = ''; }
+  document.getElementById('modalClose').addEventListener('click', closeVideo);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeVideo(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeVideo(); });
+
+  // load manifest (newest first)
+  fetch('posts.json', {cache:'no-store'})
+    .then(r=>r.json())
+    .then(d=>{ ALL = (d.posts||[]).sort((a,b)=> (b.date||'').localeCompare(a.date||'')); render(); })
+    .catch(()=>{ emptyEl.textContent='Playbook is loading soon.'; emptyEl.style.display='block'; });
+</script>
+</body>
+</html>
