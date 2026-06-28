@@ -16,7 +16,7 @@
     head.innerHTML =
       '<div class="wrap npa-head-in">' +
         '<a class="npa-brand" href="/partners/">' +
-          '<span class="npa-mark">N</span>' +
+          '<span class="npa-mark"><img src="/partners/assets/tn-mark.png" alt="ThinkNirvana" width="36" height="36"/></span>' +
           '<span><b>The Nirvana Partner Alliance</b><span>ThinkNirvana.org</span></span>' +
         '</a>' +
         '<button class="npa-burger" aria-label="Menu" aria-expanded="false">' +
