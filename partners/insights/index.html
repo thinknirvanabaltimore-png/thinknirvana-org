@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-92TN60N26P');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The PEP Playbook — Nirvana Partner Alliance | ThinkNirvana</title>
   <meta name="description" content="Articles and videos for the new fiduciaries — how to introduce, position, and close a low-cost PEP 401(k) for the small businesses you serve."/>
@@ -11,24 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../npa.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-92TN60N26P"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-92TN60N26P');</script>
 </head>
 <body>
 <div class="npa">
-
-  <header class="npa-head">
-    <div class="wrap npa-head-in">
-      <a class="npa-brand" href="/partners/">
-        <span class="npa-mark">N</span>
-        <span><b>The Nirvana Partner Alliance</b><span>The PEP Playbook</span></span>
-      </a>
-      <nav class="npa-nav">
-        <a href="/partners/">Alliance</a>
-        <a href="https://thinknirvana.org">Mission</a>
-        <a href="https://aipep401k.com">AIPEP401K</a>
-        <a class="npa-cta" href="mailto:partners@thinknirvana.org?subject=Nirvana%20Partner%20Alliance%20%E2%80%94%20Application">Apply</a>
-      </nav>
-    </div>
-  </header>
+  <header id="npa-head"></header>
 
   <section class="npa-hero" style="padding-bottom:40px">
     <div class="wrap">
@@ -138,5 +124,6 @@
     .then(d=>{ ALL = (d.posts||[]).sort((a,b)=> (b.date||'').localeCompare(a.date||'')); render(); })
     .catch(()=>{ emptyEl.textContent='Playbook is loading soon.'; emptyEl.style.display='block'; });
 </script>
+  <script src="/partners/npa.js"></script>
 </body>
 </html>
