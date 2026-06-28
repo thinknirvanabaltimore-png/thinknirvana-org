@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "slug": "advisors-clean-plan-design",
+      "type": "article",
+      "title": "The year-end trap hiding in a \"matching\" 401(k)",
+      "dek": "Why traditional matching plans fail nondiscrimination testing — and how advisors can introduce a cleaner design.",
+      "audience": ["CPA", "Attorney", "CFO"],
+      "author": "ThinkNirvana",
+      "date": "2026-06-27",
+      "minutes": 4,
+      "file": "posts/advisors-clean-plan-design.html"
+    },
+    {
+      "slug": "brokers-benefits-moat",
+      "type": "article",
+      "title": "A retention moat for your commercial book",
+      "dek": "How brokers deepen commercial accounts with a turnkey PEP — and how the 3(16) fiduciary offload actually works.",
+      "audience": ["P&C"],
+      "author": "ThinkNirvana",
+      "date": "2026-06-26",
+      "minutes": 4,
+      "file": "posts/brokers-benefits-moat.html"
+    },
+    {
+      "slug": "what-is-a-pep-explainer",
+      "type": "video",
+      "title": "What is a PEP 401(k)? A 3-minute explainer for advisors",
+      "dek": "The pooled-plan model in plain language — what it is, who carries the fiduciary load, and why the cost is lower.",
+      "audience": ["CPA", "CFO", "CHRO", "Attorney", "P&C", "Banker"],
+      "author": "ThinkNirvana",
+      "date": "2026-06-20",
+      "minutes": 3,
+      "embedUrl": "https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID"
+    }
+  ]
+}
