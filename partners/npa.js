@@ -7,7 +7,7 @@
 (function () {
   var APPLY = 'mailto:partners@thinknirvana.org'
     + '?subject=Nirvana%20Partner%20Alliance%20%E2%80%94%20Application'
-    + '&body=Name%3A%0AFirm%2FCompany%3A%0AMy%20role%20(CPA%20%2F%20CFO%20%2F%20CHRO%20%2F%20Attorney%20%2F%20P%26C%20Agent%20%2F%20Banker)%3A%0AApprox.%20%23%20of%20small-business%20clients%20I%20serve%3A%0ABest%20email%20%26%20phone%3A%0AAnything%20you%27d%20like%20us%20to%20know%3A%0A';
+    + '&body=Name%3A%0AFirm%2FCompany%3A%0AMy%20role%20(CPA%20%2F%20CFO%20%2F%20RIA%20%2F%20CHRO%20%2F%20Attorney%20%2F%20P%26C%20Agent%20%2F%20Banker)%3A%0AApprox.%20%23%20of%20small-business%20clients%20I%20serve%3A%0ABest%20email%20%26%20phone%3A%0AAnything%20you%27d%20like%20us%20to%20know%3A%0A';
 
   function build() {
     var head = document.getElementById('npa-head');
