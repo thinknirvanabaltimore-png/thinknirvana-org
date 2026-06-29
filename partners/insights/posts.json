@@ -1,6 +1,18 @@
 {
   "posts": [
     {
+      "slug": "short-cpa-irs-test-deadline",
+      "type": "video",
+      "title": "Your client's 401(k) could fail its IRS test",
+      "dek": "The annual refund deadline — and the safe-harbor fix.",
+      "audience": ["CPA"],
+      "author": "ThinkNirvana",
+      "date": "2026-06-28",
+      "minutes": 1,
+      "orientation": "vertical",
+      "embedUrl": "https://www.youtube.com/embed/IWCDiti9fR0"
+    },
+    {
       "slug": "advisors-clean-plan-design",
       "type": "article",
       "title": "The year-end trap hiding in a \"matching\" 401(k)",
