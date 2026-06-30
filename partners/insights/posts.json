@@ -1,11 +1,27 @@
 {
   "posts": [
     {
+      "slug": "short-cfo-excise-tax-liability",
+      "type": "video",
+      "title": "The 401(k) liability that's not in your budget",
+      "dek": "How a failed IRS test becomes a 10% excise tax — and the safe-harbor fix.",
+      "audience": [
+        "CFO"
+      ],
+      "author": "ThinkNirvana",
+      "date": "2026-06-29",
+      "minutes": 1,
+      "orientation": "vertical",
+      "embedUrl": "https://www.youtube.com/embed/YFqc0ApDDMM"
+    },
+    {
       "slug": "short-cpa-irs-test-deadline",
       "type": "video",
       "title": "Your client's 401(k) could fail its IRS test",
       "dek": "The annual refund deadline — and the safe-harbor fix.",
-      "audience": ["CPA"],
+      "audience": [
+        "CPA"
+      ],
       "author": "ThinkNirvana",
       "date": "2026-06-28",
       "minutes": 1,
@@ -17,7 +33,11 @@
       "type": "article",
       "title": "The year-end trap hiding in a \"matching\" 401(k)",
       "dek": "Why traditional matching plans fail nondiscrimination testing — and how advisors can introduce a cleaner design.",
-      "audience": ["CPA", "Attorney", "CFO"],
+      "audience": [
+        "CPA",
+        "Attorney",
+        "CFO"
+      ],
       "author": "ThinkNirvana",
       "date": "2026-06-27",
       "minutes": 4,
@@ -28,7 +48,9 @@
       "type": "article",
       "title": "A retention moat for your commercial book",
       "dek": "How brokers deepen commercial accounts with a turnkey PEP — and how the 3(16) fiduciary offload actually works.",
-      "audience": ["P&C"],
+      "audience": [
+        "P&C"
+      ],
       "author": "ThinkNirvana",
       "date": "2026-06-26",
       "minutes": 4,
@@ -39,7 +61,15 @@
       "type": "video",
       "title": "What is a PEP 401(k)? A 3-minute explainer for advisors",
       "dek": "The pooled-plan model in plain language — what it is, who carries the fiduciary load, and why the cost is lower.",
-      "audience": ["CPA", "CFO", "RIA", "CHRO", "Attorney", "P&C", "Banker"],
+      "audience": [
+        "CPA",
+        "CFO",
+        "RIA",
+        "CHRO",
+        "Attorney",
+        "P&C",
+        "Banker"
+      ],
       "author": "ThinkNirvana",
       "date": "2026-06-20",
       "minutes": 3,
