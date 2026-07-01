@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "slug": "short-ria-338-structure",
+      "type": "video",
+      "title": "RIAs: the 3(38) role was built for you",
+      "dek": "Only an RIA, bank, or insurer can be a 3(38) investment manager — here's what that unlocks.",
+      "audience": [
+        "RIA"
+      ],
+      "author": "ThinkNirvana",
+      "date": "2026-06-30",
+      "minutes": 1,
+      "orientation": "vertical",
+      "embedUrl": "https://www.youtube.com/embed/1kK8OdtVF9w"
+    },
+    {
       "slug": "short-cfo-excise-tax-liability",
       "type": "video",
       "title": "The 401(k) liability that's not in your budget",
