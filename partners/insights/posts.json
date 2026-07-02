@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "slug": "short-chro-auto-enroll-talent-benefit",
+      "type": "video",
+      "title": "CHROs: your 401(k) is now a talent decision",
+      "dek": "Auto-enrollment is the new default — here's what makes the benefit actually land.",
+      "audience": [
+        "CHRO"
+      ],
+      "author": "ThinkNirvana",
+      "date": "2026-07-01",
+      "minutes": 1,
+      "orientation": "vertical",
+      "embedUrl": "https://www.youtube.com/embed/VCDpTu7z79I"
+    },
+    {
       "slug": "short-ria-338-structure",
       "type": "video",
       "title": "RIAs: the 3(38) role was built for you",
